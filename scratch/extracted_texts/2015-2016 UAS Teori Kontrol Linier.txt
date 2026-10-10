@@ -1,0 +1,107 @@
+SOURCE: Past Problem\2015-2016 UAS Teori Kontrol Linier.pdf
+TOTAL PAGES: 2
+
+=== PAGE 1 ===
+MA4171 - Teori Kontrol Linear
+UAS Semester I 2015/2016
+Nama Dosen: Janson Naiborhu
+Durasi: 100 menit
+1. Tinjau sistem yang dideﬁnisikan oleh
+[ ˙x1
+˙x2
+]
+=
+[ 0 1
+0 2
+][ x1
+x2
+]
++
+[ 0
+1
+]
+u (1)
+Tunjukkan bahwa sistem ini tidak dapat distabilkan dengan umpan balik
+u − Kx.
+2. Tinjau sistem
+˙x =
+
+
+2 0 0
+0 2 0
+0 3 1
+
+ x (2)
+dengan output
+y =
+[
+1 1 1
+]
+x (3)
+(a) Tunjukkan bahwa sistem tidak terobservasi secara lengkap.
+(b) Tunjukkan bahwa sistem terobsesi lengkap jika output dari sistem
+diberikan oleh
+y =
+[ 1 1 1
+1 2 3
+]
+x (4)
+3. Tentukan observer minimal untuk sistem berikut
+˙x =
+
+
+−1 1 1
+1 −2 0
+0 0 3
+
+ x +
+
+
+0
+0
+1
+
+ u(t) (5)
+y =
+[ 1 1 0 ] x (6)
+Petunjuk: Tentukan matriks transformasi T sehingga z = T x dan per-
+samaan (1)-(2) berbentuk:
+˙z = Az + Bu
+ˆ y =z1
+4. Tentukan kontrol optimum u untuk sistem
+˙x =
+[ 0 1
+0 −1
+]
+x +
+[ 0
+1
+]
+u(t) (7)
+sehingga indeks performansi berikut ini minimum.
+J =
+∫ ∞
+0
+(
+xT x + u2) dt
+1
+
+=== PAGE 2 ===
+5. Tentukan kontrol optimum u(k) untuk sistem
+x(k + 1) =
+[ 1 2
+1 0
+]
+x(k) +
+[ 1
+0
+]
+u(k) (8)
+sehingga indeks performansi berikut ini minimum
+J = 12 xT (6)[ 1 00 1 ] x(6) + 12 5∑k=0[xT x + u2]
+dengan x(0) =
+[ 1
+0
+]
+2
+

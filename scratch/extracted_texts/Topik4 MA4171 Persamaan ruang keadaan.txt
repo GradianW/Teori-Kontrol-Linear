@@ -1,0 +1,284 @@
+SOURCE: Lecture Slide\Before UTS\Topik4 MA4171 Persamaan ruang keadaan.pdf
+TOTAL PAGES: 65
+
+=== PAGE 1 ===
+Persamaanruangkeadaanuntukfungsi
+transfer .
+Bentukkanonikketerkontrolan
+Bentukkanonikketerobservasian
+Bentukkanonikdiagonal
+BentukkanonikJordan
+Signal-flow-graph untukpersamaanruangkeadaan
+
+=== PAGE 2 ===
+Bentukkanonikketerkontrolan
+Perhatikan model sistemlinear orde-𝑛
+𝑦!+𝑎"𝑦!#"+⋯+𝑎!#"𝑦$+𝑎!𝑦=𝑏%𝑢!+𝑏"𝑢!#"+⋯+𝑏!#"𝑢$+𝑏!𝑢.
+Persamaandiatasdapatjuga ditulisdalambentuk:
+𝑌(𝑠)
+𝑈(𝑠)=𝑏%𝑠!+𝑏"𝑠!#"+⋯+𝑏!#"𝑠+𝑏!𝑠!+𝑎"𝑠!#"+⋯+𝑎!#"𝑠+𝑎!
+SisteminitermasukSISO.
+
+=== PAGE 3 ===
+Persamaanruangkeadaandalambentukkanonikketerkontrolandari
+system diatasdapatditulisdalambentuk:
+
+
+=== PAGE 4 ===
+Langkah-langkahuntukmenunjukkanpersamaantersebutadalahsbb:
+Denganmembagilangsungpersamaansebelumnyadapatdirubahmenjadi:
+atau
+dengan
+atau
+
+=== PAGE 5 ===
+Dari persamaanterakhir, diperolehpersamaanberikut:
+Denganmemisalkan:
+Dengandemikianpersamaanruangkeadaandalambentukkanonikketerkontrolandiperoleh.
+
+=== PAGE 6 ===
+Contoh
+Tentukan persamaanruangkeadaandalambentukkanonik
+keterkontrolanuntuksystem denganfungsitransfer 𝐺𝑠=!"#!!"$!"%.
+
+=== PAGE 7 ===
+Latihan
+Diberikansistemdenganpersamaanruangkeadaan:
+𝑥&𝑡=
+0 1 0
+0 0 1
+−𝑎% −𝑎$ −𝑎#
+𝑥𝑡+
+0
+0
+1
+𝑢(𝑡)
+𝑦𝑡=𝑏% 𝑏$ 𝑏#𝑥(𝑡)
+Tentukanfungsitransfer darisistemdiatas.
+
+=== PAGE 8 ===
+Bentukkanonikketerobservasian
+
+
+=== PAGE 9 ===
+Langka-Langkah untukmenunjukkanya
+dapatdituliskandalambentuk
+atau
+
+=== PAGE 10 ===
+Denganmendefinisikanvariable keadaan:
+diperoleh
+sehingga
+
+=== PAGE 11 ===
+Melaluiinvers transformasiLaplace, diperoleh:
+dan
+Dengandemikanbentukkanonikketerobservasiandapatdiperoleh.
+
+=== PAGE 12 ===
+Contoh
+Tentukan persamaanruangkeadaandalambentukkanonik
+keterobservasiandarisystem denganfungsitransfer 𝐺𝑠=!"%!!"%!"$.
+Sistem𝑥&=𝐴𝑥+𝐵𝑢,𝑦=𝐶𝑥+𝐷𝑢.
+Fungsitransfer 𝐺𝑠=𝐶(𝑠𝐼−𝐴)’#𝐵+𝐷.
+(𝑠𝐼−𝐴)’#=𝐴𝑑𝑗(𝑠𝐼−𝐴)𝑠𝐼−𝐴
+
+=== PAGE 13 ===
+Bentukkanonikdiagonal
+Dalamhalfungsitransfer mempunyaipole pole yang berbedasemua, 
+makafungsitransfer tersebutdapatditulisdalambentuk:
+Denganmemisalkan
+variabelkeadaan:
+
+=== PAGE 14 ===
+Diperolehpersamaanruangkeadaandiagonal
+
+
+=== PAGE 15 ===
+Contoh
+Tentukan persamaanruangkeadaandalambentukkanonikdiagonal 
+untuksystem denganfungsitransfer 𝐺𝑠=(!"#)(!"*)!(!"$)(!"%).
+
+=== PAGE 16 ===
+BentukkanonikJordan
+Misalkanpole yang pertamaberulangsebanyaktigakali, sehingga
+fungsitransfernyadapatditulisdalambentuk:
+atau
+
+
+=== PAGE 17 ===
+Denganmendefinikan
+variable keadaaan
+Diperolehpersamaanruangkeadaan
+dalambentukJordan
+
+=== PAGE 18 ===
+Contoh
+Tentukan persamaanruangkeadaandalambentukkanonikJordan 
+untuksystem denganfungsitransfer 𝐺𝑠=!(!"#)(!"*)(!"$)"(!"%).
+
+=== PAGE 19 ===
+
+
+=== PAGE 20 ===
+
+
+=== PAGE 21 ===
+Tentukanpersamaanruangkeadaandari
+sistem:
+𝐺𝑠=
+𝑠+2
+𝑠$+3𝑠+2
+2𝑠+3
+𝑠$+3𝑠+2
+
+=== PAGE 22 ===
+
+
+=== PAGE 23 ===
+
+
+=== PAGE 24 ===
+Contoh: Tentukanpersamaanruangkeadaan
+darisistem:
+𝐺𝑠= 𝑠+2𝑠$+3𝑠+2 2𝑠+3𝑠$+3𝑠+2
+
+=== PAGE 25 ===
+
+
+=== PAGE 26 ===
+
+
+=== PAGE 27 ===
+
+
+=== PAGE 28 ===
+
+
+=== PAGE 29 ===
+
+
+=== PAGE 30 ===
+Latihan
+
+
+=== PAGE 31 ===
+Cascade Form
+
+
+=== PAGE 32 ===
+
+
+=== PAGE 33 ===
+
+
+=== PAGE 34 ===
+ParalelForm 
+
+
+=== PAGE 35 ===
+
+
+=== PAGE 36 ===
+Controller canonical form
+
+
+=== PAGE 37 ===
+
+
+=== PAGE 38 ===
+Observer canonical form
+
+
+=== PAGE 39 ===
+
+
+=== PAGE 40 ===
+
+
+=== PAGE 41 ===
+
+
+=== PAGE 42 ===
+
+
+=== PAGE 43 ===
+SIMO
+
+
+=== PAGE 44 ===
+Solusi
+
+
+=== PAGE 45 ===
+MISO
+
+
+=== PAGE 46 ===
+Solusi
+
+
+=== PAGE 47 ===
+MIMO
+
+
+=== PAGE 48 ===
+Solusi
+
+
+=== PAGE 49 ===
+Latihan: No 1
+
+
+=== PAGE 50 ===
+Jawab
+
+
+=== PAGE 51 ===
+Latihan: No 2
+
+
+=== PAGE 52 ===
+Jawab
+
+
+=== PAGE 53 ===
+
+
+=== PAGE 54 ===
+
+
+=== PAGE 55 ===
+MIMO
+
+
+=== PAGE 56 ===
+
+
+=== PAGE 57 ===
+
+
+=== PAGE 58 ===
+
+
+=== PAGE 59 ===
+
+
+=== PAGE 60 ===
+
+
+=== PAGE 61 ===
+
+
+=== PAGE 62 ===
+
+
+=== PAGE 63 ===
+
+
+=== PAGE 64 ===
+
+
+=== PAGE 65 ===
+
+

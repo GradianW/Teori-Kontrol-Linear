@@ -1,0 +1,77 @@
+SOURCE: Past Problem\2024-2025 UAS Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Ujian Akhir Semester MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Senin, 6 Januari 2025
+Durasi: 120 menit
+Instruksi: Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian
+bersifat tutup buku, kecuali tabel transformasi Laplace. Dilarang menggunakan alat bantu hitungdalam
+bentuk apapun. Soal ujian terdiri dari 4 soal esai panjang dan harus dikerjakan secara berurutan. Perhatikan waktu
+pengerjaan. Selamat dan sukses untuk ujiannya.
+1. Diketahui sistem kontrol linear ˙x = Ax + Bu dan y = Cx dengan A =
+"
+1 2
+−3 −4
+#
+, B=
+"
+1
+2
+#
+dan C = [1 0] .
+(a) Jika kontrol umpan balik dinyatakan sebagai u(t) = − 5121 x1 − 2721 x2 dengan penempatan pole di s1 = −a dan
+s2 = −b untuk a, b∈ R, a, b >0, dengan menggunakan matriks transformasi, carilah semua penempatan pole
+yang mungkin.
+(b) Rancanglah suatu observer berode satu jika diinginkan pole observer berada pada s = −10 dengan menggu-
+nakan metode Ackerman.
+2. Misalkan sistem diskrit ditulis sebagai y(k + 2) − 5y(k + 1) + 6y(k) = u(k + 2) + 2u(k) untuk k = 0, 1, 2, . . .
+(a) Jika y(0) = 0 dan y(1) = 1, dengan menggunakan transformasi Z tentukan solusi homogen yh(k).
+(b) Tentukan fungsi transfer dari sistem diskrit tersebut, kemudian buatlah persamaan ruang keadaannya.
+3. Tentukan kontrol optimal u(t) untuk sistem didefinisikan sebagai
+ 
+˙x1
+˙x2
+!
+=
+"
+0 1
+0 −1
+#  
+x1
+x2
+!
++
+ 
+0
+1
+!
+u sehingga mem-
+inimumkan indeks performansi J =
+Z ∞
+0
+(x21 + x22 + u2) dt.
+4. Sebongkah es besar baru saja dikeluarkan dari tempat pendingin sehingga diinginkan seluruh es tersebut mencair
+lalu dipanaskan dengan energi sekecil mungkin. Setelah semua es mencair dan bersuhu sama seperti suhu ruang
+sekitar, suplai energi panas diberikan. Jika θ(t) menunjukan suhu air setiapt menit, θL = 20◦C adalah suhu ruangan
+sekitar dan u(t) kontrol suplai panas untuk air, dinamika perubahan suhu air dalam ◦C per menit dinyatakan
+sebagai ˙θ(t) = −0.5(θ(t) − θL) + 2u dengan 0 ≤ t ≤ 20 menit. Jika indeks performansi yang ingin diminimumkan
+adalah J = 12 Z 200 u2(t) dt, rancanglah suatu kontrol suplai panas optimum u∗(t) sehingga air bersuhu 30◦C denganterlebih dahulu menentukan solusi persamaan state dan costate nya.
+5. Deberikan sistem linear yang dinyatakan sebagai
+(
+˙x1 = −x1 − 3x2
+˙x2 = x1 − 2x2
+dengan x(0) =
+ 
+x10
+x20
+!
+untuk x10, x20 ̸= 0.
+(a) Bagaimana membuktikan bahwa suatu x(0) akan membawa sistem pada kondisi setimbang xe = 0. Jelaskan
+jawaban Anda.
+(b) Rancanglah suatu fungsi Lyapunov V (t) yang memenuhi ˙V (t) = −2x21 − 2x22 sehingga bersifat stabil asimtotik.
+Apakah dari hasil ini terjamin bahwa untuk setiapx(0) terjamin akan selalu menuju kondisi setimbangxe = 0?
+Jelaskan jawaban Anda.
+Typed by: Christoforus Stanislaus (MA21) 1 ©Divisi Akademik HIMATIKA ITB 2024
+

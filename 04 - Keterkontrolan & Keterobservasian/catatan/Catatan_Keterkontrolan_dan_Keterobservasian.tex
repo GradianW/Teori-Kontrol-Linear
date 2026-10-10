@@ -31,7 +31,7 @@
     {\LARGE \textbf{CATATAN KULIAH MA4171 TEORI KONTROL LINEAR}}\\[6pt]
     {\Large \textbf{Topik 04: Keterkontrolan dan Keterobservasian Sistem}}\\[4pt]
     \textit{Cakupan: Minggu ke-6 sampai Minggu ke-7}\\[2pt]
-    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} (Bab 9.2, 9.6, \& 9.7)
+    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} (Bab 9.2, 9.6, \& 9.7); Slide Kuliah MA4171 ITB
 \end{center}
 \vspace{-4pt}
 \hrule
@@ -44,14 +44,12 @@
 
 \section{Pendahuluan \& Konsep Struktural Sistem}
 
-Konsep \textbf{Keterkontrolan (\textit{Controllability})} dan \textbf{Keterobservasian (\textit{Observability})} diperkenalkan pertama kali oleh Rudolf E. Kalman pada awal tahun 1960-an. Keduanya merupakan sifat struktural fundamental dalam teori kontrol modern berbasis ruang keadaan (\textit{state-space}):
+Konsep \textbf{Keterkontrolan (\textit{Controllability})} dan \textbf{Keterobservasian (\textit{Observability})} diperkenalkan oleh Rudolf E. Kalman pada awal 1960-an sebagai pilar fundamental teori kontrol modern berbasis ruang keadaan (\textit{state-space}):
 
 \begin{itemize}
-    \item \textbf{Keterkontrolan} menjawab pertanyaan: \textit{"Dapatkah masukan kontrol $u(t)$ menggerakkan seluruh variabel keadaan internal $x(t)$ dari sembarang titik awal ke titik tujuan yang diinginkan dalam waktu berhingga?"}
-    \item \textbf{Keterobservasian} menjawab pertanyaan: \textit{"Dapatkah kondisi awal seluruh variabel keadaan internal $x(0)$ direkonstruksi/diestimasi secara unik hanya dari riwayat pengukuran keluaran $y(t)$ dan masukan $u(t)$?"}
+    \item \textbf{Keterkontrolan}: Menjawab apakah masukan kendali $u(t)$ mampu mengarahkan seluruh variabel keadaan internal $x(t)$ dari sembarang kondisi awal menuju titik tujuan dalam waktu berhingga.
+    \item \textbf{Keterobservasian}: Menjawab apakah kondisi awal seluruh variabel keadaan internal $x(0)$ dapat direkonstruksi secara unik hanya melalui pengukuran riwayat keluaran $y(t)$ dan masukan $u(t)$.
 \end{itemize}
-
-Keterkontrolan merupakan syarat mutlak agar kita dapat merancang pengendali umpan balik keadaan (\textit{state feedback / pole placement}) untuk menempatkan kutub-kutub lup tertutup pada posisi sembarang di bidang kompleks. Keterobservasian merupakan syarat mutlak dalam merancang pengamat keadaan (\textit{state observer / estimator}).
 
 \vspace{6pt}
 
@@ -62,61 +60,27 @@ Diberikan sistem LTI kontinu:
     \dot{x}(t) = A x(t) + B u(t), \quad x(t) \in \mathbb{R}^n, \; u(t) \in \mathbb{R}^m
 \end{equation*}
 
-\kotakdefinisi{Definisi Keterkontrolan Keadaan Lengkap:}{
-Sistem $(A, B)$ dikatakan \textbf{terkontrol keadaan lengkap} (\textit{completely state controllable}) jika untuk sembarang keadaan awal $x(t_0) = x_0$ dan sembarang keadaan akhir $x_1$, terdapat sinyal masukan kendali tak-terkendala $u(t)$ yang dapat mentransfer keadaan sistem dari $x_0$ ke $x_1$ dalam interval waktu berhingga $t_0 \le t \le t_1$.
-}
-
-\subsection{Kriteria Matriks Keterkontrolan Kalman}
-Dari solusi domain waktu sistem:
-\begin{equation*}
-    x(t_1) = e^{A(t_1 - t_0)} x(t_0) + \int_{t_0}^{t_1} e^{A(t_1 - \tau)} B u(\tau) \, d\tau
-\end{equation*}
-Berdasarkan \textbf{Teorema Cayley-Hamilton}, matriks eksponensial $e^{At}$ dapat diekspansikan sebagai kombinasi linear hingga orde $n-1$:
-\begin{equation*}
-    e^{At} = \sum_{k=0}^{n-1} \alpha_k(t) A^k
-\end{equation*}
-Sehingga integral kendali berada pada rentang kolom dari matriks:
-\begin{equation*}
-    M_c = \begin{bmatrix} B & AB & A^2 B & \dots & A^{n-1} B \end{bmatrix} \in \mathbb{R}^{n \times nm}
-\end{equation*}
-
 \kotakdefinisi{Teorema Keterkontrolan Kalman:}{
-Sistem kontinu LTI $(A, B)$ dengan $n$ variabel keadaan bersifat \textbf{terkontrol keadaan lengkap} jika dan hanya jika matriks keterkontrolan $M_c$ memiliki rank penuh (\textit{full row rank}):
+Sistem kontinu LTI $(A, B)$ dengan $n$ variabel keadaan bersifat \textbf{terkontrol keadaan lengkap} jika dan hanya jika matriks keterkontrolan $M_c$ memiliki rank penuh:
 \begin{equation*}
     \operatorname{rank}(M_c) = \operatorname{rank} \begin{bmatrix} B & AB & A^2 B & \dots & A^{n-1} B \end{bmatrix} = n
 \end{equation*}
-Untuk sistem SISO ($m = 1$), $M_c$ berbentuk matriks bujursangkar $n \times n$, sehingga syarat ekuivalennya adalah $\det(M_c) \ne 0$.
+Untuk sistem SISO ($m = 1$), syarat ekuivalennya adalah $\det(M_c) \ne 0$.
 }
 
-\subsection{Gramian Keterkontrolan (\textit{Controllability Gramian})}
-Keterkontrolan pada selang waktu $[0, t_1]$ dapat juga diuji melalui matriks Gramian keterkontrolan:
-\begin{equation*}
-    W_c(0, t_1) = \int_0^{t_1} e^{A(t_1 - \tau)} B B^T e^{A^T(t_1 - \tau)} \, d\tau \in \mathbb{R}^{n \times n}
-\end{equation*}
-Sistem $(A, B)$ terkontrol jika dan hanya jika $W_c(0, t_1)$ bersifat \textbf{simetris dan definit positif} ($W_c > 0$) untuk setiap $t_1 > 0$.
-
-Sinyal kendali dengan energi minimum $\int_0^{t_1} u^T(t) u(t) \, dt$ yang mentransfer $x(0) = x_0$ menuju $x(t_1) = x_1$ diberikan oleh:
-\begin{equation*}
-    u(t) = B^T e^{A^T(t_1 - t)} W_c^{-1}(0, t_1) \left[ x_1 - e^{At_1} x_0 \right]
-\end{equation*}
-
-\subsection{Uji Popov-Belevitch-Hautus (PBH Test) untuk Keterkontrolan}
-Uji PBH merupakan uji berbasis nilai eigen yang sangat elegan dan praktis:
-
+\subsection{Uji Popov-Belevitch-Hautus (PBH Test) Keterkontrolan}
 \kotakdefinisi{Uji PBH Keterkontrolan:}{
-Sistem $(A, B)$ terkontrol keadaan lengkap jika dan hanya jika:
+Sistem $(A, B)$ terkontrol lengkap jika dan hanya jika:
 \begin{equation*}
     \operatorname{rank} \begin{bmatrix} sI - A & B \end{bmatrix} = n, \quad \forall s \in \mathbb{C}
 \end{equation*}
-Dalam praktiknya, kita hanya perlu menguji untuk nilai-nilai $s = \lambda_i$, di mana $\lambda_i$ adalah nilai eigen dari matriks $A$.
+Cukup diuji pada seluruh nilai eigen $s = \lambda_i$ dari matriks $A$.
 }
 
-\subsection{Uji Keterkontrolan Gilbert (Bentuk Diagonal / Jordan)}
-Jika matriks $A$ dapat didiagonalkan dengan transformasi keserupaan $x = P z$ sehingga $\Lambda = P^{-1} A P = \operatorname{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)$ dengan nilai eigen berbeda:
+\subsection{Gramian Keterkontrolan (\textit{Controllability Gramian})}
 \begin{equation*}
-    \dot{z}(t) = \Lambda z(t) + \tilde{B} u(t), \quad \tilde{B} = P^{-1} B
+    W_c(0, t_1) = \int_0^{t_1} e^{A(t_1 - \tau)} B B^T e^{A^T(t_1 - \tau)} \, d\tau > 0 \quad (\forall t_1 > 0)
 \end{equation*}
-\textbf{Syarat Keterkontrolan Gilbert}: Sistem $(A, B)$ terkontrol jika dan hanya jika \textbf{tidak ada satu pun baris pada matriks $\tilde{B}$ yang seluruh elemennya bernilai nol}.
 
 \vspace{6pt}
 
@@ -126,83 +90,68 @@ Diberikan sistem LTI kontinu:
 \begin{equation*}
     \dot{x}(t) = A x(t) + B u(t), \quad y(t) = C x(t) + D u(t)
 \end{equation*}
-dengan $x(t) \in \mathbb{R}^n$, $u(t) \in \mathbb{R}^m$, dan $y(t) \in \mathbb{R}^p$.
-
-\kotakdefinisi{Definisi Keterobservasian Keadaan Lengkap:}{
-Sistem $(A, C)$ dikatakan \textbf{terobservasi keadaan lengkap} (\textit{completely state observable}) jika untuk sembarang keadaan awal $x(t_0) = x_0$, nilai $x_0$ dapat ditentukan secara unik dari pengukuran keluaran $y(t)$ dan masukan kendali $u(t)$ pada interval waktu berhingga $t_0 \le t \le t_1$.
-}
-
-\subsection{Kriteria Matriks Keterobservasian Kalman}
-Tanpa mengurangi keumuman (karena efek masukan $u(t)$ diketahui dan dapat dikurangkan), perhatikan respon alami tanpa masukan $u(t) = 0$:
-\begin{equation*}
-    y(t) = C e^{At} x_0 = \sum_{k=0}^{n-1} \alpha_k(t) C A^k x_0
-\end{equation*}
-Agar $x_0$ dapat ditentukan secara unik dari fungsi $y(t)$, matriks keterobservasian harus memiliki rank kolom penuh.
 
 \kotakdefinisi{Teorema Keterobservasian Kalman:}{
-Sistem kontinu LTI $(A, C)$ dengan $n$ variabel keadaan bersifat \textbf{terobservasi keadaan lengkap} jika dan hanya jika matriks keterobservasian $M_o$ memiliki rank penuh (\textit{full column rank}):
+Sistem kontinu LTI $(A, C)$ bersifat \textbf{terobservasi keadaan lengkap} jika dan hanya jika matriks keterobservasian $M_o$ memiliki rank penuh:
 \begin{equation*}
     \operatorname{rank}(M_o) = \operatorname{rank} \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatrix} = n
 \end{equation*}
-Untuk sistem dengan keluaran skalar ($p = 1$), $M_o$ adalah matriks $n \times n$, sehingga syarat ekuivalennya adalah $\det(M_o) \ne 0$.
+Untuk sistem keluaran skalar ($p = 1$), syarat ekuivalennya adalah $\det(M_o) \ne 0$.
 }
 
-\subsection{Gramian Keterobservasian (\textit{Observability Gramian})}
-Matriks Gramian keterobservasian didefinisikan sebagai:
-\begin{equation*}
-    W_o(0, t_1) = \int_0^{t_1} e^{A^T \tau} C^T C e^{A \tau} \, d\tau \in \mathbb{R}^{n \times n}
-\end{equation*}
-Sistem $(A, C)$ terobservasi jika dan hanya jika $W_o(0, t_1)$ bersifat \textbf{simetris dan definit positif} ($W_o > 0$) untuk setiap $t_1 > 0$.
-
-\subsection{Uji PBH untuk Keterobservasian}
+\subsection{Uji PBH Keterobservasian}
 \kotakdefinisi{Uji PBH Keterobservasian:}{
-Sistem $(A, C)$ terobservasi keadaan lengkap jika dan hanya jika:
+Sistem $(A, C)$ terobservasi lengkap jika dan hanya jika:
 \begin{equation*}
     \operatorname{rank} \begin{bmatrix} sI - A \\ C \end{bmatrix} = n, \quad \forall s \in \mathbb{C}
 \end{equation*}
 Cukup diuji pada seluruh nilai eigen $s = \lambda_i$ dari matriks $A$.
 }
 
-\subsection{Uji Keterobservasian Gilbert}
-Jika sistem berada dalam bentuk kanonik diagonal $\dot{z} = \Lambda z, y = \tilde{C} z$ dengan $\tilde{C} = C P$ dan nilai-nilai eigen berbeda:\\
-\textbf{Syarat Keterobservasian Gilbert}: Sistem $(A, C)$ terobservasi jika dan hanya jika \textbf{tidak ada satu pun kolom pada matriks $\tilde{C}$ yang seluruh elemennya bernilai nol}.
-
 \vspace{6pt}
 
 \section{Prinsip Dualitas Kalman}
 
-Rudolf E. Kalman membuktikan relasi matematis yang sangat indah antara masalah keterkontrolan dan keterobservasian:
-
 \kotakdefinisi{Teorema Dualitas Kalman:}{
 Pasangan sistem $(A, B)$ bersifat \textbf{terkontrol lengkap} jika dan hanya jika pasangan dualnya $(A^T, B^T)$ bersifat \textbf{terobservasi lengkap}.
+\begin{equation*}
+    M_c(A, B) = M_o^T(A^T, B^T)
+\end{equation*}
 }
 
-\subsection{Tabel Ekuivalensi Sistem Primer dan Sistem Dual}
-\begin{center}
-\small
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Properti} & \textbf{Sistem Primer $\mathcal{S}$} & \textbf{Sistem Dual $\mathcal{S}^*$} \\ \hline
-\textbf{Persamaan Ruang Keadaan} & $\dot{x} = Ax + Bu, \; y = Cx$ & $\dot{z} = A^T z + C^T v, \; w = B^T z$ \\ \hline
-\textbf{Matriks Sistem} & $A$ & $A^T$ \\ \hline
-\textbf{Matriks Masukan / Keluaran} & Masukan: $B$, Keluaran: $C$ & Masukan: $C^T$, Keluaran: $B^T$ \\ \hline
-\textbf{Matriks Keterkontrolan} & $M_c = \begin{bmatrix} B & AB & \dots & A^{n-1}B \end{bmatrix}$ & $M_c^* = M_o^T$ \\ \hline
-\textbf{Matriks Keterobservasian} & $M_o = \begin{bmatrix} C \\ CA \\ \vdots \\ CA^{n-1} \end{bmatrix}$ & $M_o^* = M_c^T$ \\ \hline
-\textbf{Kondisi Rank} & $\operatorname{rank}(M_c) = n$ & $\operatorname{rank}(M_o^*) = \operatorname{rank}(M_c^T) = n$ \\ \hline
-\end{tabular}
-\end{center}
+\vspace{6pt}
 
-\textbf{Manfaat Utama Dualitas}: Setiap algoritma atau teorema untuk perancangan kontrol umpan balik keadaan (\textit{state feedback}) dapat dipetakan langsung untuk merancang pengamat keadaan (\textit{state observer}) dengan memanfaatkan transpos matriks.
+\section{Matriks Transformasi ke Bentuk Kanonik (\texorpdfstring{$P$}{P} dan \texorpdfstring{$Q$}{Q})}
+
+Misalkan polinomial karakteristik $\det(sI - A) = s^n + a_1 s^{n-1} + \dots + a_n$.
+Definisikan matriks Toeplitz $W$:
+\begin{equation*}
+    W = \begin{bmatrix}
+        a_{n-1} & a_{n-2} & \dots & a_1 & 1 \\
+        a_{n-2} & a_{n-3} & \dots & 1 & 0 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        a_1 & 1 & \dots & 0 & 0 \\
+        1 & 0 & \dots & 0 & 0
+    \end{bmatrix}
+\end{equation*}
+
+\kotakdefinisi{Matriks Transformasi Keterkontrolan:}{
+Matriks transformasi $T = M_c W$ mentransformasikan sistem $(A, B)$ menjadi bentuk kanonik terkontrol:
+\begin{equation*}
+    T^{-1} A T = \begin{bmatrix}
+        0 & 1 & 0 & \dots & 0 \\
+        0 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \dots & 1 \\
+        -a_n & -a_{n-1} & -a_{n-2} & \dots & -a_1
+    \end{bmatrix}, \quad
+    T^{-1} B = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}
+\end{equation*}
+}
 
 \vspace{6pt}
 
 \section{Keterkontrolan Keluaran (\textit{Output Controllability})}
-
-Pada beberapa aplikasi praktis, kita hanya tertarik mengontrol variabel keluaran sistem $y(t)$, bukan seluruh variabel keadaan internal $x(t)$.
-
-\kotakdefinisi{Definisi Keterkontrolan Keluaran:}{
-Sistem dikatakan \textbf{terkontrol keluaran lengkap} (\textit{completely output controllable}) jika untuk sembarang keluaran awal $y(t_0)$ dan sembarang keluaran akhir $y_1$, terdapat masukan $u(t)$ yang dapat mentransfer keluaran dari $y(t_0)$ ke $y_1$ dalam waktu berhingga $t_1 - t_0$.
-}
 
 \kotakdefinisi{Syarat Rank Keterkontrolan Keluaran:}{
 Sistem $\dot{x} = Ax + Bu, y = Cx + Du$ dengan $p$ keluaran terkontrol keluaran lengkap jika dan hanya jika:
@@ -211,56 +160,23 @@ Sistem $\dot{x} = Ax + Bu, y = Cx + Du$ dengan $p$ keluaran terkontrol keluaran 
 \end{equation*}
 }
 
-\textbf{Hubungan Antara Keterkontrolan Keadaan dan Keterkontrolan Keluaran}:
-\begin{itemize}
-    \item Jika sistem terkontrol keadaan lengkap dan matriks $C$ memiliki baris-baris yang bebas linear ($\operatorname{rank}(C) = p$), maka sistem \textbf{pasti} terkontrol keluaran lengkap.
-    \item Keterkontrolan keluaran \textbf{tidak menjamin} keterkontrolan keadaan sistem (keadaan internal bisa saja tidak terkontrol).
-\end{itemize}
-
 \vspace{6pt}
 
 \section{Keterstabilan (\textit{Stabilizability}) \& Keterdeteksian (\textit{Detectability})}
 
-Jika suatu sistem tidak terkontrol atau tidak terobservasi lengkap, kita masih dapat mengendalikan atau mengestimasinya asalkan dinamika tak terkontrol / tak terobservasi tersebut stabil dengan sendirinya:
-
-\begin{itemize}
-    \item \textbf{Keterstabilan (\textit{Stabilizability})}: Sistem $(A, B)$ dikatakan \textit{stabilizable} jika seluruh mode tak terkontrolnya bersifat stabil asimtotik ($\operatorname{Re}(\lambda) < 0$).
-    \item \textbf{Keterdeteksian (\textit{Detectability})}: Sistem $(A, C)$ dikatakan \textit{detectable} jika seluruh mode tak terobservasinya bersifat stabil asimtotik ($\operatorname{Re}(\lambda) < 0$).
-\end{itemize}
-
-\kotakdefinisi{Uji PBH untuk Keterstabilan dan Keterdeteksian:}{
 \begin{align*}
     (A, B) \text{ stabilizable} &\iff \operatorname{rank} \begin{bmatrix} sI - A & B \end{bmatrix} = n, \quad \forall s \in \mathbb{C} \text{ dengan } \operatorname{Re}(s) \ge 0 \\
     (A, C) \text{ detectable} &\iff \operatorname{rank} \begin{bmatrix} sI - A \\ C \end{bmatrix} = n, \quad \forall s \in \mathbb{C} \text{ dengan } \operatorname{Re}(s) \ge 0
 \end{align*}
-}
 
 \vspace{6pt}
 
 \section{Dekomposisi Kanonik Kalman \& Pembatalan Kutub-Nol}
 
-\subsection{Empat Sub-ruang Dekomposisi Kalman}
-Melalui transformasi keserupaan yang tepat, sembarang ruang keadaan dapat didekomposisikan menjadi 4 sub-ruang ortogonal:
-\begin{equation*}
-    x = \begin{bmatrix} x_{co} \\ x_{c\bar{o}} \\ x_{\bar{c}o} \\ x_{\bar{c}\bar{o}} \end{bmatrix}
-    \begin{array}{l}
-        \leftarrow \text{Terkontrol dan Terobservasi} \\
-        \leftarrow \text{Terkontrol dan Tak Terobservasi} \\
-        \leftarrow \text{Tak Terkontrol dan Terobservasi} \\
-        \leftarrow \text{Tak Terkontrol dan Tak Terobservasi}
-    \end{array}
-\end{equation*}
-
-\subsection{Kaitan dengan Fungsi Transfer \& Pembatalan Kutub-Nol (\textit{Pole-Zero Cancellation})}
-Fungsi transfer sistem $G(s) = C(sI - A)^{-1} B + D$ **hanya merepresentasikan sub-sistem yang terkontrol dan terobservasi ($x_{co}$)**:
-\begin{equation*}
-    G(s) = C_{co} (sI - A_{co})^{-1} B_{co} + D
-\end{equation*}
-
 \kotakdefinisi{Teorema Realisasi Minimal \& Pembatalan Kutub-Nol:}{
 \begin{enumerate}
     \item Representasi ruang keadaan $(A, B, C, D)$ berorde $n$ merupakan \textbf{realisasi minimal} dari fungsi transfer $G(s)$ jika dan hanya jika sistem bersifat \textbf{terkontrol lengkap dan terobservasi lengkap}.
-    \item Jika terjadi \textbf{pembatalan kutub-pembuat nol (\textit{pole-zero cancellation})} pada fungsi transfer $G(s)$, maka representasi ruang keadaan yang dibangun pasti \textbf{kehilangan sifat keterkontrolan, keterobservasian, atau keduanya}.
+    \item Jika terjadi \textbf{pembatalan kutub-pembuat nol (\textit{pole-zero cancellation})} pada $G(s)$, maka representasi ruang keadaan pasti kehilangan sifat keterkontrolan, keterobservasian, atau keduanya.
 \end{enumerate}
 }
 
@@ -268,125 +184,53 @@ Fungsi transfer sistem $G(s) = C(sI - A)^{-1} B + D$ **hanya merepresentasikan s
 
 \section{Keterkontrolan \& Keterobservasian Sistem Diskrit}
 
-Untuk sistem LTI waktu diskrit:
-\begin{equation*}
-    x(k+1) = G x(k) + H u(k), \quad y(k) = C x(k) + D u(k), \quad x(k) \in \mathbb{R}^n
-\end{equation*}
-
-\kotakdefinisi{Matriks Keterkontrolan dan Keterobservasian Diskrit:}{
+Untuk sistem diskrit $x(k+1) = G x(k) + H u(k), \; y(k) = C x(k) + D u(k)$:
 \begin{align*}
-    M_c &= \begin{bmatrix} H & GH & G^2 H & \dots & G^{n-1} H \end{bmatrix} \in \mathbb{R}^{n \times nm} \\
-    M_o &= \begin{bmatrix} C \\ CG \\ CG^2 \\ \vdots \\ CG^{n-1} \end{bmatrix} \in \mathbb{R}^{np \times n}
+    M_c &= \begin{bmatrix} H & GH & G^2 H & \dots & G^{n-1} H \end{bmatrix}, \quad \operatorname{rank}(M_c) = n \\
+    M_o &= \begin{bmatrix} C \\ CG \\ CG^2 \\ \vdots \\ CG^{n-1} \end{bmatrix}, \quad \operatorname{rank}(M_o) = n
 \end{align*}
-Sistem diskrit terkontrol lengkap $\iff \operatorname{rank}(M_c) = n$.\\
-Sistem diskrit terobservasi lengkap $\iff \operatorname{rank}(M_o) = n$.
-}
 
 \vspace{6pt}
 
 \section{Contoh Soal dan Pembahasan Komprehensif}
 
-\noindent\textbf{Contoh 1: Uji Keterkontrolan dan Keterobservasian Kalman}\\
-Diberikan sistem kontinu:
+\noindent\textbf{Contoh 1: Uji Keterkontrolan dan Keterobservasian Berparameter}\\
+Diberikan sistem:
 \begin{equation*}
-    A = \begin{bmatrix} 1 & 1 \\ 0 & -1 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 \end{bmatrix}
+    \dot{x} = \begin{bmatrix} 1 & 2 \\ -4 & -3 \end{bmatrix} x + \begin{bmatrix} 1 \\ 2 \end{bmatrix} u, \quad y = \begin{bmatrix} a & 1 \end{bmatrix} x
 \end{equation*}
-Periksalah keterkontrolan dan keterobservasian sistem tersebut.
 
 \textit{Penyelesaian:}
 
-1. \textbf{Uji Keterkontrolan}:
-Hitung $AB$:
+1. \textbf{Keterkontrolan}:
 \begin{equation*}
-    AB = \begin{bmatrix} 1 & 1 \\ 0 & -1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+    AB = \begin{bmatrix} 1 & 2 \\ -4 & -3 \end{bmatrix} \begin{bmatrix} 1 \\ 2 \end{bmatrix} = \begin{bmatrix} 5 \\ -10 \end{bmatrix} \implies M_c = \begin{bmatrix} 1 & 5 \\ 2 & -10 \end{bmatrix}
 \end{equation*}
-Bentuk matriks keterkontrolan $M_c$:
-\begin{equation*}
-    M_c = \begin{bmatrix} B & AB \end{bmatrix} = \begin{bmatrix} 1 & 1 \\ 0 & 0 \end{bmatrix}
-\end{equation*}
-Determinan $\det(M_c) = (1)(0) - (1)(0) = 0 \implies \operatorname{rank}(M_c) = 1 < 2$.  
-\textbf{Kesimpulan}: Sistem \textbf{TIDAK terkontrol keadaan lengkap}.
+$\det(M_c) = -10 - 10 = -20 \ne 0 \implies \operatorname{rank}(M_c) = 2$. Sistem \textbf{terkontrol keadaan lengkap}.
 
-2. \textbf{Uji Keterobservasian}:
-Hitung $CA$:
+2. \textbf{Keterobservasian}:
 \begin{equation*}
-    CA = \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 0 & -1 \end{bmatrix} = \begin{bmatrix} 1 & 1 \end{bmatrix}
+    CA = \begin{bmatrix} a & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ -4 & -3 \end{bmatrix} = \begin{bmatrix} a - 4 & 2a - 3 \end{bmatrix} \implies M_o = \begin{bmatrix} a & 1 \\ a - 4 & 2a - 3 \end{bmatrix}
 \end{equation*}
-Bentuk matriks keterobservasian $M_o$:
+Determinan:
 \begin{equation*}
-    M_o = \begin{bmatrix} C \\ CA \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}
+    \det(M_o) = a(2a - 3) - 1(a - 4) = 2a^2 - 4a + 4 = 2[(a-1)^2 + 1]
 \end{equation*}
-Determinan $\det(M_o) = (1)(1) - (0)(1) = 1 \ne 0 \implies \operatorname{rank}(M_o) = 2$.  
-\textbf{Kesimpulan}: Sistem \textbf{terobservasi keadaan lengkap}.
+Karena $(a-1)^2 + 1 > 0$ untuk setiap $a \in \mathbb{R}$, maka $\det(M_o) \ne 0$ untuk seluruh $a \in \mathbb{R}$.  
+Sistem \textbf{terobservasi keadaan lengkap untuk semua $a \in \mathbb{R}$}.
 
 \vspace{10pt}
 
 \noindent\textbf{Contoh 2: Analisis Pembatalan Pole-Zero}\\
-Diberikan fungsi transfer sistem:
-\begin{equation*}
-    G(s) = \frac{s + 1}{(s + 1)(s + 2)} = \frac{s + 1}{s^2 + 3s + 2}
-\end{equation*}
-Susun representasi bentuk kanonik terkontrol (\textit{controllable canonical form}), kemudian hitung matriks $M_c$ dan $M_o$.
-
-\textit{Penyelesaian:}
-
-Dari $G(s) = \dfrac{s + 1}{s^2 + 3s + 2}$, koefisien penyebut $a_1 = 3, a_2 = 2$ dan pembilang $b_1 = 1, b_2 = 1$.  
-Bentuk kanonik terkontrolnya adalah:
+Diberikan $G(s) = \dfrac{s + 1}{(s + 1)(s + 2)} = \dfrac{s + 1}{s^2 + 3s + 2}$. Bentuk kanonik terkontrol:
 \begin{equation*}
     A = \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 1 \end{bmatrix}
 \end{equation*}
-
-1. \textbf{Matriks Keterkontrolan}:
-\begin{equation*}
-    AB = \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ -3 \end{bmatrix} \implies M_c = \begin{bmatrix} 0 & 1 \\ 1 & -3 \end{bmatrix}
-\end{equation*}
-$\det(M_c) = -1 \ne 0 \implies \operatorname{rank}(M_c) = 2$ (\textbf{Terkontrol Lengkap}).
-
-2. \textbf{Matriks Keterobservasian}:
-\begin{equation*}
-    CA = \begin{bmatrix} 1 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix} = \begin{bmatrix} -2 & -2 \end{bmatrix} \implies M_o = \begin{bmatrix} 1 & 1 \\ -2 & -2 \end{bmatrix}
-\end{equation*}
-$\det(M_o) = (1)(-2) - (1)(-2) = 0 \implies \operatorname{rank}(M_o) = 1 < 2$ (\textbf{TIDAK Terobservasi}).
-
-\textbf{Interpretasi Fisis}: Pembatalan faktor $(s + 1)$ menyebabkan mode $\lambda = -1$ menjadi tidak terobservasi pada keluaran.
-
-\vspace{10pt}
-
-\noindent\textbf{Contoh 3: Uji PBH dengan Parameter Tak Diketahui}\\
-Diberikan matriks sistem:
-\begin{equation*}
-    A = \begin{bmatrix} -1 & 0 \\ 0 & -2 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ \alpha \end{bmatrix}, \quad C = \begin{bmatrix} \beta & 1 \end{bmatrix}
-\end{equation*}
-Tentukan nilai parameter $\alpha$ dan $\beta$ agar sistem bersifat terkontrol lengkap dan terobservasi lengkap.
-
-\textit{Penyelesaian:}
-
-Nilai eigen dari matriks diagonal $A$ adalah $\lambda_1 = -1$ dan $\lambda_2 = -2$.
-
-1. \textbf{Uji Keterkontrolan via PBH}:
+Diperoleh:
 \begin{itemize}
-    \item Untuk $s = -1$:
-    \begin{equation*}
-        \begin{bmatrix} -1 \cdot I - A & B \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & \alpha \end{bmatrix} \implies \text{rank} = 2 \quad (\forall \alpha)
-    \end{equation*}
-    \item Untuk $s = -2$:
-    \begin{equation*}
-        \begin{bmatrix} -2 \cdot I - A & B \end{bmatrix} = \begin{bmatrix} -1 & 0 & 1 \\ 0 & 0 & \alpha \end{bmatrix} \implies \text{rank} = 2 \iff \alpha \ne 0
-    \end{equation*}
+    \item $M_c = \begin{bmatrix} 0 & 1 \\ 1 & -3 \end{bmatrix} \implies \det(M_c) = -1 \ne 0 \implies \operatorname{rank}(M_c) = 2$ (\textbf{Terkontrol}).
+    \item $M_o = \begin{bmatrix} 1 & 1 \\ -2 & -2 \end{bmatrix} \implies \det(M_o) = 0 \implies \operatorname{rank}(M_o) = 1 < 2$ (\textbf{Tak Terobservasi}).
 \end{itemize}
-Jadi sistem terkontrol lengkap jika dan hanya jika $\mathbf{\alpha \ne 0}$.
-
-2. \textbf{Uji Keterobservasian via PBH}:
-\begin{itemize}
-    \item Untuk $s = -1$:
-    \begin{equation*}
-        \begin{bmatrix} -1 \cdot I - A \\ C \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 1 \\ \beta & 1 \end{bmatrix} \implies \text{rank} = 2 \iff \beta \ne 0
-    \end{equation*}
-    \item Untuk $s = -2$:
-    \begin{equation*}
-        \begin{bmatrix} -2 \cdot I - A \\ C \end{bmatrix} = \begin{bmatrix} -1 & 0 \\ 0 & 0 \\ \beta & 1 \end{bmatrix} \implies \text{rank} = 2 \quad (\forall \beta)
-    \end{equation*}
-\end{itemize}
-Jadi sistem terobservasi lengkap jika dan hanya jika $\mathbf{\beta \ne 0}$.
+Pembatalan kutub $(s + 1)$ membuat mode internal $\lambda = -1$ tak terobservasi.
 
 \end{document}

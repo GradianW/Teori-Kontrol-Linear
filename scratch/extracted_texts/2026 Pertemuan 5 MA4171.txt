@@ -1,0 +1,231 @@
+SOURCE: Lecture Slide\Before UTS\2026 Pertemuan 5 MA4171.pdf
+TOTAL PAGES: 23
+
+=== PAGE 1 ===
+Matematika-FMIPA ITB
+Dr. Dewi Handayani, S.Si., M.Si.
+ MA4171 T eoriKontrol Linear
+Aturan Mason
+Bentuk Keterkontrolan
+Pertemuan 5 MA4171
+Rabu, 9 September 2026, Pkl 07.00 WIB
+
+=== PAGE 2 ===
+Mason’s Rule
+• Mason's gain formula (MGF) is a method for finding the transfer function of a linear
+signal-flow graph (SFG).
+• The formula was derived by Samuel Jefferson Mason, whom it is also named after. MGF
+is an alternate method to finding the transfer function algebraically by labeling each
+signal, writing down the equation for how that signal depends on other signals, and then
+solving the multiple equations for the output signal in terms of the input signal.
+• MGF provides a step by step method to obtain the transfer function from a SFG. Often,
+MGF can be determined by inspection of the SFG. The method can easily handle SFGs
+with many variables and loops including loops with inner loops.
+• MGF comes up often in the context of control systems, microwave circuits and digital
+filters because these are often represented by SFGs.
+
+=== PAGE 3 ===
+Mason’s Rule
+• Fungsi transfer 𝐺(𝑠) dari suatu system, direpresentasikan melalui grafik aliran
+sinyal
+𝐺 𝑠 = 𝑅 𝑠𝐶(𝑠) = σ𝑘 𝐹𝑘Δ𝑘Δ
+dengan
+𝐹𝑘 = gain dari aliran langsung ke-𝑘 yang menghubungkan input ke output
+Δ𝑘 = 1 − σ gain loop non touching sepanjang aliran langsung
+Δ = 1 − σ gain dari setiap loop + σ gain dari kombinasi 2 loop non touching −
+σ gain dari kombinasi 3 loop non touching + ⋯
+
+
+=== PAGE 4 ===
+CONTOH
+• Perhatikan signal flow graph berikut. Tentukan fungsi transfer.
+Perhatikan aliran signal tersebut, maka diperoleh :
+• Dua buah aliran langsung (Forward)
+• Empat buah single loop
+• Tiga buah kombinasi 2 loop yang non-touching
+L1
+L2
+L3
+L4
+
+
+=== PAGE 5 ===
+Single loop yang diperoleh adalah
+Aliran langsung (forward path) adalah
+Perhatikan bahwa, semua aliran langsung
+menyentuh (node) setiap Loop, maka
+Δ1 = 1 dan Δ2 = 1
+Kombinasi 2 loop non-touching
+L1L2
+L1L3
+L1L4
+Kofaktor system
+Δ = 1 − 𝐿1 + 𝐿2 + 𝐿3 + 𝐿4
++ 𝐿1𝐿2 + 𝐿1𝐿3 + 𝐿1𝐿4
+Fungsi Transfer
+𝐺 𝑠 = 𝐹1Δ1 + 𝐹2Δ2
+Δ
+
+
+=== PAGE 6 ===
+Soal Latihan
+• Perhatikan signal flow graph berikut. Tentukan fungsi transfer.
+
+
+=== PAGE 7 ===
+Perhatikan aliran signal tersebut, maka diperoleh :
+• Satu buah aliran langsung (Forward)
+• Empat buah single loop
+• Tiga buah kombinasi 2 loop yang non-touching
+• Satu kombinasi 3 loop non-touching
+
+
+=== PAGE 8 ===
+Aliran langsung tidak menyentuk loop 𝐿4
+Fungsi Transfer
+𝐺 𝑠 = 𝐹1Δ1
+Δ
+
+
+=== PAGE 9 ===
+Soal Latihan
+• Perhatikan signal flow graph berikut. Dengan menggunakan aturan
+Mason tentukan fungsi transfer.
+
+
+=== PAGE 10 ===
+
+
+=== PAGE 11 ===
+Persamaan Ruang Keadaan untuk Fungsi
+Transfer
+
+
+=== PAGE 12 ===
+Bentuk Kanonik Keterkontrolan
+
+
+=== PAGE 13 ===
+
+
+=== PAGE 14 ===
+
+
+=== PAGE 15 ===
+
+
+=== PAGE 16 ===
+𝑠𝑋𝑛 = 𝑠𝑛𝑄(𝑠)
+
+=== PAGE 17 ===
+
+
+=== PAGE 18 ===
+Contoh
+• Tentukan persamaan ruang keadaan dalam bentuk kanonik
+keterkontrolan dari fungsi transfer berikut:
+(a) 
+𝑌 𝑠
+𝑈 𝑠 =
+𝑠+3
+𝑠2+3𝑠+2
+(b) 
+𝑌 𝑠
+𝑈 𝑠 =
+𝑠+1
+𝑠2+2𝑠+3
+(c) 
+𝑌 𝑠
+𝑈 𝑠 =
+10.4𝑠2+47𝑠+160
+𝑠3+14𝑠2+56𝑠+160
+
+=== PAGE 19 ===
+
+
+=== PAGE 20 ===
+Perhatikan, 
+𝑌 𝑠
+𝑈 𝑠 =
+𝑠+3
+𝑠2+3𝑠+2 yang akan dibentuk menjadi system control linear orde 2
+Maka buatlah perbandingan sedemikian sehingga :
+𝑌 𝑠
+𝑠 + 3 = 𝑈 𝑠𝑠2 + 3𝑠 + 2 = 𝑄 𝑠
+Perhatikan
+𝑈 𝑠
+𝑠2 + 3𝑠 + 2 = 𝑄 𝑠 ⇒ 𝑈 𝑠 = 𝑠2𝑄 𝑠 + 3𝑠𝑄 𝑠 + 2𝑄 𝑠
+𝑠2𝑄 𝑠 = −2𝑄 𝑠 − 3𝑠𝑄 𝑠 + 𝑈(𝑠)
+Definisikan : 𝑋1 𝑠 = 𝑄(𝑠) dan 𝑋2 𝑠 = 𝑠𝑄(𝑠), maka diperoleh
+𝑠𝑋1 𝑠 = 𝑠𝑄 𝑠 = 𝑋2(𝑠)
+𝑠𝑋2 𝑠 = 𝑠2𝑄 𝑠 = −2𝑄 𝑠 − 3𝑠𝑄 𝑠 + 𝑈 𝑠 = −2𝑋1 𝑠 − 3𝑋2 𝑠 + 𝑈(𝑠)
+Dengan menggunakan invers Laplace, diperoleh state :
+ሶ𝑥1 𝑡 = 𝑥2 𝑡
+ሶ𝑥2 𝑡 = −2𝑥1 𝑡 − 3𝑥2 𝑡 + 𝑢(𝑡)
+output
+state
+
+=== PAGE 21 ===
+Perhatikan
+𝑌 𝑠
+𝑠 + 3 = 𝑄 𝑠 ⇒ 𝑌 𝑠 = 𝑠𝑄 𝑠 + 3𝑄 𝑠 = 3𝑋1 𝑠 + 𝑋2(𝑠)
+Dengan menggunakan invers Laplace, diperoleh output :
+𝑦 𝑡 = 3𝑥1 𝑡 + 𝑥2(𝑡)
+Dengan demikian, ruang keadaannya adalah
+ሶ𝑥1
+ሶ𝑥2 = 0 1−2 −3 𝑥1𝑥2 + 01 𝑢
+𝑦 = 3 1 𝑥1𝑥2
+
+=== PAGE 22 ===
+Perhatikan, 
+𝑌 𝑠
+𝑈 𝑠 =
+10.4𝑠2+47𝑠+160
+𝑠3+14𝑠2+56𝑠+160 yang akan dibentuk menjadi system control linear orde 2
+Maka buatlah perbandingan sedemikian sehingga :
+𝑌 𝑠
+10.4𝑠2 + 47𝑠 + 160 = 𝑈 𝑠𝑠3 + 14𝑠2 + 56𝑠 + 160 = 𝑄 𝑠
+Perhatikan
+𝑈 𝑠
+𝑠3 + 14𝑠2 + 56𝑠 + 160 = 𝑄 𝑠 ⇒ 𝑈 𝑠 = 𝑠3𝑄 𝑠 + 14𝑠2𝑄(𝑠) + 56𝑠𝑄 𝑠 + 160𝑄 𝑠
+𝑠3𝑄 𝑠 = −160𝑄 𝑠 − 56𝑠𝑄 𝑠 − 14𝑠2𝑄 𝑠 + 𝑈(𝑠)
+Definisikan : 𝑋1 𝑠 = 𝑄 𝑠 , 𝑋2 𝑠 = 𝑠𝑄(𝑠) dan 𝑋3𝑄 𝑠 = 𝑠2𝑄(𝑠) maka diperoleh
+𝑠𝑋1 𝑠 = 𝑠𝑄 𝑠 = 𝑋2(𝑠)
+𝑠𝑋2 𝑠 = 𝑠2𝑄 𝑠 = 𝑋3(𝑠)
+𝑠𝑋3 𝑠 = 𝑠3𝑄 𝑠 = −160𝑄 𝑠 − 56𝑠𝑄 𝑠 − 14𝑠2𝑄 𝑠 + 𝑈(𝑠)
+= −160𝑋1 𝑠 − 56𝑋2 𝑠 − 14𝑋3(𝑠) + 𝑈(𝑠)
+Dengan menggunakan invers Laplace, diperoleh state :
+ሶ𝑥1 𝑡 = 𝑥2 𝑡
+ሶ𝑥2 𝑡 = 𝑥3 𝑡
+ሶ𝑥3 𝑡 = −160𝑥1 𝑡 − 56𝑥2 𝑡 − 14𝑥3(𝑡) + 𝑢(𝑡)
+output
+state
+
+=== PAGE 23 ===
+Perhatikan
+𝑌 𝑠
+10.4𝑠2 + 47𝑠 + 160 = 𝑄 𝑠 ⇒ 𝑌 𝑠 = 160𝑄 𝑠 + 47𝑠𝑄 𝑠 + 10.4𝑠2𝑄 𝑠
+𝑌 𝑠 = 160𝑋1 𝑠 + 47𝑋2 𝑠 + 10.4𝑋3(𝑠)
+Dengan menggunakan invers Laplace, diperoleh output :
+𝑦 𝑡 = 160𝑥1 𝑡 + 47𝑥2 𝑡 + 10.4𝑥3(𝑡)
+Dengan demikian, ruang keadaannya adalah
+ሶ𝑥1
+ሶ𝑥2
+ሶ𝑥3
+=
+0 1 0
+0 0 1
+−160 −56 −14
+𝑥1
+𝑥2
+𝑥3
++
+0
+0
+1
+𝑢
+𝑦 = 160 47 10.4
+𝑥1
+𝑥2
+𝑥3
+

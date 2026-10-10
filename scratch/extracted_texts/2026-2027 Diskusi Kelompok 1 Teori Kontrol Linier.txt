@@ -1,0 +1,23 @@
+SOURCE: Past Problem\2026-2027 Diskusi Kelompok 1 Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Diskusi Kelompok 1 MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Rabu, 16 September 2026
+1. Perhatikan signal flow graph berikut ini. Dengan menggunakan aturan Mason, tentukan fungsi transfer dari
+sistem tersebut.
+R(s) V1(s) V3(s) V4(s) V5(s) C(s)
+1 G1(s) G2(s) 1 G3(s)
+1
+1
+−H1(s)
+−H2(s) −H3(s)
+2. Diberikan sistem dalam bentuky ′′′(t) + 6y′′(t) +y ′(t) + 3y(t) =−5u ′′(t) + 4u′(t)−12u(t).
+(a) Carilah fungsi transfer sistem tersebut.
+(b) Dari jawaban (a), bentuklah sistem menjadi kanonik keterobservasian dengany(t) =x 3(t).
+3. Diberikan sistem dengan persamaan:y ′′′ + 6y′′ + 11y′ + 6y= 6u ′ +u.
+(a) Tentukan fungsi transfer dari sistem tersebut.
+(b) Tentukan persamaan ruang keadaan dalam bentuk kanonik diagonal.
+Typed by: Gabriel Evan (MA’23) 1©Divisi Akademik HIMATIKA ITB 2026
+

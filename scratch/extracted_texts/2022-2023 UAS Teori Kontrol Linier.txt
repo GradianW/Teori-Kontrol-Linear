@@ -1,0 +1,96 @@
+SOURCE: Past Problem\2022-2023 UAS Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Ujian 2 MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Selasa, 6 Desember 2022
+Durasi: 100 menit
+Instruksi : Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian
+bersifat buka Cheatsheet 1 lembar A4. Cheatsheet berisi formula umum bukan catatan penyelesaian soal. Soal ujian
+terdiri atas 4 soal essay panjang. Perhatikan batas waktu pengerjaan. Selamat dan sukses untuk ujiannya.
+1. Diberikan sistem regulator yang digambarkan melalui diagram blok berikut:
++− Observercontroller 4s(s + 2)
+Plant
+r = 0 −y u y
+(a) Melalui invers transformasi Laplace, tunjukkan bahwa persamaan ruang keadaannya adalah:
+ 
+˙x1
+˙x2
+!
+=
+"
+0 1
+0 −2
+#  
+x1
+x2
+!
++
+ 
+0
+4
+!
+u, y=
+
+1 0
+  x1
+x2
+!
+(b) Buktikan penempatan pole mungkin untuk dilakukan. Kemudian tentukan suatu state feedback control
+dengan pole yang diinginkan adalahµ1 = −2 + 2
+√
+3i dan µ2 = −2 − 2
+√
+3i. (metode transformasi)
+(c) Rancanglah suatu observer berorde dua jika diinginkan pole observer padas1 = s2 = −8. Kemudian
+jelaskan pengaruh observer tersebut pada sistem loop tertutup. (metode Ackermann)
+(d) Rancanglah suatu observer berorde satu jika diinginkan pole observer padas = −8. (metode Ackermann)
+2. Diberikan sistem yang terkontrol secara lengkap˙xxx = Axxx + Bu, y= Cxxx dengan xxx ∈ R3, A∈ R3×3, B∈ R3. Jika
+M =
+h
+B AB A 2Bi , W =
+
+
+a2 a1 1
+a1 1 0
+1 0 0
+
+ dan |sI − A| = s3 + a1s2 + a2s + a3.
+(a) Buktikan bahwaM −1AM =
+
+
+0 0 −a3
+1 0 −a2
+0 1 −a1
+
+ .
+(b) Buktikan bahwaT −1AT =
+
+
+0 1 0
+0 0 1
+−a3 −a2 −a1
+
+ dan T −1B =
+
+
+0
+0
+1
+
+ untuk suatu matriks transformasiT .
+3. Suatu benda baru saja dikeluarkan dari tempat pendingin sehingga diinginkan suhu benda tersebut meningkat
+dengan energi sekecil mungkin. Setelah suhu benda sama seperti suhu ruang sekitar, suplai energi panas
+diberikan. Jika T (t) menunjukkan suhu benda setiap saat,TL = 20◦C adalah suhu ruangan sekitar danu(t) laju
+suplai panas untuk benda, dinamika perubahan suhu dinyatakan sebagai˙T (t) =−0.5(T (t) − TL) + 2u.
+(a) Tunjukkan bahwa suplai panas optimum untuk membuat benda bersuhu 35◦C adalah u∗ = 52 e0.5tsinh(0.5T )
+yang meminimumkan indeks performansi:J(0) = 12 R T0 u2(t) dt.
+(b) Tentukan suhu benda setiap saat,T (t), yang mengarah ke trayektori optimal.
+4. Diberikan sistem ˙x = 2x + 2u, x(t0) =x0 dengan indeks performansi:
+J(t0) = 12 s(T )x2(T ) +12 Z Tt0 (3x2 + u2) dt
+(a) Tunjukkan bahwa suatu kontrol optimal yang dapat membawa sistem ke suatux(T ) dan meminimumkan
+J dinyatakan sebagaiu = −2s(t)x(t) dengan s(t) = 32 + 2[(2s(T ) + 1)/(2s(T ) − 3)]e8(T −t) − 1 .
+(b) Jelaskan kondisi steady state dari sistem ini.
+Typed by: Wilson Gregory MA20 1 ©Divisi Akademik HIMATIKA ITB 2022
+

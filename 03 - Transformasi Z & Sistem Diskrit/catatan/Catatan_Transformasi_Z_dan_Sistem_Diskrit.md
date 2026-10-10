@@ -1,6 +1,6 @@
 # Catatan Kuliah MA4171 Teori Kontrol Linear
 ## Topik 03: Transformasi Z dan Sistem Diskrit (Minggu 5)
-**Referensi Utama**: Katsuhiko Ogata, *Modern Control Engineering* & *Discrete-Time Control Systems*
+**Referensi Utama**: Katsuhiko Ogata, *Modern Control Engineering* & *Discrete-Time Control Systems*; Slide Kuliah MA4171 ITB
 
 ---
 
@@ -11,15 +11,16 @@
 4. [Invers Transformasi Z](#4-invers-transformasi-z)
 5. [Fungsi Pulsa Transfer (Pulse Transfer Function)](#5-fungsi-pulsa-transfer-pulse-transfer-function)
 6. [Representasi Ruang Keadaan Sistem Diskrit](#6-representasi-ruang-keadaan-sistem-diskrit)
-7. [Solusi Ruang Keadaan Diskrit & Matriks Transisi Keadaan](#7-solusi-ruang-keadaan-diskrit--matriks-transisi-keadaan)
-8. [Kestabilan Sistem Waktu Diskrit](#8-kestabilan-sistem-waktu-diskrit)
-9. [Contoh Soal & Pembahasan Komprehensif](#9-contoh-soal--pembahasan-komprehensif)
+7. [Bentuk-Bentuk Kanonik Sistem Diskrit](#7-bentuk-bentuk-kanonik-sistem-diskrit)
+8. [Solusi Ruang Keadaan Diskrit & Matriks Transisi Keadaan](#8-solusi-ruang-keadaan-diskrit--matriks-transisi-keadaan)
+9. [Kestabilan Sistem Waktu Diskrit](#9-kestabilan-sistem-waktu-diskrit)
+10. [Contoh Soal & Pembahasan Komprehensif](#10-contoh-soal--pembahasan-komprehensif)
 
 ---
 
 ## 1. Pendahuluan Sistem Waktu Diskrit & Pencuplikan
 
-Dalam implementasi sistem kendali modern, algoritma kontrol umumnya dieksekusi menggunakan komputer digital, mikrokontroler, atau DSP (*Digital Signal Processor*).
+Dalam implementasi sistem kendali modern, algoritma kontrol dieksekusi secara digital menggunakan komputer, mikrokontroler, atau DSP (*Digital Signal Processor*).
 
 ### Klasifikasi Sinyal
 - **Sinyal Kontinu (Analog)**: Terdefinisi untuk setiap waktu riil $t \in \mathbb{R}$, dinotasikan $x(t)$.
@@ -83,6 +84,7 @@ Himpunan nilai $z \in \mathbb{C}$ yang membuat deret $\sum_{k=0}^\infty |x(k) z^
      $$\begin{aligned}
      \mathcal{Z}\{x(k+1)\} &= z X(z) - z x(0) \\
      \mathcal{Z}\{x(k+2)\} &= z^2 X(z) - z^2 x(0) - z x(1) \\
+     \mathcal{Z}\{x(k+3)\} &= z^3 X(z) - z^3 x(0) - z^2 x(1) - z x(2) \\
      \mathcal{Z}\{x(k+m)\} &= z^m X(z) - \sum_{j=0}^{m-1} z^{m-j} x(j)
      \end{aligned}$$
 
@@ -153,7 +155,7 @@ Di mana:
 - $H \in \mathbb{R}^{n \times m}$: Matriks masukan diskrit ($B_d$ atau $\Gamma$)
 
 ### Diskritisasi dari Sistem Kontinu $(\dot{x} = Ax + Bu)$
-$$G = e^{AT}, \quad H = \left( \int_{0}^T e^{A\tau} \, d\tau \right) B = A^{-1}(e^{AT} - I) B$$
+$$G = e^{AT}, \quad H = \left( \int_{0}^T e^{A\tau} \, d\tau \right) B = A^{-1}(e^{AT} - I) B \quad (\text{jika } A \text{ nonsingular})$$
 
 ### Konversi Ruang Keadaan Diskrit ke Fungsi Transfer
 $$G(z) = \frac{Y(z)}{U(z)} = C (zI - G)^{-1} H + D = \frac{C \operatorname{adj}(zI - G) H}{\det(zI - G)} + D$$
@@ -161,7 +163,36 @@ Persamaan karakteristik sistem: $\det(zI - G) = 0$.
 
 ---
 
-## 7. Solusi Ruang Keadaan Diskrit & Matriks Transisi Keadaan
+## 7. Bentuk-Bentuk Kanonik Sistem Diskrit
+
+Diberikan fungsi transfer diskrit SISO:
+$$G(z) = \frac{Y(z)}{U(z)} = \frac{b_1 z^{n-1} + b_2 z^{n-2} + \dots + b_n}{z^n + a_1 z^{n-1} + \dots + a_n}$$
+
+### 1. Bentuk Kanonik Keterkontrolan Diskrit
+$$G = \begin{bmatrix}
+0 & 1 & 0 & \dots & 0 \\
+0 & 0 & 1 & \dots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \dots & 1 \\
+-a_n & -a_{n-1} & -a_{n-2} & \dots & -a_1
+\end{bmatrix}, \quad
+H = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}, \quad
+C = \begin{bmatrix} b_n & b_{n-1} & \dots & b_1 \end{bmatrix}$$
+
+### 2. Bentuk Kanonik Keterobservasian Diskrit
+$$G = \begin{bmatrix}
+-a_1 & 1 & 0 & \dots & 0 \\
+-a_2 & 0 & 1 & \dots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+-a_{n-1} & 0 & 0 & \dots & 1 \\
+-a_n & 0 & 0 & \dots & 0
+\end{bmatrix}, \quad
+H = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix}, \quad
+C = \begin{bmatrix} 1 & 0 & \dots & 0 \end{bmatrix}$$
+
+---
+
+## 8. Solusi Ruang Keadaan Diskrit & Matriks Transisi Keadaan
 
 ### Solusi Waktu Rekursif
 $$x(k) = G^k x(0) + \sum_{j=0}^{k-1} G^{k-1-j} H u(j)$$
@@ -172,7 +203,7 @@ $$\Psi(k) = G^k = \mathcal{Z}^{-1}\left\{ (zI - G)^{-1} z \right\}$$
 
 ---
 
-## 8. Kestabilan Sistem Waktu Diskrit
+## 9. Kestabilan Sistem Waktu Diskrit
 
 ### Pemetaan Bidang $s$ ke Bidang $z$ ($z = e^{sT}$)
 - **Setengah Bidang Kiri Kontinu ($\operatorname{Re}(s) < 0$)** $\iff$ **Bagian Dalam Lingkaran Satuan ($|z| < 1$)** $\to$ **Stabil Asimtotik**
@@ -190,17 +221,25 @@ $$\Psi(k) = G^k = \mathcal{Z}^{-1}\left\{ (zI - G)^{-1} z \right\}$$
 
 ---
 
-## 9. Contoh Soal & Pembahasan Komprehensif
+## 10. Contoh Soal & Pembahasan Komprehensif
 
-### Contoh 1: Invers Transformasi Z Pecahan Parsial
-Diberikan:
-$$X(z) = \frac{z(2z + 1)}{(z - 1)(z - 0.5)}$$
+### Contoh 1: Solusi Persamaan Beda dengan Syarat Awal
+Diberikan persamaan beda:
+$$y(k+2) - 7y(k+1) + 12y(k) = 1.5 u(k)$$
+Tentukan solusi $y(k)$ jika $u(k) = 0$ dengan $y(0) = 0$ dan $y(1) = 1$.
 
 **Penyelesaian**:
-$$\frac{X(z)}{z} = \frac{2z + 1}{(z - 1)(z - 0.5)} = \frac{6}{z - 1} - \frac{4}{z - 0.5}$$
-$$X(z) = 6 \frac{z}{z - 1} - 4 \frac{z}{z - 0.5}$$
+Terapkan Transformasi Z dengan sifat pergeseran maju:
+$$\mathcal{Z}\{y(k+2)\} = z^2 Y(z) - z^2 y(0) - z y(1) = z^2 Y(z) - z$$
+$$\mathcal{Z}\{y(k+1)\} = z Y(z) - z y(0) = z Y(z)$$
+Substitusi ke persamaan beda:
+$$[z^2 Y(z) - z] - 7 [z Y(z)] + 12 Y(z) = 0$$
+$$(z^2 - 7z + 12) Y(z) = z \implies Y(z) = \frac{z}{(z-3)(z-4)}$$
+Ekspansi pecahan parsial $\frac{Y(z)}{z}$:
+$$\frac{Y(z)}{z} = \frac{1}{(z-3)(z-4)} = \frac{-1}{z-3} + \frac{1}{z-4}$$
+$$Y(z) = -\frac{z}{z-3} + \frac{z}{z-4}$$
 Invers Transformasi Z:
-$$x(k) = 6(1)^k - 4(0.5)^k = 6 - 4(0.5)^k, \quad k \ge 0$$
+$$y(k) = -(3)^k + (4)^k = 4^k - 3^k, \quad k = 0, 1, 2, \dots$$
 
 ---
 
@@ -214,23 +253,3 @@ $$\mathcal{Z}\left\{ 1 - (e^{-2T})^k \right\} = \frac{z(1 - e^{-2T})}{(z - 1)(z 
 $$G(z) = \frac{z - 1}{z} \cdot \frac{z(1 - e^{-2T})}{(z - 1)(z - e^{-2T})} = \frac{1 - e^{-2T}}{z - e^{-2T}}$$
 Untuk $T = 0.1 \implies e^{-0.2} \approx 0.8187$:
 $$G(z) = \frac{0.1813}{z - 0.8187}$$
-
----
-
-### Contoh 3: Ruang Keadaan Diskrit & Matriks Transisi $G^k$
-Diberikan:
-$$x(k+1) = \begin{bmatrix} 0 & 1 \\ -0.16 & 1 \end{bmatrix} x(k) + \begin{bmatrix} 0 \\ 1 \end{bmatrix} u(k), \quad y(k) = \begin{bmatrix} 1 & 0 \end{bmatrix} x(k)$$
-
-**Penyelesaian**:
-1. Hitung $(zI - G)^{-1}$:
-   $$\det(zI - G) = z(z - 1) + 0.16 = (z - 0.8)(z - 0.2)$$
-   $$(zI - G)^{-1} = \frac{1}{(z - 0.8)(z - 0.2)} \begin{bmatrix} z - 1 & 1 \\ -0.16 & z \end{bmatrix}$$
-
-2. Fungsi transfer $G(z) = C(zI - G)^{-1} H$:
-   $$G(z) = \begin{bmatrix} 1 & 0 \end{bmatrix} \left( \frac{1}{(z - 0.8)(z - 0.2)} \begin{bmatrix} z - 1 & 1 \\ -0.16 & z \end{bmatrix} \right) \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \frac{1}{z^2 - z + 0.16}$$
-
-3. Matriks transisi $G^k = \mathcal{Z}^{-1}\{(zI - G)^{-1} z\}$:
-   $$G^k = \begin{bmatrix}
-   -\frac{1}{3}(0.8)^k - \frac{4}{3}(0.2)^k & \frac{5}{3}(0.8)^k - \frac{5}{3}(0.2)^k \\[6pt]
-   -\frac{4}{15}(0.8)^k + \frac{4}{15}(0.2)^k & \frac{4}{3}(0.8)^k - \frac{1}{3}(0.2)^k
-   \end{bmatrix}, \quad k \ge 0$$

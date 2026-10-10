@@ -1,0 +1,89 @@
+SOURCE: Past Problem\2026-2027 Diskusi Kelompok 2 Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Diskusi Kelompok 2 MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Rabu, 30 September 2026
+1. Diberikan sistem dengan fungsi transferT(s) = 1s2 + 7s+ 12
+"
+3s+ 13
+3s+ 11
+#
+. Gambarkan bentuk signal flow graph
+sistem tersebut dimana input dibawa oleh variabelx 1. Kemudian dari aliran tersebut, tentukan persamaan ruang
+keadaan dari sistem dalam bentuk kanonik keterkontrolan.
+2. Misal, sistem kontrol linear diberikan sebagai
+ 
+x1
+x2
+!
+=
+"
+0 1
+−12−7
+#  
+x1
+x2
+!
++
+ 
+1
+1
+!
+udenganu(t) adalah fungsi
+satuan yang memenuhiu(t) = 1 untuk setiap waktutdenganx 1(0) = 10 danx 2(0) = 0.
+(a) Dengan menggunakan transformasi Laplace, tentukan matriks fundamentale At untuk sistem tersebut.
+(b) Dari matriks fundamental yang diperoleh di soal (a), tentukan solusi time response
+ 
+x1(t)
+x2(t)
+!
+3. Diberikan sistem kontrol linear ˙x=Ax+BudenganA=
+
+
+1a0
+0 2b
+0 0 3
+
+ danB=
+
+
+1
+1
+1
+
+
+(a) Bentuk matriks keterkontrolanM=
+h
+B AB A 2Bi.
+(b) Tentukan syarat koefisienadanbagar sistem terkontrol dengan sempurna.
+(c) Pilihkan satu pasanganadanbyang menyebabkan sistem tidak terkontrol. Jelaskan jawaban Anda.
+4. Perhatikan sistem ˙x=Ax+Budenganx∈R 3 danu∈Ryang terkontrol secara lengkap. DefinisikanM=
+h
+B AB A 2Bi danW=
+
+
+a2 a1 1
+a1 1 0
+1 0 0
+
+ dengana i adalah koefisien dari persamaan karakteristik|sI−A|=
+s3 +a 1s2 +a 2s+a 3. JikaT=M W, tunjukkan bahwa
+T−1A T=
+
+
+0 1 0
+0 0 1
+−a3 −a2 −a1
+
+ ,T −1B=
+
+
+0
+0
+1
+
+
+Typed by: Gabriel Evan (MA’23) 1©Divisi Akademik HIMATIKA ITB 2026
+

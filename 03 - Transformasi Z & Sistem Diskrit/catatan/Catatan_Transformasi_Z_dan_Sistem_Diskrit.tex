@@ -31,7 +31,7 @@
     {\LARGE \textbf{CATATAN KULIAH MA4171 TEORI KONTROL LINEAR}}\\[6pt]
     {\Large \textbf{Topik 03: Transformasi Z dan Sistem Diskrit}}\\[4pt]
     \textit{Cakupan: Minggu ke-5}\\[2pt]
-    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} \& \textit{Discrete-Time Control Systems}
+    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} \& \textit{Discrete-Time Control Systems}; Slide Kuliah MA4171 ITB
 \end{center}
 \vspace{-4pt}
 \hrule
@@ -50,7 +50,7 @@ Dalam implementasi sistem kendali modern, pengontrol umumnya direalisasikan meng
 \begin{itemize}
     \item \textbf{Sinyal Kontinu (Analog)}: Didefinisikan untuk setiap nilai waktu $t \in \mathbb{R}$ kontinu, dinotasikan $x(t)$.
     \item \textbf{Sinyal Diskrit (Discrete-Time)}: Didefinisikan hanya pada titik-titik waktu diskrit $t = kT$ dengan $k \in \mathbb{Z}$, dinotasikan $x(k)$ atau $x(kT)$, di mana $T$ adalah periode sampling.
-    \item \textbf{Sinyal Digital}: Sinyal waktu diskrit yang amplitudonya telah dikuantisasi ke dalam level-level diskrit tertentu (representasi biner terbatas).
+    \item \textbf{Sinyal Digital}: Sinyal waktu diskrit yang amplitudonya telah dikuantisasi ke dalam level-level diskrit tertentu.
 \end{itemize}
 
 \subsection{Proses Pencuplikan Ideal \& Teorema Sampling Shannon}
@@ -58,18 +58,17 @@ Proses pencuplikan ideal memodelkan sinyal tercuplik $x^*(t)$ sebagai modulasi k
 \begin{equation*}
     x^*(t) = \sum_{k=0}^{\infty} x(kT) \delta(t - kT)
 \end{equation*}
-Di mana $\delta(t)$ adalah impuls Dirac dan $T$ adalah periode sampling ($f_s = \frac{1}{T}$, $\omega_s = \frac{2\pi}{T}$).
 
 \kotakdefinisi{Teorema Sampling Nyquist-Shannon:}{
 Agar sinyal kontinu $x(t)$ dengan batas frekuensi tertinggi $\omega_{max}$ dapat direkonstruksi secara sempurna dari sinyal sampel $x(kT)$, frekuensi pencuplikan $\omega_s$ harus memenuhi:
 \begin{equation*}
     \omega_s \ge 2 \omega_{max} \quad \left( \text{atau } f_s \ge 2 f_{max} \right)
 \end{equation*}
-Jika syarat ini dilanggar, akan timbul fenomena tumpang tindih spektrum frekuensi yang disebut \textbf{aliasing}.
+Jika syarat ini dilanggar, timbul fenomena percampuran spektrum frekuensi yang disebut \textbf{aliasing}.
 }
 
 \subsection{Penahan Orde Nol (\textit{Zero-Order Hold} / ZOH)}
-Untuk menghubungkan sinyal kontrol diskrit $u(kT)$ ke plant fisik kontinu, digunakan penahan orde nol (ZOH) yang mempertahankan nilai sinyal konstan selama interval satu periode sampling $T$:
+Untuk memegang nilai sinyal diskrit $u(kT)$ konstan selama satu interval periode sampling $T$:
 \begin{equation*}
     u(t) = u(kT) \quad \text{untuk } kT \le t < (k+1)T
 \end{equation*}
@@ -82,28 +81,15 @@ Fungsi transfer dari ZOH dalam domain Laplace adalah:
 
 \section{Definisi Transformasi Z}
 
-Transformasi Z merupakan ekuivalen domain diskrit dari Transformasi Laplace pada sistem kontinu.
-
 \kotakdefinisi{Definisi Transformasi Z Satu-Sisi (Unilateral):}{
 Diberikan deret waktu diskrit $x(k) = x(kT)$ untuk $k \ge 0$, Transformasi Z didefinisikan sebagai:
 \begin{equation*}
     \mathcal{Z}\{x(k)\} = X(z) = \sum_{k=0}^{\infty} x(k) z^{-k}
 \end{equation*}
-Di mana $z$ adalah variabel kompleks yang berelasi dengan variabel Laplace $s$ melalui:
-\begin{equation*}
-    z = e^{sT}
-\end{equation*}
+Di mana $z$ adalah variabel kompleks yang berelasi dengan variabel Laplace $s$ melalui $z = e^{sT}$.
 }
 
-\subsection{Daerah Konvergensi (\textit{Region of Convergence} / ROC)}
-Transformasi Z hanya berlaku pada daerah di bidang kompleks $z$ di mana deret tak hingga $\sum_{k=0}^{\infty} x(k) z^{-k}$ konvergen mutlak:
-\begin{equation*}
-    \sum_{k=0}^{\infty} |x(k) z^{-k}| < \infty
-\end{equation*}
-Untuk sinyal kausal ($x(k) = 0$ untuk $k < 0$), ROC umumnya berbentuk bagian luar suatu lingkaran pada bidang kompleks: $|z| > R$.
-
 \subsection{Tabel Pasangan Transformasi Z Sinyal Dasar}
-Berikut adalah pasangan Transformasi Z untuk sinyal-sinyal dasar yang sering digunakan:
 \begin{center}
 \small
 \begin{tabular}{|l|c|c|c|}
@@ -125,52 +111,25 @@ Berikut adalah pasangan Transformasi Z untuk sinyal-sinyal dasar yang sering dig
 \section{Sifat-Sifat dan Teorema Transformasi Z}
 
 \begin{enumerate}
-    \item \textbf{Linearitas}:\\
-    Untuk setiap skalar $\alpha, \beta \in \mathbb{C}$:
-    \begin{equation*}
-        \mathcal{Z}\{\alpha x_1(k) + \beta x_2(k)\} = \alpha X_1(z) + \beta X_2(z)
-    \end{equation*}
-
-    \item \textbf{Teorema Pergeseran Waktu (Time Shifting)}:
+    \item \textbf{Linearitas}:
+    $\mathcal{Z}\{\alpha x_1(k) + \beta x_2(k)\} = \alpha X_1(z) + \beta X_2(z)$
+    \item \textbf{Pergeseran Waktu (Time Shifting)}:
     \begin{itemize}
-        \item \textbf{Pergeseran Mundur (Delay / Backward Shift)}:\\
-        Jika $x(k) = 0$ untuk $k < 0$, maka untuk bilangan bulat $m \ge 0$:
-        \begin{equation*}
-            \mathcal{Z}\{x(k-m)\} = z^{-m} X(z)
-        \end{equation*}
-        \item \textbf{Pergeseran Maju (Advance / Forward Shift)}:
+        \item \textbf{Delay}: $\mathcal{Z}\{x(k-m)\} = z^{-m} X(z)$
+        \item \textbf{Advance}:
         \begin{align*}
             \mathcal{Z}\{x(k+1)\} &= z X(z) - z x(0) \\
             \mathcal{Z}\{x(k+2)\} &= z^2 X(z) - z^2 x(0) - z x(1) \\
-            \mathcal{Z}\{x(k+m)\} &= z^m X(z) - \sum_{j=0}^{m-1} z^{m-j} x(j)
+            \mathcal{Z}\{x(k+3)\} &= z^3 X(z) - z^3 x(0) - z^2 x(1) - z x(2)
         \end{align*}
     \end{itemize}
-
     \item \textbf{Penskalaan Kompleks}:
-    \begin{equation*}
-        \mathcal{Z}\{a^{-k} x(k)\} = X(az), \quad \mathcal{Z}\{e^{-akT} x(k)\} = X(z e^{aT})
-    \end{equation*}
-
+    $\mathcal{Z}\{a^{-k} x(k)\} = X(az), \quad \mathcal{Z}\{e^{-akT} x(k)\} = X(z e^{aT})$
     \item \textbf{Diferensiasi Kompleks}:
+    $\mathcal{Z}\{k \, x(k)\} = -z \frac{d}{dz} X(z)$
+    \item \textbf{Teorema Nilai Awal \& Nilai Akhir}:
     \begin{equation*}
-        \mathcal{Z}\{k \, x(k)\} = -z \frac{d}{dz} X(z)
-    \end{equation*}
-
-    \item \textbf{Teorema Nilai Awal (\textit{Initial Value Theorem})}:
-    \begin{equation*}
-        x(0) = \lim_{z \to \infty} X(z)
-    \end{equation*}
-
-    \item \textbf{Teorema Nilai Akhir (\textit{Final Value Theorem})}:\\
-    Jika semua kutub dari $(1 - z^{-1})X(z)$ atau $(z-1)X(z)$ berada di dalam lingkaran satuan $|z| < 1$, maka:
-    \begin{equation*}
-        \lim_{k \to \infty} x(k) = \lim_{z \to 1} (1 - z^{-1}) X(z) = \lim_{z \to 1} (z-1) X(z)
-    \end{equation*}
-
-    \item \textbf{Konvolusi Kompleks Diskrit}:\\
-    Jika $y(k) = x_1(k) * x_2(k) = \sum_{j=0}^{k} x_1(j) x_2(k-j)$, maka:
-    \begin{equation*}
-        Y(z) = X_1(z) \cdot X_2(z)
+        x(0) = \lim_{z \to \infty} X(z), \quad \lim_{k \to \infty} x(k) = \lim_{z \to 1} (1 - z^{-1}) X(z) = \lim_{z \to 1} (z-1) X(z)
     \end{equation*}
 \end{enumerate}
 
@@ -178,76 +137,39 @@ Berikut adalah pasangan Transformasi Z untuk sinyal-sinyal dasar yang sering dig
 
 \section{Invers Transformasi Z}
 
-Untuk mengembalikan fungsi domain $z$, $X(z)$, ke domain waktu diskrit $x(k) = \mathcal{Z}^{-1}\{X(z)\}$, terdapat 3 metode utama:
-
-\subsection{1. Metode Ekspansi Pecahan Parsial (\textit{Partial Fraction Expansion})}
-Bentuk yang paling efisien adalah melakukan ekspansi pada fungsi $\dfrac{X(z)}{z}$:
-\begin{equation*}
-    \frac{X(z)}{z} = \frac{c_1}{z - p_1} + \frac{c_2}{z - p_2} + \dots + \frac{c_n}{z - p_n}
-\end{equation*}
-Sehingga:
-\begin{equation*}
-    X(z) = \frac{c_1 z}{z - p_1} + \frac{c_2 z}{z - p_2} + \dots + \frac{c_n z}{z - p_n}
-\end{equation*}
-Dengan menerapkan inversi langsung dari tabel dasar:
-\begin{equation*}
-    x(k) = c_1 (p_1)^k + c_2 (p_2)^k + \dots + c_n (p_n)^k, \quad k \ge 0
-\end{equation*}
-
-\subsection{2. Metode Pembagian Langsung (\textit{Power Series / Direct Division})}
-Fungsi $X(z) = \frac{N(z)}{D(z)}$ dibagi secara langsung dalam pangkat turun $z^{-1}$:
-\begin{equation*}
-    X(z) = x(0) + x(1) z^{-1} + x(2) z^{-2} + x(3) z^{-3} + \dots
-\end{equation*}
-Koefisien dari suku $z^{-k}$ secara langsung merupakan nilai sampel $x(k)$.
-
-\subsection{3. Metode Integral Inversi (Teorema Residu)}
-\begin{equation*}
-    x(k) = \frac{1}{2\pi j} \oint_{C} X(z) z^{k-1} \, dz = \sum_{i} \operatorname{Res}\left[ X(z) z^{k-1}, z = p_i \right]
-\end{equation*}
-Di mana untuk kutub sederhana $p_i$:
-\begin{equation*}
-    \operatorname{Res}\left[ X(z) z^{k-1}, z = p_i \right] = \lim_{z \to p_i} (z - p_i) X(z) z^{k-1}
-\end{equation*}
+Untuk memperoleh $x(k) = \mathcal{Z}^{-1}\{X(z)\}$:
+\begin{enumerate}
+    \item \textbf{Metode Ekspansi Pecahan Parsial}:
+    Ekspansikan $\dfrac{X(z)}{z} = \sum_{i=1}^n \frac{c_i}{z - p_i} \implies X(z) = \sum_{i=1}^n c_i \frac{z}{z - p_i} \implies x(k) = \sum_{i=1}^n c_i (p_i)^k$.
+    \item \textbf{Metode Pembagian Langsung (\textit{Power Series})}:
+    Membagi pembilang dengan penyebut dalam pangkat menurun $z^{-1}$.
+    \item \textbf{Metode Integral Inversi (Residu)}:
+    $x(k) = \sum_i \lim_{z \to p_i} (z - p_i) X(z) z^{k-1}$.
+\end{enumerate}
 
 \vspace{6pt}
 
 \section{Fungsi Pulsa Transfer (\textit{Pulse Transfer Function})}
 
 \subsection{Persamaan Beda Linear Time-Invariant}
-Dinamika sistem diskrit LTI orde-$n$ dimodelkan oleh persamaan beda linear:
+Diberikan persamaan beda:
 \begin{equation*}
     y(k) + a_1 y(k-1) + \dots + a_n y(k-n) = b_0 u(k) + b_1 u(k-1) + \dots + b_m u(k-m)
 \end{equation*}
-Dengan menerapkan Transformasi Z pada kedua sisi dan mengasumsikan kondisi awal nol:
+Fungsi transfer pulsa adalah:
 \begin{equation*}
-    (1 + a_1 z^{-1} + \dots + a_n z^{-n}) Y(z) = (b_0 + b_1 z^{-1} + \dots + b_m z^{-m}) U(z)
+    G(z) = \frac{Y(z)}{U(z)} = \frac{b_0 z^n + b_1 z^{n-1} + \dots + b_m z^{n-m}}{z^n + a_1 z^{n-1} + \dots + a_n}
 \end{equation*}
-
-\kotakdefinisi{Fungsi Pulsa Transfer $G(z)$:}{
-\begin{equation*}
-    G(z) = \frac{Y(z)}{U(z)} = \frac{b_0 + b_1 z^{-1} + \dots + b_m z^{-m}}{1 + a_1 z^{-1} + \dots + a_n z^{-n}} = \frac{b_0 z^n + b_1 z^{n-1} + \dots + b_m z^{n-m}}{z^n + a_1 z^{n-1} + \dots + a_n}
-\end{equation*}
-}
 
 \subsection{Diskritisasi Plant Kontinu dengan ZOH}
-Jika suatu plant kontinu $G_p(s)$ didahului oleh penahan orde nol ZOH $G_h(s) = \frac{1 - e^{-Ts}}{s}$, fungsi transfer diskrit ekuivalennya adalah:
-\begin{align*}
-    G(z) &= \mathcal{Z}\{ G_h(s) G_p(s) \} = \mathcal{Z}\left\{ \frac{1 - e^{-Ts}}{s} G_p(s) \right\} \\
-    &= (1 - z^{-1}) \mathcal{Z}\left\{ \frac{G_p(s)}{s} \right\}
-\end{align*}
-
-\kotakdefinisi{Rumus Diskritisasi Plant Kontinu dengan ZOH:}{
+Jika suatu plant kontinu $G_p(s)$ didahului oleh penahan ZOH:
 \begin{equation*}
-    G(z) = (1 - z^{-1}) \mathcal{Z}\left\{ \mathcal{L}^{-1}\left[ \frac{G_p(s)}{s} \right] \right\}
+    G(z) = (1 - z^{-1}) \mathcal{Z}\left\{ \frac{G_p(s)}{s} \right\}
 \end{equation*}
-}
 
 \vspace{6pt}
 
 \section{Representasi Ruang Keadaan Sistem Diskrit}
-
-\subsection{Bentuk Standar Sistem Ruang Keadaan Diskrit}
 
 \kotakdefinisi{Persamaan Ruang Keadaan LTI Diskrit:}{
 \begin{align*}
@@ -255,122 +177,75 @@ Jika suatu plant kontinu $G_p(s)$ didahului oleh penahan orde nol ZOH $G_h(s) = 
     y(k) &= C x(k) + D u(k) \quad &\text{(\textbf{Persamaan Keluaran Diskrit})}
 \end{align*}
 }
-Di mana:
-\begin{itemize}
-    \item $x(k) \in \mathbb{R}^n$ : Vektor keadaan pada langkah ke-$k$.
-    \item $u(k) \in \mathbb{R}^m$ : Vektor masukan kontrol pada langkah ke-$k$.
-    \item $y(k) \in \mathbb{R}^p$ : Vektor keluaran pada langkah ke-$k$.
-    \item $G \in \mathbb{R}^{n \times n}$ : Matriks sistem diskrit (beberapa literatur menuliskan $A_d$ atau $\Phi$).
-    \item $H \in \mathbb{R}^{n \times m}$ : Matriks masukan diskrit (beberapa literatur menuliskan $B_d$ atau $\Gamma$).
-    \item $C \in \mathbb{R}^{p \times n}$ : Matriks keluaran.
-    \item $D \in \mathbb{R}^{p \times m}$ : Matriks transmisi langsung.
-\end{itemize}
 
 \subsection{Diskritisasi dari Ruang Keadaan Kontinu}
-Diberikan sistem kontinu:
+Untuk sistem kontinu $\dot{x}(t) = A x(t) + B u(t)$, diskritisasi dengan ZOH pada periode sampling $T$:
 \begin{equation*}
-    \dot{x}(t) = A x(t) + B u(t), \quad y(t) = C x(t) + D u(t)
-\end{equation*}
-Dengan masukan dikendalikan oleh ZOH ($u(t) = u(kT)$ untuk $kT \le t < (k+1)T$), solusi kontinu pada interval sampling adalah:
-\begin{equation*}
-    x((k+1)T) = e^{AT} x(kT) + \int_{kT}^{(k+1)T} e^{A((k+1)T - \tau)} B u(\tau) \, d\tau
-\end{equation*}
-Dengan substitusi variabel $\lambda = (k+1)T - \tau$, diperoleh relasi matriks diskrit:
-\begin{equation*}
-    G = e^{AT}, \quad H = \left( \int_{0}^{T} e^{A\lambda} \, d\lambda \right) B
-\end{equation*}
-Jika matriks $A$ nonsingular (memiliki invers), rumus untuk $H$ dapat disederhanakan menjadi:
-\begin{equation*}
-    H = A^{-1}(e^{AT} - I) B
+    G = e^{AT}, \quad H = \left( \int_{0}^{T} e^{A\tau} \, d\tau \right) B = A^{-1}(e^{AT} - I) B \quad (\text{jika } A \text{ nonsingular})
 \end{equation*}
 
 \subsection{Konversi Ruang Keadaan Diskrit ke Fungsi Transfer}
-Dengan menerapkan Transformasi Z pada persamaan keadaan diskrit dengan $x(0) = 0$:
-\begin{align*}
-    z X(z) &= G X(z) + H U(z) \implies (zI - G) X(z) = H U(z) \\
-    X(z) &= (zI - G)^{-1} H U(z)
-\end{align*}
-Substitusi ke persamaan keluaran $Y(z) = C X(z) + D U(z)$:
-
-\kotakdefinisi{Fungsi Pulsa Transfer dari Ruang Keadaan Diskrit:}{
 \begin{equation*}
     G(z) = \frac{Y(z)}{U(z)} = C (zI - G)^{-1} H + D = \frac{C \operatorname{adj}(zI - G) H}{\det(zI - G)} + D
 \end{equation*}
-}
-Persamaan karakteristik sistem diskrit adalah $\det(zI - G) = 0$. Nilai-nilai eigen dari matriks $G$ ($\lambda_i$) merupakan kutub-kutub (\textit{poles}) sistem diskrit.
+
+\vspace{6pt}
+
+\section{Bentuk-Bentuk Kanonik Sistem Diskrit}
+
+Diberikan fungsi transfer pulsa $G(z) = \dfrac{b_1 z^{n-1} + \dots + b_n}{z^n + a_1 z^{n-1} + \dots + a_n}$:
+
+\subsection{1. Bentuk Kanonik Keterkontrolan Diskrit}
+\begin{equation*}
+    G = \begin{bmatrix}
+        0 & 1 & 0 & \dots & 0 \\
+        0 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \dots & 1 \\
+        -a_n & -a_{n-1} & -a_{n-2} & \dots & -a_1
+    \end{bmatrix}, \quad
+    H = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}, \quad
+    C = \begin{bmatrix} b_n & b_{n-1} & \dots & b_1 \end{bmatrix}
+\end{equation*}
+
+\subsection{2. Bentuk Kanonik Keterobservasian Diskrit}
+\begin{equation*}
+    G = \begin{bmatrix}
+        -a_1 & 1 & 0 & \dots & 0 \\
+        -a_2 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        -a_{n-1} & 0 & 0 & \dots & 1 \\
+        -a_n & 0 & 0 & \dots & 0
+    \end{bmatrix}, \quad
+    H = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix}, \quad
+    C = \begin{bmatrix} 1 & 0 & \dots & 0 \end{bmatrix}
+\end{equation*}
 
 \vspace{6pt}
 
 \section{Solusi Ruang Keadaan Diskrit \& Matriks Transisi Keadaan}
 
-\subsection{Solusi Domain Waktu Rekursif}
-Persamaan keadaan $x(k+1) = G x(k) + H u(k)$ dengan syarat awal $x(0)$ dapat diselesaikan secara rekursif:
-\begin{align*}
-    x(1) &= G x(0) + H u(0) \\
-    x(2) &= G x(1) + H u(1) = G^2 x(0) + G H u(0) + H u(1) \\
-    &\;\;\vdots \\
-    x(k) &= G^k x(0) + \sum_{j=0}^{k-1} G^{k-1-j} H u(j)
-\end{align*}
-Dan persamaan keluaran:
+Solusi domain waktu secara rekursif:
 \begin{equation*}
-    y(k) = C G^k x(0) + C \sum_{j=0}^{k-1} G^{k-1-j} H u(j) + D u(k)
+    x(k) = G^k x(0) + \sum_{j=0}^{k-1} G^{k-1-j} H u(j)
 \end{equation*}
-
-\subsection{Matriks Transisi Keadaan Diskrit \texorpdfstring{$\Psi(k) = G^k$}{Psi(k) = G^k}}
-\kotakdefinisi{Perhitungan Matriks Transisi Keadaan Diskrit:}{
+Di mana matriks transisi keadaan diskrit dihitung melalui:
 \begin{equation*}
     \Psi(k) = G^k = \mathcal{Z}^{-1}\left\{ (zI - G)^{-1} z \right\}
 \end{equation*}
-}
-
-\textbf{Sifat-sifat Matriks Transisi Diskrit $G^k$}:
-\begin{itemize}
-    \item $G^0 = I$
-    \item $G^{k_1 + k_2} = G^{k_1} G^{k_2} = G^{k_2} G^{k_1}$
-    \item $(G^k)^{-1} = G^{-k}$ (jika $G$ nonsingular)
-    \item $\Psi(k+1) = G \Psi(k) = \Psi(k) G$
-\end{itemize}
 
 \vspace{6pt}
 
 \section{Kestabilan Sistem Waktu Diskrit}
 
-\subsection{Pemetaan Bidang \texorpdfstring{$s$}{s} ke Bidang \texorpdfstring{$z$}{z}}
-Hubungan $z = e^{sT}$ dengan $s = \sigma + j\omega$ menghasilkan:
-\begin{equation*}
-    z = e^{(\sigma + j\omega)T} = e^{\sigma T} e^{j\omega T} \implies |z| = e^{\sigma T}, \quad \angle z = \omega T
-\end{equation*}
-
-\begin{center}
-\small
-\begin{tabular}{|p{4.5cm}|p{4.5cm}|p{5.5cm}|}
-\hline
-\textbf{Daerah di Bidang $s$} & \textbf{Daerah di Bidang $z$} & \textbf{Karakteristik Kestabilan} \\ \hline
-Setengah Bidang Kiri ($\sigma < 0$) & Bagian dalam lingkaran satuan ($|z| < 1$) & \textbf{Stabil Asimtotik} (Amplitudo meluruh) \\ \hline
-Sumbu Imajiner ($\sigma = 0$) & Pada lingkaran satuan ($|z| = 1$) & \textbf{Stabil Marjinal} (Osilasi kontinu) \\ \hline
-Setengah Bidang Kanan ($\sigma > 0$) & Bagian luar lingkaran satuan ($|z| > 1$) & \textbf{Tak Stabil} (Amplitudo divergen) \\ \hline
-\end{tabular}
-\end{center}
-
-\kotakdefinisi{Kriteria Kestabilan Sistem Waktu Diskrit:}{
+\kotakdefinisi{Kriteria Kestabilan Sistem Diskrit:}{
 Sistem LTI diskrit bersifat \textbf{stabil asimtotik} jika dan hanya jika seluruh kutub dari fungsi transfer $G(z)$ (atau seluruh nilai eigen dari matriks sistem $G$) terletak \textbf{di dalam lingkaran satuan} pada bidang kompleks $z$:
 \begin{equation*}
-    |p_i| < 1 \quad \text{atau} \quad |\lambda_i| < 1, \quad \forall i = 1, 2, \dots, n
+    |\lambda_i| < 1, \quad \forall i = 1, 2, \dots, n
 \end{equation*}
 }
 
-\subsection{Uji Kestabilan Jury (\textit{Jury Stability Test})}
-Untuk polinomial karakteristik sistem orde-$n$:
-\begin{equation*}
-    P(z) = a_0 z^n + a_1 z^{n-1} + \dots + a_{n-1} z + a_n = 0 \quad (a_0 > 0)
-\end{equation*}
-Syarat perlu kestabilan:
-\begin{enumerate}
-    \item $P(1) > 0$
-    \item $(-1)^n P(-1) > 0$
-    \item $|a_n| < a_0$
-\end{enumerate}
-Untuk orde-2 ($P(z) = a_0 z^2 + a_1 z + a_2 = 0, a_0 > 0$), syarat perlu dan cukup adalah:
+\subsection{Uji Kestabilan Jury Orde-2 (\texorpdfstring{$P(z) = a_0 z^2 + a_1 z + a_2 = 0, a_0 > 0$}{P(z)})}
 \begin{enumerate}
     \item $|a_2| < a_0$
     \item $P(1) = a_0 + a_1 + a_2 > 0$
@@ -381,115 +256,48 @@ Untuk orde-2 ($P(z) = a_0 z^2 + a_1 z + a_2 = 0, a_0 > 0$), syarat perlu dan cuk
 
 \section{Contoh Soal dan Pembahasan Komprehensif}
 
-\noindent\textbf{Contoh 1: Invers Transformasi Z}\\
-Tentukan invers Transformasi Z dari fungsi:
+\noindent\textbf{Contoh 1: Solusi Persamaan Beda dengan Kondisi Awal}\\
+Diberikan persamaan beda:
 \begin{equation*}
-    X(z) = \frac{z(2z + 1)}{(z - 1)(z - 0.5)}
+    y(k+2) - 7y(k+1) + 12y(k) = 0, \quad y(0) = 0, \; y(1) = 1
 \end{equation*}
 
 \textit{Penyelesaian:}
 
-Bagi $X(z)$ dengan $z$ terlebih dahulu:
-\begin{equation*}
-    \frac{X(z)}{z} = \frac{2z + 1}{(z - 1)(z - 0.5)} = \frac{A}{z - 1} + \frac{B}{z - 0.5}
-\end{equation*}
-Menghitung koefisien $A$ dan $B$:
+Terapkan Transformasi Z dengan sifat pergeseran waktu maju:
 \begin{align*}
-    A &= \lim_{z \to 1} (z - 1) \frac{X(z)}{z} = \frac{2(1) + 1}{1 - 0.5} = \frac{3}{0.5} = 6 \\
-    B &= \lim_{z \to 0.5} (z - 0.5) \frac{X(z)}{z} = \frac{2(0.5) + 1}{0.5 - 1} = \frac{2}{-0.5} = -4
+    \mathcal{Z}\{y(k+2)\} &= z^2 Y(z) - z^2 y(0) - z y(1) = z^2 Y(z) - z \\
+    \mathcal{Z}\{y(k+1)\} &= z Y(z) - z y(0) = z Y(z)
 \end{align*}
-Sehingga diperoleh:
+Substitusi ke dalam persamaan beda:
+\begin{align*}
+    [z^2 Y(z) - z] - 7 [z Y(z)] + 12 Y(z) &= 0 \\
+    (z^2 - 7z + 12) Y(z) &= z \\
+    Y(z) &= \frac{z}{(z-3)(z-4)}
+\end{align*}
+Lakukan ekspansi pecahan parsial pada $\dfrac{Y(z)}{z}$:
+\begin{align*}
+    \frac{Y(z)}{z} &= \frac{1}{(z-3)(z-4)} = \frac{-1}{z-3} + \frac{1}{z-4} \\
+    Y(z) &= -\frac{z}{z-3} + \frac{z}{z-4}
+\end{align*}
+Invers Transformasi Z dari masing-masing suku:
 \begin{equation*}
-    X(z) = 6 \frac{z}{z - 1} - 4 \frac{z}{z - 0.5}
-\end{equation*}
-Dengan mengambil invers Transformasi Z dari masing-masing suku:
-\begin{equation*}
-    x(k) = 6(1)^k - 4(0.5)^k = 6 - 4(0.5)^k, \quad k = 0, 1, 2, \dots
+    y(k) = -(3)^k + (4)^k = 4^k - 3^k, \quad k = 0, 1, 2, \dots
 \end{equation*}
 
 \vspace{10pt}
 
 \noindent\textbf{Contoh 2: Diskritisasi Plant Kontinu dengan ZOH}\\
-Diberikan plant kontinu $G_p(s) = \dfrac{2}{s + 2}$ dengan periode pencuplikan $T = 0.1$ detik. Tentukan fungsi transfer diskrit $G(z)$.
+Diberikan plant kontinu $G_p(s) = \dfrac{2}{s + 2}$ dengan $T = 0.1$ detik. Tentukan fungsi transfer diskrit $G(z)$.
 
 \textit{Penyelesaian:}
-
-Gunakan rumus diskritisasi dengan ZOH:
-\begin{equation*}
-    G(z) = (1 - z^{-1}) \mathcal{Z}\left\{ \frac{G_p(s)}{s} \right\} = \frac{z - 1}{z} \mathcal{Z}\left\{ \frac{2}{s(s+2)} \right\}
-\end{equation*}
-Ekspansi pecahan parsial pada domain $s$:
-\begin{equation*}
-    \frac{2}{s(s+2)} = \frac{1}{s} - \frac{1}{s+2}
-\end{equation*}
-Invers Laplace:
-\begin{equation*}
-    \mathcal{L}^{-1}\left\{ \frac{1}{s} - \frac{1}{s+2} \right\} = 1(t) - e^{-2t}
-\end{equation*}
-Lakukan pencuplikan pada $t = kT$:
-\begin{equation*}
-    x(kT) = 1 - e^{-2kT} = 1 - (e^{-2T})^k
-\end{equation*}
-Transformasi Z dari sinyal tercuplik:
-\begin{equation*}
-    \mathcal{Z}\left\{ 1 - (e^{-2T})^k \right\} = \frac{z}{z - 1} - \frac{z}{z - e^{-2T}} = \frac{z(1 - e^{-2T})}{(z - 1)(z - e^{-2T})}
-\end{equation*}
-Maka fungsi transfer diskrit $G(z)$:
-\begin{equation*}
-    G(z) = \frac{z - 1}{z} \cdot \frac{z(1 - e^{-2T})}{(z - 1)(z - e^{-2T})} = \frac{1 - e^{-2T}}{z - e^{-2T}}
-\end{equation*}
-Substitusikan $T = 0.1 \implies e^{-2(0.1)} = e^{-0.2} \approx 0.8187$:
-\begin{equation*}
-    G(z) = \frac{1 - 0.8187}{z - 0.8187} = \frac{0.1813}{z - 0.8187}
-\end{equation*}
-
-\vspace{10pt}
-
-\noindent\textbf{Contoh 3: Ruang Keadaan Diskrit \& Matriks Transisi}\\
-Diberikan sistem diskrit:
-\begin{equation*}
-    x(k+1) = \begin{bmatrix} 0 & 1 \\ -0.16 & 1 \end{bmatrix} x(k) + \begin{bmatrix} 0 \\ 1 \end{bmatrix} u(k), \quad y(k) = \begin{bmatrix} 1 & 0 \end{bmatrix} x(k)
-\end{equation*}
-Tentukan matriks transisi keadaan $G^k$ dan fungsi pulsa transfer $G(z)$.
-
-\textit{Penyelesaian:}
-
-Bentuk matriks $(zI - G)$:
-\begin{equation*}
-    zI - G = \begin{bmatrix} z & -1 \\ 0.16 & z - 1 \end{bmatrix}
-\end{equation*}
-Determinan:
-\begin{equation*}
-    \det(zI - G) = z(z - 1) - (-1)(0.16) = z^2 - z + 0.16 = (z - 0.8)(z - 0.2)
-\end{equation*}
-Invers $(zI - G)^{-1}$:
-\begin{equation*}
-    (zI - G)^{-1} = \frac{1}{(z - 0.8)(z - 0.2)} \begin{bmatrix} z - 1 & 1 \\ -0.16 & z \end{bmatrix}
-\end{equation*}
-
-Menghitung fungsi transfer $G(z) = C (zI - G)^{-1} H$:
 \begin{align*}
-    G(z) &= \begin{bmatrix} 1 & 0 \end{bmatrix} \left( \frac{1}{(z - 0.8)(z - 0.2)} \begin{bmatrix} z - 1 & 1 \\ -0.16 & z \end{bmatrix} \right) \begin{bmatrix} 0 \\ 1 \end{bmatrix} \\
-    &= \frac{1}{(z - 0.8)(z - 0.2)} \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} 1 \\ z \end{bmatrix} = \frac{1}{z^2 - z + 0.16}
+    G(z) &= (1 - z^{-1}) \mathcal{Z}\left\{ \frac{2}{s(s+2)} \right\} = \frac{z - 1}{z} \mathcal{Z}\left\{ \frac{1}{s} - \frac{1}{s+2} \right\} \\
+    &= \frac{z - 1}{z} \left[ \frac{z(1 - e^{-2T})}{(z - 1)(z - e^{-2T})} \right] = \frac{1 - e^{-2T}}{z - e^{-2T}}
 \end{align*}
-
-Menghitung matriks transisi keadaan $G^k = \mathcal{Z}^{-1}\{(zI - G)^{-1} z\}$:
+Untuk $T = 0.1 \implies e^{-0.2} \approx 0.8187$:
 \begin{equation*}
-    (zI - G)^{-1} z = \frac{z}{(z - 0.8)(z - 0.2)} \begin{bmatrix} z - 1 & 1 \\ -0.16 & z \end{bmatrix}
-\end{equation*}
-Dekomposisi pecahan parsial tiap elemen:
-\begin{align*}
-    \frac{(z - 1)z}{(z - 0.8)(z - 0.2)} &= -\frac{1}{3}\frac{z}{z - 0.8} - \frac{4}{3}\frac{z}{z - 0.2} \implies -\frac{1}{3}(0.8)^k - \frac{4}{3}(0.2)^k \\
-    \frac{z}{(z - 0.8)(z - 0.2)} &= \frac{5}{3}\frac{z}{z - 0.8} - \frac{5}{3}\frac{z}{z - 0.2} \implies \frac{5}{3}(0.8)^k - \frac{5}{3}(0.2)^k \\
-    \frac{-0.16 z}{(z - 0.8)(z - 0.2)} &= -\frac{4}{15}\frac{z}{z - 0.8} + \frac{4}{15}\frac{z}{z - 0.2} \implies -\frac{4}{15}(0.8)^k + \frac{4}{15}(0.2)^k \\
-    \frac{z^2}{(z - 0.8)(z - 0.2)} &= \frac{4}{3}\frac{z}{z - 0.8} - \frac{1}{3}\frac{z}{z - 0.2} \implies \frac{4}{3}(0.8)^k - \frac{1}{3}(0.2)^k
-\end{align*}
-Sehingga matriks transisi keadaan diperoleh:
-\begin{equation*}
-    G^k = \begin{bmatrix}
-        -\frac{1}{3}(0.8)^k - \frac{4}{3}(0.2)^k & \frac{5}{3}(0.8)^k - \frac{5}{3}(0.2)^k \\[6pt]
-        -\frac{4}{15}(0.8)^k + \frac{4}{15}(0.2)^k & \frac{4}{3}(0.8)^k - \frac{1}{3}(0.2)^k
-    \end{bmatrix}, \quad k \ge 0
+    G(z) = \frac{0.1813}{z - 0.8187}
 \end{equation*}
 
 \end{document}

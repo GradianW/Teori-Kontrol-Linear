@@ -1,0 +1,60 @@
+SOURCE: Past Problem\2023-2024 UAS Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Ujian Akhir Semester MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Selasa, 12 Desember 2023
+Durasi: 120 menit
+Instruksi : Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian bersi-
+fat tutup buku, namun diperbolehkan membawa rangkuman 1 halaman A4.Dilarang menggunakan alat bantu
+hitung dalam bentuk apapun. Soal ujian terdiri atas 4 soal esai panjang dan harus dikerjakan secaraberurutan.
+Perhatikan batas waktu pengerjaan. Selamat dan sukses untuk ujiannya.
+1. Diberikan sistem ˙x = Ax + Bu dan y = Cx dengan A =
+"
+−1 1
+1 −2
+#
+, B =
+ 
+1
+−1
+!
+dan C =
+h
+1 0
+i
+.
+(a) Periksa apakah sistem terobservasi secara lengkap?
+(b) Tentukan suatu matriks transformasiQ, kemudian tentukan persamaan ruang keadaan dalam bentuk keter-
+observasian.
+(c) Dengan menggunakan matriks Q yang diperoleh di (b), rancanglah suatu observer berorde penuh jika
+diinginkan pole observer berada padaµ1 = −5 dan µ2 = −10.
+2. Sistem loop tertutup dari
+
+
+
+˙x1 = x2
+˙x2 = u
+y = x1
+diinginkan pada penempatan pole−1 + 2i dan −1 − 2i.
+(a) Buktikan bahwa, kontrol umpan balik yang diperoleh adalahu = −5x1 − 2x2.
+(b) Rancanglah suatu state observer berorde satu jika pole observer yang diinginkan diu = −8, kemudian
+tentukan kontrol umpan balik untuk observer yang diperoleh.
+3. Diketahui suatu sistem dengan persamaan ˙x(t) = −2x(t) +u(t), dengan indeks performansi dituliskan sebagai
+J =
+Z 1
+0
+u2(t)dt.
+(a) Tunjukkan bahwa kontrol yang meminimumkanJ untuk mentransfer sistem darix(0) = 1 kex(1) = 0
+adalah u(t) =− 4e2t
+e4 − 1 .
+(b) Tentukan x(t) sepanjang 0< t <1.
+4. Untuk sistem ˙x(t) = 2x(t) +u(t), indeks performansi adalahJ = 15x2(10) +
+Z 10
+0
+(5x2 + u2)dt.
+(a) Tentukan kontrol optimalu(t) yang meminimumkanJ.
+(b) Jika x(0) = 10, tentukan besarnya ongkos yang optimal.
+Typed by: Ricky Rahadiyan Daraputra (MA’22) 1 ©Divisi Akademik HIMATIKA ITB 2023
+

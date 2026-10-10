@@ -1,0 +1,76 @@
+SOURCE: Past Problem\2022-2023 UTS Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Ujian 1 MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Rabu, 12 Oktober 2022
+Durasi: 100 menit
+Instruksi : Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian
+bersifat buka Cheatsheet 1 lembar A4. Soal ujian terdiri atas dua bagian, yaitu 4 soal Bagian A dan 2 soal Bagian B.
+Perhatikan batas waktu pengerjaan. Selamat dan sukses untuk ujiannya.
+Bagian A (5 poin)
+1. Tentukan fungsi transfer jika diketahui diagram blok sistem sebagai berikut:
++
+− GC(s)
+Controller
+GP (s)
+Plant
++
++R(s)
+D(s)
+C(s)
+2. Suatu sistem linear dituliskan sebagai ˙ x = Ax(t) + Bu(t) sehingga diperoleh ( sI − A) =
+"
+s −1
+2 s + 3
+#
+. Jika
+diberikan nilai awal x(0) =
+ 
+1
+0
+!
+dan u(t) = 0, tentukan response state dari sistem tersebut.
+3. Tentukan y(k), jika diketahui persamaan beda y(k + 2) − 5y(k + 1) + 6y(k) = 0 dengan y(0) = 0 dan y(1) = 1.
+4. Diberikan sistem sebagai:
+ 
+˙x1(t)
+˙x2(t)
+!
+=
+"
+0 1
+−4 −4
+#  
+x1(t)
+x2(t)
+!
++
+ 
+0
+1
+!
+u(t)
+y(t) =
+h
+c1 c2
+i  x1(t)
+x2(t)
+!
+, c1 ̸= 0, c2 ̸= 0
+Supaya sistem terobservasi, carilah syarat untuk c1 dan c2 yang harus terpenuhi.
+Bagian B (10 poin)
+1. Diberikan fungsi transfer suatu sistem linear adalah G(s) = 0.4s2 + 1.4s + 0.8s3 + 0.3s2 + 1.7s + 0.2 .
+(a) Gambarkan signal-flow graph dalam bentuk terobservasi.
+(b) Dari signal-flow soal (a), tentukan persamaan ruang keadaan untuk sistem tersebut.
+2. Diberikan signal flow sistem sebagai berikut. Tentukan fungsi transfernya.
+1 G1(s) 1
+−H3(s)
+1 G2(s) G3(s)
+H1(s)
+G4(s)
+−H2(s)
+G5(s)
+Typed by: Wilson Gregory MA20 1 ©Divisi Akademik HIMATIKA ITB 2022
+

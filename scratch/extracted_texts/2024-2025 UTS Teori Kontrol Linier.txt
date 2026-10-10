@@ -1,0 +1,86 @@
+SOURCE: Past Problem\2024-2025 UTS Teori Kontrol Linier.pdf
+TOTAL PAGES: 2
+
+=== PAGE 1 ===
+Ujian T engah Semester MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Rabu, 6 November 2024
+Durasi: 120 menit
+Instruksi: Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian
+bersifat tutup buku, kecuali tabel transformasi Laplace. Dilarang menggunakan alat bantu hitungdalam
+bentuk apapun. Soal ujian terdiri dari 4 soal esai panjang dan harus dikerjakan secaraberurutan. Perhatikan waktu
+pengerjaan. Selamat dan sukses untuk ujiannya.
+1. Diketahui suatu sistem yang dinyatakan oleh diagram blok seperti berikut:
+R(s) X G(s) C(s)
+H(s)
++
+−
+Jika diberikanG(s) = s + 1s(s + 2) dan H(s) = s + 3s + 4, maka
+(a) Tentukan fungsi transfer dari sistem tersebut yang menyatakan hubungan antara inputR(s) dan outputC(s).
+(b) Tentukan persamaan ruang keadaan dari sistem dalam bentuk kanonik keterkontrolan.
+2. Tentukan fungsi transfer dari sistem yang dinyatakan sebagai aliran signal berikut.
+R(s) · · · · · · C(s)1 G1 G2 G3 G4 G5 1
+−H1 −H2 −H3
+−H4
+G6
+3. Diberikan sistem dengan fungsi transferT (s) = 1s2 + 7s + 12[3s + 13 3 s + 11].
+(a) Tentukan persamaan ruang keadaan dari sistem dalam bentuk kanonik keterobservasian.
+(b) Tentukan persamaan ruang keadaan sistem dalam bentuk kanonik diagonal.
+4. Misal, sistem kontrol linear diberikan sebagai
+ 
+˙x1
+˙x2
+!
+=
+"
+0 1
+−2 −3
+#  
+x1
+x2
+!
++
+ 
+0
+1
+!
+u
+dengan u(t) adalah fungsi satuan yang memenuhiu(t) = 1 untuk setiap waktut dengan x1(0) = 1 danx2(0) =−1.
+(a) Dengan menerapkan transformasi Laplace, tentukan matriks fundamentaleAt untuk sistem tersebut.
+(b) Dari matriks fundamental yang diperoleh soal (a), tentukan solusi time responsex1 dan x2.
+Typed by: Christoforus Stanislaus (MA21) 1 ©Divisi Akademik HIMATIKA ITB 2024
+
+=== PAGE 2 ===
+Ujian T engah Semester MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Rabu, 6 November 2024
+Durasi: 120 menit
+5. Misal, sistem kontrol linear diberikan sebagai
+ 
+˙x1
+˙x2
+!
+=
+"
+1 2
+−4 −3
+#  
+x1
+x2
+!
++
+ 
+1
+2
+!
+u.
+(a) Tunjukkan bahwa sistem terkontrol secara lengkap, lalu lakukan transformasi sistem dalam bentuk kanonik
+keterkontrolan.
+(b) Jika outputy = [a 1]
+ 
+x1
+x2
+!
+, tunjukkan bahwa untuk semuaa ∈ R sistem akan terobservasi.
+Typed by: Christoforus Stanislaus (MA21) 2 ©Divisi Akademik HIMATIKA ITB 2024
+

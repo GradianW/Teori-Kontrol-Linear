@@ -31,7 +31,7 @@
     {\LARGE \textbf{CATATAN KULIAH MA4171 TEORI KONTROL LINEAR}}\\[6pt]
     {\Large \textbf{Topik 02: Model Matematika pada Sistem Dinamik}}\\[4pt]
     \textit{Cakupan: Minggu ke-2 sampai Minggu ke-4}\\[2pt]
-    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} (Bab 2 \& 9.2)
+    \textbf{Referensi Utama:} Katsuhiko Ogata, \textit{Modern Control Engineering} (Bab 2 \& Bab 9.2); Slide Kuliah MA4171 ITB
 \end{center}
 \vspace{-4pt}
 \hrule
@@ -44,7 +44,7 @@
 
 \section{Pendahuluan \& Karakteristik Sistem LTI}
 
-Pemodelan matematika merupakan fondasi dasar dalam menganalisis dan merancang sistem kendali. Model matematika merepresentasikan relasi kuantitatif antara masukan (\textit{input}), keluaran (\textit{output}), serta variabel keadaan internal (\textit{state variables}).
+Pemodelan matematika merupakan fondasi dasar dalam menganalisis perilaku sistem dinamik dan merancang pengontrol yang optimal, stabil, dan tegar (\textit{robust}).
 
 \subsection{Karakteristik Sistem Linear Time-Invariant (LTI)}
 Kajian utama mata kuliah ini berfokus pada sistem \textbf{Linear Time-Invariant (LTI)} kontinu:
@@ -63,8 +63,8 @@ Kajian utama mata kuliah ini berfokus pada sistem \textbf{Linear Time-Invariant 
 
 \subsection{Dua Pendekatan Pemodelan Sistem LTI}
 \begin{itemize}
-    \item \textbf{Domain Frekuensi (S-Domain / Kontrol Klasik)}: Berbasis \textit{Fungsi Transfer} dan \textit{Diagram Blok}. Pendekatan ini sangat efektif untuk sistem SISO (\textit{Single-Input Single-Output}) dengan asumsi semua kondisi awal bernilai nol.
-    \item \textbf{Domain Waktu (State-Space / Kontrol Modern)}: Berbasis sistem persamaan diferensial linear orde satu simultan. Pendekatan ini mampu menangani sistem multivariabel MIMO (\textit{Multi-Input Multi-Output}) dan kondisi awal non-nol.
+    \item \textbf{Domain Frekuensi (S-Domain / Kontrol Klasik)}: Berbasis \textit{Fungsi Transfer}, \textit{Diagram Blok}, dan \textit{Signal Flow Graph}. Pendekatan ini sangat efektif untuk sistem SISO (\textit{Single-Input Single-Output}) dengan asumsi kondisi awal nol.
+    \item \textbf{Domain Waktu (State-Space / Kontrol Modern)}: Berbasis sistem persamaan diferensial vektor orde satu simultan. Pendekatan ini mampu menangani sistem multivariabel MIMO (\textit{Multi-Input Multi-Output}) dan kondisi awal riil.
 \end{itemize}
 
 \vspace{6pt}
@@ -123,23 +123,50 @@ Diagram blok menyajikan interkoneksi fungsional antar subsistem.
 \end{tabular}
 \end{center}
 
-Untuk sistem dengan umpan balik satuan (\textit{unity feedback}), yaitu $H(s) = 1$:
+Untuk sistem dengan gangguan (\textit{disturbance}) $D(s)$ dan masukan acuan $R(s)$, keluaran dihitung menggunakan prinsip superposisi:
 \begin{equation*}
-    T(s) = \frac{G(s)}{1 + G(s)}
+    C(s) = T_R(s) R(s) + T_D(s) D(s)
 \end{equation*}
+
+\vspace{6pt}
+
+\section{Signal-Flow Graph (SFG) \& Aturan Penguatan Mason}
+
+\textbf{Signal-Flow Graph (SFG)} adalah representasi graf berarah dari sistem persamaan aljabar linear simultan.
+
+\subsection{Terminologi Graf Aliran Sinyal}
+\begin{itemize}
+    \item \textbf{Simpul Masukan (\textit{Source Node})}: Simpul yang hanya memiliki cabang keluar (contoh: $R(s)$).
+    \item \textbf{Simpul Keluaran (\textit{Sink Node})}: Simpul yang hanya memiliki cabang masuk (contoh: $C(s)$).
+    \item \textbf{Transmitansi (\textit{Gain})}: Bobot pengali sinyal pada suatu cabang.
+    \item \textbf{Jalur Maju (\textit{Forward Path}, $F_k$)}: Lintasan dari simpul masukan ke simpul keluaran yang searah dengan panah tanpa melewati simpul yang sama lebih dari satu kali.
+    \item \textbf{Lup (\textit{Loop}, $L_i$)}: Lintasan tertutup yang dimulai dan berakhir pada simpul yang sama tanpa melintasi simpul lain lebih dari sekali.
+    \item \textbf{Lup Tak Bersentuhan (\textit{Non-touching Loops})}: Lup-lup yang tidak berbagi simpul yang sama.
+\end{itemize}
+
+\subsection{Rumus Penguatan Mason (\textit{Mason's Gain Formula})}
+\kotakdefinisi{Aturan Mason:}{
+Fungsi transfer total dari sinyal masukan ke keluaran dihitung melalui:
+\begin{equation*}
+    G(s) = \frac{C(s)}{R(s)} = \frac{\sum_{k=1}^N F_k \Delta_k}{\Delta}
+\end{equation*}
+Di mana:
+\begin{itemize}
+    \item $N$ = Jumlah total lintasan maju (\textit{forward paths}).
+    \item $F_k$ = Penguatan lintasan maju ke-$k$.
+    \item $\Delta$ = Determinan sistem graf:
+    \begin{equation*}
+        \Delta = 1 - \sum L_i + \sum L_i L_j - \sum L_i L_j L_k + \dots
+    \end{equation*}
+    \item $\Delta_k$ = Kofaktor dari lintasan maju ke-$k$, yaitu nilai determinan $\Delta$ yang dihitung hanya untuk bagian graf yang \textbf{tidak menyentuh} lintasan maju ke-$k$.
+\end{itemize}
+}
 
 \vspace{6pt}
 
 \section{Representasi Ruang Keadaan (\textit{State-Space Representation})}
 
-\subsection{Konsep Dasar Ruang Keadaan}
-\begin{itemize}
-    \item \textbf{Variabel Keadaan (\textit{State Variables})}: Himpunan terkecil dari variabel $\{x_1(t), x_2(t), \dots, x_n(t)\}$ yang bersama dengan masukan $u(t)$ untuk $t \ge t_0$, menentukan dinamika sistem secara utuh untuk setiap $t \ge t_0$.
-    \item \textbf{Vektor Keadaan (\textit{State Vector})}: $x(t) = \begin{bmatrix} x_1(t) & x_2(t) & \dots & x_n(t) \end{bmatrix}^T \in \mathbb{R}^n$.
-\end{itemize}
-
 \subsection{Bentuk Standar Persamaan Ruang Keadaan LTI}
-
 \kotakdefinisi{Sistem Ruang Keadaan LTI Kontinu:}{
 \begin{align*}
     \dot{x}(t) &= A x(t) + B u(t) \quad &\text{(\textbf{Persamaan Keadaan} / \textit{State Equation})} \\
@@ -149,47 +176,35 @@ Untuk sistem dengan umpan balik satuan (\textit{unity feedback}), yaitu $H(s) = 
 
 Dimensi matriks untuk sistem dengan $n$ variabel keadaan, $m$ masukan, dan $p$ keluaran:
 \begin{itemize}
-    \item $A \in \mathbb{R}^{n \times n}$ : Matriks sistem (\textit{system matrix}).
-    \item $B \in \mathbb{R}^{n \times m}$ : Matriks masukan (\textit{input matrix}).
-    \item $C \in \mathbb{R}^{p \times n}$ : Matriks keluaran (\textit{output matrix}).
-    \item $D \in \mathbb{R}^{p \times m}$ : Matriks transmisi langsung (\textit{direct transmission / feedforward matrix}).
+    \item $A \in \mathbb{R}^{n \times n}$ : Matriks dinamika sistem.
+    \item $B \in \mathbb{R}^{n \times m}$ : Matriks masukan.
+    \item $C \in \mathbb{R}^{p \times n}$ : Matriks keluaran.
+    \item $D \in \mathbb{R}^{p \times m}$ : Matriks transmisi langsung.
 \end{itemize}
 
 \vspace{6pt}
 
 \section{Hubungan Ruang Keadaan dan Fungsi Transfer}
 
-Untuk menurunkan fungsi transfer dari persamaan ruang keadaan, terapkan Transformasi Laplace pada persamaan keadaan dengan asumsi kondisi awal $x(0) = 0$:
+Dengan menerapkan Transformasi Laplace pada persamaan keadaan dengan syarat awal $x(0) = 0$:
 \begin{align*}
-    s X(s) - x(0) &= A X(s) + B U(s) \\
-    (sI - A) X(s) &= B U(s) \\
-    X(s) &= (sI - A)^{-1} B U(s)
+    s X(s) - x(0) &= A X(s) + B U(s) \implies (sI - A) X(s) = B U(s) \implies X(s) = (sI - A)^{-1} B U(s)
 \end{align*}
-Substitusikan ke persamaan Transformasi Laplace dari keluaran $Y(s) = C X(s) + D U(s)$:
-\begin{equation*}
-    Y(s) = \left[ C(sI - A)^{-1} B + D \right] U(s)
-\end{equation*}
-
-\kotakdefinisi{Rumus Konversi Ruang Keadaan ke Fungsi Transfer:}{
+Substitusikan ke persamaan keluaran $Y(s) = C X(s) + D U(s)$:
 \begin{equation*}
     G(s) = \frac{Y(s)}{U(s)} = C(sI - A)^{-1}B + D = \frac{C \operatorname{adj}(sI - A) B}{\det(sI - A)} + D
 \end{equation*}
-}
-
-\textbf{Keterkaitan Sifat:}\\
-Polinomial karakteristik sistem adalah $\det(sI - A) = 0$. Oleh karena itu, nilai-nilai eigen dari matriks $A$ ($\lambda_i$) berkorespondensi langsung dengan kutub-kutub (\textit{poles}) fungsi transfer sistem.
 
 \vspace{6pt}
 
 \section{Bentuk-Bentuk Kanonik Ruang Keadaan}
 
-Diberikan fungsi transfer \textit{strictly proper} ($b_0 = 0$):
+Diberikan fungsi transfer SISO \textit{strictly proper}:
 \begin{equation*}
     G(s) = \frac{b_1 s^{n-1} + b_2 s^{n-2} + \dots + b_n}{s^n + a_1 s^{n-1} + a_2 s^{n-2} + \dots + a_n}
 \end{equation*}
 
-\subsection{1. Bentuk Kanonik Terkontrol (\textit{Controllable Canonical Form})}
-Struktur ini sangat penting dalam perancangan kontrol umpan balik keadaan (\textit{state feedback} / penempatan pole):
+\subsection{1. Bentuk Kanonik Keterkontrolan (\textit{Controllable Canonical Form})}
 \begin{equation*}
     A = \begin{bmatrix}
         0 & 1 & 0 & \dots & 0 \\
@@ -198,137 +213,89 @@ Struktur ini sangat penting dalam perancangan kontrol umpan balik keadaan (\text
         0 & 0 & 0 & \dots & 1 \\
         -a_n & -a_{n-1} & -a_{n-2} & \dots & -a_1
     \end{bmatrix}, \quad
-    B = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}
-\end{equation*}
-\begin{equation*}
-    C = \begin{bmatrix} b_n & b_{n-1} & \dots & b_1 \end{bmatrix}, \quad D = [0]
+    B = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix}, \quad
+    C = \begin{bmatrix} b_n & b_{n-1} & \dots & b_1 \end{bmatrix}
 \end{equation*}
 
-\subsection{2. Bentuk Kanonik Terobservasi (\textit{Observable Canonical Form})}
-Bentuk dual dari bentuk terkontrol, sangat fundamental dalam perancangan pengamat keadaan (\textit{state observer}):
+\subsection{2. Bentuk Kanonik Keterobservasian (\textit{Observable Canonical Form})}
 \begin{equation*}
     A = \begin{bmatrix}
-        0 & 0 & \dots & 0 & -a_n \\
-        1 & 0 & \dots & 0 & -a_{n-1} \\
-        0 & 1 & \dots & 0 & -a_{n-2} \\
-        \vdots & \vdots & \ddots & \vdots & \vdots \\
-        0 & 0 & \dots & 1 & -a_1
+        -a_1 & 1 & 0 & \dots & 0 \\
+        -a_2 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        -a_{n-1} & 0 & 0 & \dots & 1 \\
+        -a_n & 0 & 0 & \dots & 0
     \end{bmatrix}, \quad
-    B = \begin{bmatrix} b_n \\ b_{n-1} \\ \vdots \\ b_1 \end{bmatrix}
-\end{equation*}
-\begin{equation*}
-    C = \begin{bmatrix} 0 & 0 & \dots & 0 & 1 \end{bmatrix}, \quad D = [0]
+    B = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix}, \quad
+    C = \begin{bmatrix} 1 & 0 & \dots & 0 \end{bmatrix}
 \end{equation*}
 
 \subsection{3. Bentuk Kanonik Diagonal / Jordan}
-Jika polinomial penyebut memiliki akar-akar real yang berbeda $p_1, p_2, \dots, p_n$:
+Jika akar penyebut memiliki nilai berbeda $p_1, p_2, \dots, p_n$:
 \begin{equation*}
-    G(s) = \frac{c_1}{s - p_1} + \frac{c_2}{s - p_2} + \dots + \frac{c_n}{s - p_n}
-\end{equation*}
-Maka:
-\begin{equation*}
-    A = \begin{bmatrix}
-        p_1 & 0 & \dots & 0 \\
-        0 & p_2 & \dots & 0 \\
-        \vdots & \vdots & \ddots & \vdots \\
-        0 & 0 & \dots & p_n
-    \end{bmatrix}, \quad
-    B = \begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}, \quad
-    C = \begin{bmatrix} c_1 & c_2 & \dots & c_n \end{bmatrix}, \quad D = [0]
+    A = \operatorname{diag}(p_1, p_2, \dots, p_n), \quad B = \begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} c_1 & c_2 & \dots & c_n \end{bmatrix}
 \end{equation*}
 
 \vspace{6pt}
 
-\section{Transformasi Keserupaan (\textit{Similarity Transformation})}
+\section{Pemodelan Sistem Multivariabel (SIMO, MISO, MIMO)}
 
-Representasi ruang keadaan suatu sistem \textbf{tidak bersifat tunggal}. Kita dapat mengubah basis ruang keadaan dengan matriks transformasi non-singular $P \in \mathbb{R}^{n \times n}$ melalui $x(t) = P z(t)$.
-
-\kotakdefinisi{Matriks Baru Hasil Transformasi Keserupaan:}{
+\subsection{1. Sistem SIMO (\textit{Single-Input Multiple-Output})}
+Fungsi transfer dinyatakan sebagai matriks kolom berukuran $p \times 1$:
 \begin{equation*}
-    \tilde{A} = P^{-1} A P, \quad \tilde{B} = P^{-1} B, \quad \tilde{C} = C P, \quad \tilde{D} = D
+    \mathbf{G}(s) = \begin{bmatrix} g_1(s) \\ g_2(s) \\ \vdots \\ g_p(s) \end{bmatrix} = \frac{\boldsymbol{\beta}_1 s^{n-1} + \boldsymbol{\beta}_2 s^{n-2} + \dots + \boldsymbol{\beta}_n}{s^n + a_1 s^{n-1} + \dots + a_n} + \mathbf{d}
 \end{equation*}
-}
+Realisasi kanonik keterkontrolan memiliki matriks keluaran $C = \begin{bmatrix} \boldsymbol{\beta}_1 & \boldsymbol{\beta}_2 & \dots & \boldsymbol{\beta}_n \end{bmatrix} \in \mathbb{R}^{p \times n}$.
 
-\textbf{Sifat-Sifat Invarian:}\\
-Di bawah transformasi keserupaan:
-\begin{enumerate}
-    \item Polinomial karakteristik tidak berubah: $\det(sI - \tilde{A}) = \det(sI - A)$.
-    \item Nilai-nilai eigen matriks $A$ tidak berubah.
-    \item Fungsi transfer $\tilde{G}(s) = G(s)$ identik sama.
-\end{enumerate}
+\subsection{2. Sistem MISO (\textit{Multiple-Input Single-Output})}
+Fungsi transfer dinyatakan sebagai matriks baris berukuran $1 \times m$:
+\begin{equation*}
+    \mathbf{G}(s) = \begin{bmatrix} g_1(s) & g_2(s) & \dots & g_m(s) \end{bmatrix} = \frac{\boldsymbol{\eta}_1 s^{n-1} + \boldsymbol{\eta}_2 s^{n-2} + \dots + \boldsymbol{\eta}_n}{s^n + a_1 s^{n-1} + \dots + a_n} + \mathbf{d}
+\end{equation*}
+Realisasi kanonik keterobservasian memiliki matriks masukan $B = \begin{bmatrix} \boldsymbol{\eta}_1^T & \boldsymbol{\eta}_2^T & \dots & \boldsymbol{\eta}_n^T \end{bmatrix}^T \in \mathbb{R}^{n \times m}$.
+
+\subsection{3. Sistem MIMO (\textit{Multi-Input Multi-Output}) \& Realisasi Minimal Gilbert}
+Melalui ekspansi pecahan parsial $G(s) = D + \sum_{i=1}^r \frac{W_i}{s - \lambda_i}$.\\
+Faktorisasi matriks residu rank $k_i$: $W_i = C_i B_i$ dengan $C_i \in \mathbb{R}^{p \times k_i}$ dan $B_i \in \mathbb{R}^{k_i \times m}$. Realisasi minimal berorde $n = \sum k_i$:
+\begin{equation*}
+    A = \operatorname{diag}(\lambda_1 I_{k_1}, \dots, \lambda_r I_{k_r}), \quad B = \begin{bmatrix} B_1 \\ \vdots \\ B_r \end{bmatrix}, \quad C = \begin{bmatrix} C_1 & \dots & C_r \end{bmatrix}
+\end{equation*}
 
 \vspace{6pt}
 
 \section{Solusi Domain Waktu \& Matriks Transisi Keadaan}
 
-Untuk sistem keadaan dengan kondisi awal $x(0) = x_0$:
-\begin{equation*}
-    \dot{x}(t) = A x(t) + B u(t)
-\end{equation*}
-Solusi analitiknya dalam domain waktu adalah:
+Solusi analitik persamaan keadaan kontinu adalah:
 \begin{equation*}
     x(t) = e^{At} x(0) + \int_{0}^{t} e^{A(t - \tau)} B u(\tau) \, d\tau
 \end{equation*}
-\begin{equation*}
-    y(t) = C e^{At} x(0) + C \int_{0}^{t} e^{A(t - \tau)} B u(\tau) \, d\tau + D u(t)
-\end{equation*}
-
-Di mana \textbf{Matriks Transisi Keadaan} didefinisikan sebagai:
+Di mana matriks transisi keadaan diperoleh melalui invers Transformasi Laplace:
 \begin{equation*}
     \Phi(t) = e^{At} = \mathcal{L}^{-1}\{(sI - A)^{-1}\}
 \end{equation*}
-
-\textbf{Sifat-Sifat $e^{At}$}:
-\begin{itemize}
-    \item $e^{A \cdot 0} = I$
-    \item $(e^{At})^{-1} = e^{-At}$
-    \item $e^{A(t_1 + t_2)} = e^{At_1} e^{At_2} = e^{At_2} e^{At_1}$
-    \item $\dfrac{d}{dt} e^{At} = A e^{At} = e^{At} A$
-\end{itemize}
 
 \vspace{6pt}
 
 \section{Contoh Soal dan Pembahasan}
 
-\noindent\textbf{Contoh: Menghitung Fungsi Transfer dan Matriks Transisi Keadaan}\\
-Diberikan sistem ruang keadaan:
+\noindent\textbf{Contoh: Realisasi Sistem SIMO ke Bentuk Kanonik Keterkontrolan}\\
+Diberikan fungsi transfer SIMO:
 \begin{equation*}
-    A = \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 \end{bmatrix}, \quad D = [0]
+    T(s) = \frac{1}{s^2 + 7s + 12} \begin{bmatrix} 3s + 13 \\ 3s + 11 \end{bmatrix}
 \end{equation*}
 
 \textit{Penyelesaian:}
 
-Bentuk matriks $(sI - A)$:
+Dari polinomial karakteristik pada penyebut, diperoleh $a_1 = 7$ dan $a_2 = 12$. Vektor polinomial pembilang dipisahkan berdasarkan derajat $s$:
 \begin{equation*}
-    sI - A = \begin{bmatrix} s & -1 \\ 2 & s+3 \end{bmatrix}
+    \begin{bmatrix} 3s + 13 \\ 3s + 11 \end{bmatrix} = \begin{bmatrix} 3 \\ 3 \end{bmatrix} s + \begin{bmatrix} 13 \\ 11 \end{bmatrix}
 \end{equation*}
-Determinan $(sI - A)$:
-\begin{equation*}
-    \det(sI - A) = s(s+3) - (-1)(2) = s^2 + 3s + 2 = (s+1)(s+2)
-\end{equation*}
-Invers $(sI - A)^{-1}$:
-\begin{equation*}
-    (sI - A)^{-1} = \frac{1}{(s+1)(s+2)} \begin{bmatrix} s+3 & 1 \\ -2 & s \end{bmatrix}
-\end{equation*}
+Sehingga $\boldsymbol{\beta}_1 = \begin{bmatrix} 3 \\ 3 \end{bmatrix}$ dan $\boldsymbol{\beta}_2 = \begin{bmatrix} 13 \\ 11 \end{bmatrix}$.
 
-Menghitung fungsi transfer $G(s)$:
+Persamaan ruang keadaan dalam bentuk kanonik keterkontrolan adalah:
 \begin{align*}
-    G(s) &= C (sI - A)^{-1} B \\
-    &= \begin{bmatrix} 1 & 0 \end{bmatrix} \left( \frac{1}{(s+1)(s+2)} \begin{bmatrix} s+3 & 1 \\ -2 & s \end{bmatrix} \right) \begin{bmatrix} 0 \\ 1 \end{bmatrix} \\
-    &= \frac{1}{(s+1)(s+2)} \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} 1 \\ s \end{bmatrix} = \frac{1}{s^2 + 3s + 2}
+    \begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \end{bmatrix} &= \begin{bmatrix} 0 & 1 \\ -12 & -7 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \end{bmatrix} u \\
+    \begin{bmatrix} y_1 \\ y_2 \end{bmatrix} &= \begin{bmatrix} 13 & 3 \\ 11 & 3 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}
 \end{align*}
-
-Menghitung matriks transisi keadaan $\Phi(t) = e^{At} = \mathcal{L}^{-1}\{(sI - A)^{-1}\}$ melalui pecahan parsial:
-\begin{align*}
-    \mathcal{L}^{-1}\left\{ \frac{s+3}{(s+1)(s+2)} \right\} &= \mathcal{L}^{-1}\left\{ \frac{2}{s+1} - \frac{1}{s+2} \right\} = 2e^{-t} - e^{-2t} \\
-    \mathcal{L}^{-1}\left\{ \frac{1}{(s+1)(s+2)} \right\} &= \mathcal{L}^{-1}\left\{ \frac{1}{s+1} - \frac{1}{s+2} \right\} = e^{-t} - e^{-2t} \\
-    \mathcal{L}^{-1}\left\{ \frac{-2}{(s+1)(s+2)} \right\} &= \mathcal{L}^{-1}\left\{ \frac{-2}{s+1} + \frac{2}{s+2} \right\} = -2e^{-t} + 2e^{-2t} \\
-    \mathcal{L}^{-1}\left\{ \frac{s}{(s+1)(s+2)} \right\} &= \mathcal{L}^{-1}\left\{ \frac{-1}{s+1} + \frac{2}{s+2} \right\} = -e^{-t} + 2e^{-2t}
-\end{align*}
-
-Sehingga diperoleh matriks transisi keadaan:
-\begin{equation*}
-    e^{At} = \begin{bmatrix} 2e^{-t} - e^{-2t} & e^{-t} - e^{-2t} \\ -2e^{-t} + 2e^{-2t} & -e^{-t} + 2e^{-2t} \end{bmatrix}
-\end{equation*}
 
 \end{document}

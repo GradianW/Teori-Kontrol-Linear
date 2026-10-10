@@ -1,0 +1,201 @@
+SOURCE: Lecture Slide\Before UTS\2026 Pertemuan 1 MA4171.pdf
+TOTAL PAGES: 18
+
+=== PAGE 1 ===
+Matematika-FMIPA ITB
+Dr. Dewi Handayani, S.Si., M.Si.
+ MA4171 T eoriKontrol Linear
+Sejarah Kontrol, TransformasiLaplace 
+dan Sistem Persamaan Diferensial
+Pertemuan 1 MA4171
+Senin, 24 Agustus 2026, Pkl 09.00 WIB
+
+=== PAGE 2 ===
+Pendahuluan
+• Sistem Kontrol : Mengubah perilaku sistem 
+dinamik sesuai dengan yang diinginkan.
+• Meminimumkan ongkos : Optimal Control.
+• Tegar terhadap disturbance, perturbation, 
+uncertainty, noise.
+• Robust Control : H-infinity control, 𝜇-synthesis,  
+Gap Metric.
+
+=== PAGE 3 ===
+Overview Sistem Kontrol
+Kontrol Klasik
+James Watt (abad 18) : kontrol kecepatan mesin uap
+Minorsky (1932) : pengemudian kapal
+Nyquist(1932) : kestabilan lup tertutup
+1940 : metoda respon frekuensi dan tempat kedudukan akar
+Tidak Optimal SISOFrequency domain
+
+=== PAGE 4 ===
+Kontrol Modern
+Wiener (1930's - 1950's) Generalized 
+harmonic analysis, cybernetics, 
+filtering, prediction, smoothing
+1930's - 1950's
+Kolmogorov (1940's) Stochastic 
+processes
+1940's
+Linear and nonlinear programming
+1940's
+Bellman's Dynamic Programming
+1950's
+Pontryagin's Maximum Principle
+1950's
+
+=== PAGE 5 ===
+Kontrol Modern 
+• Linear optimal control (late 1950's and 1960's)
+➢Kalman Filtering
+➢Linear-Quadratic (LQ) regulator problem
+➢Stochastic optimal control (LQG)
+Modern control has had little impact 
+on feedback design because it
+neglects fundamental feedback 
+tradeoffs and the role of plant uncertainty.
+MIMO Time domain
+
+=== PAGE 6 ===
+Beberapa 
+Istilah
+• Plant : objek fisik yang di kontrol (tungku
+pemanas, reactor kimia, pesawat ruang
+angkasa).
+• Sistem: kombinasi dari beberapa
+komponen yang bekerja bersama-sama
+untuk mencapai suatu sasaran tertentu.
+• Gangguan (disturbance): suatu sinyal yang 
+cenderung mempunyai pengaruh yang 
+merugikan keluaran (output) sistem. 
+Internal (perturbation) & eksternal.
+Beberapa Istilah
+dalam
+Teori Kontrol
+
+
+=== PAGE 7 ===
+Beberapa 
+istilah….
+• Sistem kontrol berumpan-balik (feedback 
+control system): sistem kontrol yang 
+menjaga hubungan yang telah ditentukan
+antara keluaran dan masukan acuan
+dengan membandingkannya dan 
+menggunakan selisihnya sebagai alat
+pengontrolan.
+• Sistem kontrol lup tertutup (closed-loop  
+control system): sistem control yang sinyal
+keluarannya mempunyai pengaruh
+langsung pada aksi pengontrolan
+• Sistem kontrol lup terbuka (open loop 
+control system): sistem control yang 
+keluarannya tidak berpengaruh pada aksi
+pengontrolan.
+Beberapa Istilah
+dalam
+Teori Kontrol
+
+
+=== PAGE 8 ===
+Plant/ProcessINPUT OUTPUTCONTROLLER
+SISTEM KONTROL LUP TERBUKA
+Plant/ProcessINPUT OUTPUTCONTROLLER
+SENSOR
+SISTEM LUP TERTUTUP
+
+=== PAGE 9 ===
+Beberapa contoh sistem lup terbuka 
+dan lup tertutup
+Input Controller Plant Disturbance Output Measurement
+Heat setting Dial Hair dryer Hair dampness Hot air 
+temperature
+None
+Speed setting Dial Drill Type of material Rotating drill bit 
+speed
+None
+Desired 
+temperature
+Thermostat Furnace Outside temperature Hot air 
+temperature
+Room temperature
+Desired speed Cruise control Auto engine Driving conditions Car speed Engine rpm
+Desired 
+performance
+Electorate President Economy Decisions Evaluation
+
+=== PAGE 10 ===
+Aplikasi pada Bidang Kesehatan
+• Pengaturan dosis obat terapi pada pasien kanker (kemo, fisio atau
+imuno), pasien HIV atau AIDS
+• Pengaturan insulin pada diabetes
+• Optimasi ventilasi mekanika untuk pasien ICU
+• Waktu optimal untuk pemberian vaksinasi
+
+=== PAGE 11 ===
+Aplikasi di Asuransi
+
+
+=== PAGE 12 ===
+TransformasiLaplace untuk Solusi
+Nilai Awal
+Review: meninjau kembali definisi dari transformasi Laplace dan solusi masalah
+nilai awal
+
+=== PAGE 13 ===
+DEFINISI TRANSFORMASI LAPLACE
+• Transformasi integral didefinisikan sebagai:
+𝐹 𝑠 = න
+𝛼
+𝛽
+𝐾 𝑠, 𝑡 𝑓(𝑡) 𝑑𝑡
+dimana 𝐾(𝑠, 𝑡) merupakan fungsi tertentu yang disebut kernel transformasi, dan 
+batas-batas integrasi 𝛼, 𝛽 juga diberikan.
+• Transformasi Laplace: Misalkan 𝑓(𝑡) diberikan untuk 𝑡 ≥ 0, dan anggaplah 𝑓
+memenuhi kondisi tertentu. Kemudian Transformasi Laplace dari 𝑓, yang akan
+kita nyatakan dengan ℒ 𝑓 𝑡 = 𝐹(𝑠), didefinisikan oleh persamaan:
+ℒ 𝑓 𝑡 = 𝐹 𝑠 = න
+0
+∞
+𝑒−𝑠𝑡𝑓(𝑡) 𝑑𝑡
+Transformasi Laplace menggunakan kernel 𝐾(𝑠, 𝑡) = 𝑒−𝑠𝑡 .
+
+
+=== PAGE 14 ===
+Tabel Laplace
+
+
+=== PAGE 15 ===
+
+
+=== PAGE 16 ===
+Solusi Masalah Nilai Awal
+Teorema: Misal 𝑓 kontinu dan 𝑓′ kontinu bagian demi bagian pada selang 0 ≤ 𝑡 ≤ 𝑎 . 
+Misalkan terdapat konstanta 𝐾, 𝑎, dan 𝑀 sehingga 𝑓 𝑡 < 𝐾𝑒𝑎𝑡 untuk 𝑡 ≥ 𝑀, maka
+untuk 𝑠 > 𝑎 diperoleh
+ℒ 𝑓′ 𝑡 = 𝑠ℒ 𝑓 𝑡 − 𝑓(0)
+Bukti: Nyatakan 𝑓′ mempunyai titik diskontinu pada 𝑡1, 𝑡2, … , 𝑡𝑛
+Untuk 𝐴 → ∞, 𝑒−𝑠𝐴𝑓 𝐴 → 0 untuk 𝑠 > 𝑎 sehingga ℒ 𝑓′ 𝑡 = 𝑠ℒ 𝑓 𝑡 − 𝑓(0)
+
+
+=== PAGE 17 ===
+Solusi Masalah Nilai Awal
+• Jika 𝑓′ dan 𝑓′′ memenuhi kondisi yang sama yang diterapkan pada 𝑓 dan 𝑓′ di 
+teorema sebelumnya, maka transformasi Laplace dari 𝑓′′ juga ada untuk 𝑠 > 𝑎
+dan diberikan oleh:
+ℒ 𝑓′′ 𝑡 = 𝑠2ℒ 𝑓 𝑡 − 𝑠𝑓 0 − 𝑓′(0)
+• Akibatnya: Misal 𝑓, 𝑓′, 𝑓′′, … , 𝑓(𝑛−1) kontinu dan 𝑓(𝑛) kontinu bagian demi bagian
+pada selang 0 ≤ 𝑡 ≤ 𝑎 . Misalkan terdapat konstanta 𝐾, 𝑎, dan 𝑀 sehingga
+𝑓 𝑡 < 𝐾𝑒𝑎𝑡, 𝑓′ 𝑡 < 𝐾𝑒𝑎𝑡, … , 𝑓 𝑛−1 𝑡 < 𝐾𝑒𝑎𝑡 untuk 𝑡 ≥ 𝑀, maka untuk
+𝑠 > 𝑎 diperoleh
+ℒ 𝑓 𝑛 (𝑡) = 𝑠𝑛ℒ 𝑓 𝑡 − 𝑠𝑛−1𝑓 0 − 𝑠𝑛−2𝑓′ 0 − ⋯ − 𝑠𝑓 𝑛−2 0 − 𝑓 𝑛−1 (0)
+
+
+=== PAGE 18 ===
+Soal Latihan
+• Tentukan solusi dari 𝑦′′ − 𝑦′ − 2𝑦 = 0 dengan 𝑦 0 = 1, 𝑦′ 0 = 0
+• Tentukansolusi dari 𝑦′′ + 𝑦 = sin 2𝑡 dengan 𝑦 0 = 2, 𝑦′ 0 = 1
+• Tentukan solusi dari 𝑦(4) − 𝑦 = 0 dengan 𝑦 0 = 0, 𝑦′ 0 = 1,
+𝑦′′ 0 = 0, 𝑦′′′ 0 = 0
+

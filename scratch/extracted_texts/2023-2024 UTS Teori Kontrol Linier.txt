@@ -1,0 +1,65 @@
+SOURCE: Past Problem\2023-2024 UTS Teori Kontrol Linier.pdf
+TOTAL PAGES: 1
+
+=== PAGE 1 ===
+Ujian T engah Semester MA4171 T eori Kontrol Linear
+Dosen: Dr. Dewi Handayani, S.Si., M.Si.
+Jum’at, 13 Oktober 2023
+Durasi: 110 menit
+Instruksi : Kerjakan soal ujian dengan seksama dan teliti tanpa harus menguraikan hal yang tidak perlu. Ujian
+bersifat tutup buku, kecuali untuk tabel transformasi Laplace dan Z. Dilarang menggunakan alat bantu hitung
+dalam bentuk apapun. Soal ujian terdiri atas 4 soal esai panjang dan harus dikerjakan secara berurutan. Perhatikan
+batas waktu pengerjaan. Selamat dan sukses untuk ujiannya.
+Bagian A
+1. Dengan menggambarkan signal-flow terlebih dahulu, carilah fungsi transfer untuk sistem yang direpresentasikan
+sebagai diagram blok berikut.
+2. Diketahui sistem dengan fungsi transfer G(s) = 1s3 + 3s2 + 2s + 1
+"
+2s2 − 4s + 6
+−3s2 + s − 5
+#
+(a) Gambarkan signal-flow bentuk kekontrolan untuk sistem G(s).
+(b) Tentukan ruang persamaan keadaan (state space dan output equation) dari sistem dalam bentuk kanonik
+keterkontrolan.
+3. DIberikan sistem dengan persamaan state
+ 
+˙x1
+˙x2
+!
+=
+"
+0 1
+−2 −3
+#  
+x1
+x2
+!
++
+ 
+0
+1
+!
+u.
+(a) Untuk u(t) = et, t >0 dan x(0) =
+ 
+1
+0
+!
+, tentukan state response dari sistem tersebut.
+(b) Dengan memeriksa rank matriks keterkontrolan, buktikan bahwa sistem terkontrol secara lengkap.
+(c) Jika output y =
+"
+a
+1
+#  
+x1
+x2
+!
+, carilah syarat yang harus dipenuhi nilai a sehingga sistem terobservasi secara
+lengkap.
+4. Diketahui persamaan beda y(k + 2) − 7y(k + 1) + 12y(k) = 1.5u(k) untuk k = 0, 1, 2, ....
+(a) Tentukan solusi y(k) untuk kondisi u(k) = 0 di semua k dengan y(0) = 0, y(1) = 1.
+(b) Jika y(k) dan u(k) masing-masing menunjukkan output dan input dari suatu sistem diskrit, carilah fungsi
+transfer sistem, kemudian tuliskan sistem dalam bentuk persamaan ruang keadaan.
+Typed by: Ricky Rahadiyan Daraputra (MA’22) 1 ©Divisi Akademik HIMATIKA ITB 2023
+
