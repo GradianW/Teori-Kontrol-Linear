@@ -1,0 +1,728 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.3cm,right=2.3cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, shapes.geometric}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{MA4171 Teori Kontrol Linear}}
+\lhead{\textbf{Latihan 04: Keterkontrolan \& Keterobservasian}}
+\rfoot{Halaman \thepage}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{LEMBAR LATIHAN DAN PEMBAHASAN LENGKAP}}\\[4pt]
+    {\large \textbf{TOPIK 04: KETERKONTROLAN DAN KETEROBSERVASIAN SISTEM}}\\[4pt]
+    \textbf{Mata Kuliah:} MA4171 Teori Kontrol Linear
+\end{center}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 1
+% =========================================================================
+\textbf{\large No. 1}
+
+\textbf{Soal:}  
+Suatu sistem dinamik linear invarian waktu (LTI) kontinu orde-3 memiliki representasi ruang keadaan dengan matriks dinamika dan matriks masukan sebagai berikut:
+$$A = \begin{bmatrix} 1 & 2 & 0 \\ 0 & -1 & 1 \\ 0 & 0 & -2 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung matriks keterkontrolan Kalman $M_c$.
+    \item Tentukan nilai determinan dan rank dari matriks $M_c$.
+    \item Tarik kesimpulan apakah sistem tersebut terkontrol keadaan lengkap (\textit{completely state controllable}).
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Perhitungan Matriks Keterkontrolan Kalman}
+
+Matriks keterkontrolan Kalman untuk sistem berorde $n = 3$ didefinisikan sebagai:
+$$M_c = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$$
+
+Dihitung perkalian matriks tahap demi tahap:
+Kolom pertama adalah vektor masukan $B$:
+$$B = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$$
+
+Kolom kedua dihitung melalui perkalian $A$ dengan $B$:
+$$AB = \begin{bmatrix} 1 & 2 & 0 \\ 0 & -1 & 1 \\ 0 & 0 & -2 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} (1)(1) + (2)(0) + (0)(1) \\ (0)(1) + (-1)(0) + (1)(1) \\ (0)(1) + (0)(0) + (-2)(1) \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \\ -2 \end{bmatrix}$$
+
+Kolom ketiga diperoleh dengan mengalikan $A$ dengan vektor $AB$:
+$$A^2B = A(AB) = \begin{bmatrix} 1 & 2 & 0 \\ 0 & -1 & 1 \\ 0 & 0 & -2 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \\ -2 \end{bmatrix} = \begin{bmatrix} (1)(1) + (2)(1) + (0)(-2) \\ (0)(1) + (-1)(1) + (1)(-2) \\ (0)(1) + (0)(1) + (-2)(-2) \end{bmatrix} = \begin{bmatrix} 3 \\ -3 \\ 4 \end{bmatrix}$$
+
+Dengan menyusun ketiga vektor kolom tersebut secara berdampingan, matriks keterkontrolan Kalman adalah:
+$$M_c = \begin{bmatrix} 1 & 1 & 3 \\ 0 & 1 & -3 \\ 1 & -2 & 4 \end{bmatrix}$$
+
+\textbf{(b) Penentuan Determinan dan Rank}
+
+Determinan dari matriks $M_c$ dihitung melalui ekspansi baris pertama:
+\begin{align*}
+    \det(M_c) &= 1 \cdot \det \begin{bmatrix} 1 & -3 \\ -2 & 4 \end{bmatrix} - 1 \cdot \det \begin{bmatrix} 0 & -3 \\ 1 & 4 \end{bmatrix} + 3 \cdot \det \begin{bmatrix} 0 & 1 \\ 1 & -2 \end{bmatrix} \\
+    &= 1 \cdot [(1)(4) - (-3)(-2)] - 1 \cdot [(0)(4) - (-3)(1)] + 3 \cdot [(0)(-2) - (1)(1)] \\
+    &= 1 \cdot [4 - 6] - 1 \cdot [0 + 3] + 3 \cdot [0 - 1] \\
+    &= -2 - 3 - 3 = -8
+\end{align*}
+
+Karena $\det(M_c) = -8 \ne 0$, matriks $M_c$ berukuran $3 \times 3$ memiliki rank penuh:
+$$\operatorname{rank}(M_c) = 3$$
+
+\textbf{(c) Kesimpulan Keterkontrolan}
+
+Berdasarkan Kriteria Keterkontrolan Kalman, karena $\operatorname{rank}(M_c) = n = 3$, sistem dinyatakan \textbf{terkontrol keadaan lengkap} (\textit{completely state controllable}). Setiap keadaan internal sistem dapat dipindahkan ke sembarang keadaan target dalam waktu berhingga melalui masukan kendali $u(t)$.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 2
+% =========================================================================
+\textbf{\large No. 2}
+
+\textbf{Soal:}  
+Diberikan sistem LTI orde-3 dengan matriks dinamika $A$ dan matriks keluaran $C$ sebagai berikut:
+$$A = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -6 & -11 & -6 \end{bmatrix}, \quad C = \begin{bmatrix} 2 & 1 & 0 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung matriks keterobservasian Kalman $M_o$.
+    \item Evaluasi apakah sistem terobservasi keadaan lengkap (\textit{completely state observable}).
+    \item Jika tidak terobservasi lengkap, tentukan dimensi subruang tak-terobservasi (\textit{unobservable subspace}).
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Perhitungan Matriks Keterobservasian Kalman}
+
+Matriks keterobservasian Kalman untuk sistem orde $n = 3$ didefinisikan sebagai:
+$$M_o = \begin{bmatrix} C \\ CA \\ CA^2 \end{bmatrix}$$
+
+Baris pertama adalah vektor keluaran $C$:
+$$C = \begin{bmatrix} 2 & 1 & 0 \end{bmatrix}$$
+
+Baris kedua dihitung melalui perkalian $C$ dengan $A$:
+$$CA = \begin{bmatrix} 2 & 1 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -6 & -11 & -6 \end{bmatrix} = \begin{bmatrix} 0 & 2 & 1 \end{bmatrix}$$
+
+Baris ketiga diperoleh dengan mengalikan vektor baris $CA$ dengan matriks $A$:
+$$CA^2 = (CA)A = \begin{bmatrix} 0 & 2 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -6 & -11 & -6 \end{bmatrix} = \begin{bmatrix} -6 & -11 & -4 \end{bmatrix}$$
+
+Penyusunan ketiga vektor baris menghasilkan matriks keterobservasian:
+$$M_o = \begin{bmatrix} 2 & 1 & 0 \\ 0 & 2 & 1 \\ -6 & -11 & -4 \end{bmatrix}$$
+
+\textbf{(b) Evaluasi Keterobservasian Sistem}
+
+Determinan matriks $M_o$ dihitung melalui ekspansi baris pertama:
+\begin{align*}
+    \det(M_o) &= 2 \cdot [(2)(-4) - (1)(-11)] - 1 \cdot [(0)(-4) - (1)(-6)] + 0 \\
+    &= 2 \cdot [-8 + 11] - 1 \cdot [0 + 6] \\
+    &= 2(3) - 6 = 6 - 6 = 0
+\end{align*}
+
+Karena $\det(M_o) = 0$, rank matriks $M_o$ kurang dari dimensi sistem ($n=3$). Diperiksa rank matriks melalui minor ukuran $2 \times 2$:
+$$\det \begin{bmatrix} 2 & 1 \\ 0 & 2 \end{bmatrix} = 4 - 0 = 4 \ne 0 \implies \operatorname{rank}(M_o) = 2 < 3$$
+
+Dengan demikian, sistem \textbf{tidak terobservasi keadaan lengkap} (\textit{not completely observable}).
+
+\textbf{(c) Dimensi Subruang Tak-Terobservasi}
+
+Dimensi subruang tak-terobservasi dinyatakan oleh nulitas matriks $M_o$:
+$$\dim(\ker(M_o)) = n - \operatorname{rank}(M_o) = 3 - 2 = 1$$
+Terdapat satu moda keadaan tak-terobservasi yang sinyalnya tidak terdeteksi pada keluaran $y(t)$.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 3
+% =========================================================================
+\textbf{\large No. 3}
+
+\textbf{Soal:}  
+Suatu sistem fisik memiliki representasi ruang keadaan yang bergantung pada dua parameter skalar $\alpha$ dan $\beta$:
+$$A = \begin{bmatrix} 1 & 1 \\ 0 & \alpha \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ \beta \end{bmatrix}, \quad C = \begin{bmatrix} 1 & -1 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Tentukan syarat nilai $\alpha$ dan $\beta$ agar sistem terkontrol keadaan lengkap.
+    \item Tentukan syarat nilai $\alpha$ agar sistem terobservasi keadaan lengkap.
+    \item Tentukan pasangan parameter $(\alpha, \beta)$ sedemikian sehingga sistem sekaligus terkontrol dan terobservasi.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Syarat Keterkontrolan Keadaan}
+
+Dihitung matriks keterkontrolan $M_c = \begin{bmatrix} B & AB \end{bmatrix}$:
+$$AB = \begin{bmatrix} 1 & 1 \\ 0 & \alpha \end{bmatrix} \begin{bmatrix} 1 \\ \beta \end{bmatrix} = \begin{bmatrix} 1 + \beta \\ \alpha\beta \end{bmatrix}$$
+$$M_c = \begin{bmatrix} 1 & 1 + \beta \\ \beta & \alpha\beta \end{bmatrix}$$
+
+Determinan matriks keterkontrolan dihitung sebagai:
+$$\det(M_c) = (1)(\alpha\beta) - (1 + \beta)(\beta) = \alpha\beta - \beta - \beta^2 = \beta(\alpha - 1 - \beta)$$
+
+Sistem terkontrol keadaan lengkap jika dan hanya jika $\det(M_c) \ne 0$:
+$$\beta \ne 0 \quad \text{dan} \quad \alpha - \beta \ne 1$$
+
+\textbf{(b) Syarat Keterobservasian Keadaan}
+
+Dihitung matriks keterobservasian $M_o = \begin{bmatrix} C \\ CA \end{bmatrix}$:
+$$CA = \begin{bmatrix} 1 & -1 \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 0 & \alpha \end{bmatrix} = \begin{bmatrix} 1 & 1 - \alpha \end{bmatrix}$$
+$$M_o = \begin{bmatrix} 1 & -1 \\ 1 & 1 - \alpha \end{bmatrix}$$
+
+Determinan matriks keterobservasian adalah:
+$$\det(M_o) = (1)(1 - \alpha) - (-1)(1) = 1 - \alpha + 1 = 2 - \alpha$$
+
+Sistem terobservasi keadaan lengkap jika dan hanya jika $\det(M_o) \ne 0$:
+$$\alpha \ne 2$$
+
+\textbf{(c) Syarat Sistem Simultan Terkontrol dan Terobservasi}
+
+Sistem memenuhi kedua sifat secara bersamaan jika seluruh kondisi dipenuhi:
+$$\alpha \ne 2, \quad \beta \ne 0, \quad \text{dan} \quad \beta \ne \alpha - 1$$
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 4
+% =========================================================================
+\textbf{\large No. 4}
+
+\textbf{Soal:}  
+Gunakan Uji Popov-Belevitch-Hautus (PBH Controllability Test) untuk memeriksa keterkontrolan sistem dengan matriks:
+$$A = \begin{bmatrix} -2 & 1 & 0 \\ 0 & -2 & 0 \\ 0 & 0 & -3 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}$$
+
+\textbf{Penyelesaian:}
+
+Nilai-nilai eigen matriks $A$ ditentukan dari persamaan karakteristik $\det(sI - A) = 0$. Karena matriks $A$ bertipe segitiga atas, nilai eigen terletak pada diagonal utama:
+$$\lambda_1 = \lambda_2 = -2 \quad (\text{kembar dengan multiplisitas aljabar } 2), \quad \lambda_3 = -3$$
+
+Uji PBH menyatakan bahwa sistem terkontrol lengkap jika dan hanya jika:
+$$\operatorname{rank} \begin{bmatrix} sI - A & B \end{bmatrix} = n = 3, \quad \forall s \in \{\lambda_i\}$$
+
+Pemeriksaan pada nilai eigen pertama $s = -2$:
+$$-2 I - A = \begin{bmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
+Dibentuk matriks uji PBH ukuran $3 \times 4$:
+$$P_{PBH}(-2) = \begin{bmatrix} -2I - A & B \end{bmatrix} = \begin{bmatrix} 0 & -1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 1 \end{bmatrix}$$
+
+Diperiksa baris-baris pada matriks $P_{PBH}(-2)$:
+Baris 1 memuat elemen non-nol pada kolom 2 ($-1$).
+Baris 2 memuat elemen non-nol pada kolom 4 ($1$).
+Baris 3 memuat elemen non-nol pada kolom 3 ($1$).
+Ketiga vektor baris saling bebas linear secara langsung, sehingga:
+$$\operatorname{rank}(P_{PBH}(-2)) = 3$$
+
+Pemeriksaan pada nilai eigen kedua $s = -3$:
+$$-3 I - A = \begin{bmatrix} -1 & -1 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 0 \end{bmatrix}$$
+Matriks uji PBH pada $s = -3$:
+$$P_{PBH}(-3) = \begin{bmatrix} -3I - A & B \end{bmatrix} = \begin{bmatrix} -1 & -1 & 0 & 0 \\ 0 & -1 & 0 & 1 \\ 0 & 0 & 0 & 1 \end{bmatrix}$$
+Baris 1 memiliki pivot pada kolom 1, baris 2 memiliki pivot pada kolom 2, dan baris 3 memiliki pivot pada kolom 4. Ketiga baris bebas linear, sehingga:
+$$\operatorname{rank}(P_{PBH}(-3)) = 3$$
+
+Karena $\operatorname{rank} \begin{bmatrix} \lambda_i I - A & B \end{bmatrix} = 3$ untuk semua nilai eigen, sistem dinyatakan \textbf{terkontrol keadaan lengkap}.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 5
+% =========================================================================
+\textbf{\large No. 5}
+
+\textbf{Soal:}  
+Gunakan Uji PBH Keterobservasian (PBH Observability Test) untuk menentukan apakah sistem berikut terobservasi:
+$$A = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 3 & 0 \\ 1 & 1 & 2 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 & 1 \end{bmatrix}$$
+
+\textbf{Penyelesaian:}
+
+Matriks $A$ adalah matriks segitiga bawah dengan nilai-nilai eigen pada diagonal:
+$$\lambda_1 = 1, \quad \lambda_2 = 3, \quad \lambda_3 = 2$$
+
+Kriteria PBH Keterobservasian mengharuskan pengujian rank matriks kolom ukuran $4 \times 3$:
+$$\operatorname{rank} \begin{bmatrix} \lambda_i I - A \\ C \end{bmatrix} = n = 3, \quad \forall \lambda_i \in \{1, 2, 3\}$$
+
+Pengujian pada $\lambda = 1$:
+$$Q_{PBH}(1) = \begin{bmatrix} 1I - A \\ C \end{bmatrix} = \begin{bmatrix} 0 & 0 & 0 \\ -2 & -2 & 0 \\ -1 & -1 & -1 \\ 1 & 0 & 1 \end{bmatrix}$$
+Ditinjau minor $3 \times 3$ yang dibentuk dari baris 2, 3, dan 4:
+$$\det \begin{bmatrix} -2 & -2 & 0 \\ -1 & -1 & -1 \\ 1 & 0 & 1 \end{bmatrix} = -2(-1 - 0) - (-2)(-1 + 1) + 0 = 2 \ne 0 \implies \operatorname{rank} = 3$$
+
+Pengujian pada $\lambda = 2$:
+$$Q_{PBH}(2) = \begin{bmatrix} 2I - A \\ C \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ -2 & -1 & 0 \\ -1 & -1 & 0 \\ 1 & 0 & 1 \end{bmatrix}$$
+Kolom 3 hanya memiliki elemen bukan nol pada baris ke-4 (nilai $1$). Baris 1, 2, dan 4 membentuk matriks segitiga dengan determinan $(1)(-1)(1) = -1 \ne 0 \implies \operatorname{rank} = 3$.
+
+Pengujian pada $\lambda = 3$:
+$$Q_{PBH}(3) = \begin{bmatrix} 3I - A \\ C \end{bmatrix} = \begin{bmatrix} 2 & 0 & 0 \\ -2 & 0 & 0 \\ -1 & -1 & 1 \\ 1 & 0 & 1 \end{bmatrix}$$
+Ditinjau minor dari baris 1, 3, dan 4:
+$$\det \begin{bmatrix} 2 & 0 & 0 \\ -1 & -1 & 1 \\ 1 & 0 & 1 \end{bmatrix} = 2((-1)(1) - 0) = -2 \ne 0 \implies \operatorname{rank} = 3$$
+
+Karena untuk seluruh nilai eigen rank matriks uji bernilai 3, sistem dinyatakan \textbf{terobservasi keadaan lengkap}.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 6
+% =========================================================================
+\textbf{\large No. 6}
+
+\textbf{Soal:}  
+Diberikan sistem yang sudah berada dalam bentuk diagonal dan bentuk blok Jordan:
+$$\dot{\mathbf{x}}_1 = \begin{bmatrix} -1 & 0 & 0 \\ 0 & -2 & 0 \\ 0 & 0 & -4 \end{bmatrix} \mathbf{x}_1 + \begin{bmatrix} 2 \\ 0 \\ 3 \end{bmatrix} u, \quad y_1 = \begin{bmatrix} 1 & 4 & 2 \end{bmatrix} \mathbf{x}_1$$
+$$\dot{\mathbf{x}}_2 = \begin{bmatrix} -2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -2 \end{bmatrix} \mathbf{x}_2 + \begin{bmatrix} 0 \\ 0 \\ 5 \end{bmatrix} u, \quad y_2 = \begin{bmatrix} 1 & 0 & 0 \end{bmatrix} \mathbf{x}_2$$
+Terapkan Uji Keterkontrolan dan Keterobservasian Gilbert untuk menganalisis kedua sistem tersebut.
+
+\textbf{Penyelesaian:}
+
+\textbf{Analisis Sistem Pertama (Bentuk Diagonal Murni)}
+
+Teorema Gilbert untuk sistem diagonal dengan nilai eigen distingtif menyatakan:
+Sistem terkontrol jika dan hanya jika tidak ada baris pada matriks masukan $B$ yang bernilai nol.
+Sistem terobservasi jika dan hanya jika tidak ada kolom pada matriks keluaran $C$ yang bernilai nol.
+
+Pemeriksaan matriks $B_1$:
+Baris kedua dari matriks $B_1$ bernilai nol ($b_2 = 0$). Sinyal kontrol $u(t)$ tidak memiliki saluran masukan menuju moda eigen $\lambda = -2$. Dengan demikian, sistem pertama \textbf{tidak terkontrol lengkap}. Moda $\lambda = -2$ merupakan moda tak-terkontrol.
+
+Pemeriksaan matriks $C_1$:
+Seluruh elemen kolom matriks $C_1 = [1, 4, 2]$ bernilai bukan nol. Setiap moda eigen berkontribusi langsung pada sinyal keluaran $y_1(t)$. Dengan demikian, sistem pertama \textbf{terobservasi keadaan lengkap}.
+
+\textbf{Analisis Sistem Kedua (Bentuk Blok Jordan)}
+
+Teorema Gilbert untuk sistem dengan blok Jordan tunggal menyatakan:
+Sistem terkontrol jika dan hanya jika elemen pada baris terakhir blok Jordan pada matriks $B$ bernilai bukan nol.
+Sistem terobservasi jika dan hanya jika elemen pada kolom pertama blok Jordan pada matriks $C$ bernilai bukan nol.
+
+Pemeriksaan matriks $B_2$:
+Baris terakhir dari blok Jordan berorde 3 berkorespondensi dengan elemen ketiga matriks $B_2$, yaitu $b_3 = 5 \ne 0$. Sinyal masukan menyuntikkan eksitasi pada integrator terbawah rantai Jordan yang merambat ke seluruh variabel keadaan rantai. Dengan demikian, sistem kedua \textbf{terkontrol keadaan lengkap}.
+
+Pemeriksaan matriks $C_2$:
+Kolom pertama blok Jordan pada matriks $C_2$ adalah elemen pertama, yaitu $c_1 = 1 \ne 0$. Sinyal keluaran membaca akumulasi integrasi dari seluruh rantai variabel keadaan. Dengan demikian, sistem kedua \textbf{terobservasi keadaan lengkap}.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 7
+% =========================================================================
+\textbf{\large No. 7}
+
+\textbf{Soal:}  
+Diberikan sistem LTI terkontrol berikut:
+$$A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung polinomial karakteristik matriks $A$.
+    \item Tentukan matriks transformasi $P$ sedemikian rupa sehingga $\tilde{A} = P^{-1} A P$ dan $\tilde{B} = P^{-1} B$ berada dalam Bentuk Kanonik Keterkontrolan (\textit{Controllable Canonical Form}).
+    \item Verifikasi hasil matriks $\tilde{A}$ dan $\tilde{B}$.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Polinomial Karakteristik Matriks $A$}
+
+Polinomial karakteristik dihitung melalui determinan:
+$$\det(sI - A) = \det \begin{bmatrix} s - 1 & -2 \\ -3 & s - 4 \end{bmatrix} = (s - 1)(s - 4) - (-2)(-3) = s^2 - 5s + 4 - 6 = s^2 - 5s - 2$$
+Koefisien polinomial adalah $a_1 = -5$ dan $a_2 = -2$.
+
+\textbf{(b) Penentuan Matriks Transformasi $P$}
+
+Matriks keterkontrolan sistem awal adalah:
+$$M_c = \begin{bmatrix} B & AB \end{bmatrix} = \begin{bmatrix} 1 & 3 \\ 1 & 7 \end{bmatrix}$$
+Invers dari matriks $M_c$ dihitung dengan $\det(M_c) = 7 - 3 = 4$:
+$$M_c^{-1} = \frac{1}{4} \begin{bmatrix} 7 & -3 \\ -1 & 1 \end{bmatrix} = \begin{bmatrix} 7/4 & -3/4 \\ -1/4 & 1/4 \end{bmatrix}$$
+
+Vektor baris terakhir dari $M_c^{-1}$ dinotasikan sebagai $t_1^T$:
+$$t_1^T = \begin{bmatrix} -1/4 & 1/4 \end{bmatrix}$$
+
+Matriks transformasi $P^{-1}$ dibentuk dari vektor $t_1^T$ dan hasil kalinya dengan $A$:
+$$t_1^T A = \begin{bmatrix} -1/4 & 1/4 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} (-1/4 + 3/4) & (-2/4 + 4/4) \end{bmatrix} = \begin{bmatrix} 1/2 & 1/2 \end{bmatrix}$$
+$$P^{-1} = \begin{bmatrix} t_1^T \\ t_1^T A \end{bmatrix} = \begin{bmatrix} -1/4 & 1/4 \\ 1/2 & 1/2 \end{bmatrix}$$
+
+Matriks transformasi $P$ diperoleh dengan menginverskan $P^{-1}$:
+$$\det(P^{-1}) = (-1/4)(1/2) - (1/4)(1/2) = -1/8 - 1/8 = -1/4$$
+$$P = \frac{1}{-1/4} \begin{bmatrix} 1/2 & -1/4 \\ -1/2 & -1/4 \end{bmatrix} = \begin{bmatrix} -2 & 1 \\ 2 & 1 \end{bmatrix}$$
+
+\textbf{(c) Verifikasi Matriks Bentuk Kanonik}
+
+Dihitung transformasi matriks:
+$$\tilde{A} = P^{-1} A P = \begin{bmatrix} -1/4 & 1/4 \\ 1/2 & 1/2 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} -2 & 1 \\ 2 & 1 \end{bmatrix} = \begin{bmatrix} 1/2 & 1/2 \\ 2 & 3 \end{bmatrix} \begin{bmatrix} -2 & 1 \\ 2 & 1 \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 2 & 5 \end{bmatrix}$$
+$$\tilde{B} = P^{-1} B = \begin{bmatrix} -1/4 & 1/4 \\ 1/2 & 1/2 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$$
+
+Matriks $\tilde{A}$ memiliki baris terakhir $[-a_2, -a_1] = [2, 5]$ dan superdiagonal 1, sedangkan $\tilde{B} = [0, 1]^T$. Hasil ini tepat memenuhi struktur kanonik keterkontrolan.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 8
+% =========================================================================
+\textbf{\large No. 8}
+
+\textbf{Soal:}  
+Diberikan sistem terobservasi berikut:
+$$A = \begin{bmatrix} 0 & -2 \\ 1 & -3 \end{bmatrix}, \quad C = \begin{bmatrix} 0 & 1 \end{bmatrix}$$
+Tentukan matriks transformasi koordinat $Q$ sedemikian rupa sehingga representasi ruang keadaan baru $\bar{A} = Q A Q^{-1}$ dan $\bar{C} = C Q^{-1}$ berada dalam Bentuk Kanonik Keterobservasian (\textit{Observable Canonical Form}).
+
+\textbf{Penyelesaian:}
+
+Polinomial karakteristik matriks $A$ adalah:
+$$\det(sI - A) = \det \begin{bmatrix} s & 2 \\ -1 & s + 3 \end{bmatrix} = s^2 + 3s + 2 \implies a_1 = 3, \; a_2 = 2$$
+
+Matriks keterobservasian Kalman awal dihitung:
+$$M_o = \begin{bmatrix} C \\ CA \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 1 & -3 \end{bmatrix}$$
+Invers dari matriks keterobservasian dengan determinan $\det(M_o) = 0 - 1 = -1$:
+$$M_o^{-1} = \begin{bmatrix} 3 & 1 \\ 1 & 0 \end{bmatrix}$$
+
+Kolom terakhir dari $M_o^{-1}$ didefinisikan sebagai vektor $q_1$:
+$$q_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$$
+
+Matriks transformasi $Q^{-1}$ dibangun dari vektor $q_1$ dan $A q_1$:
+$$A q_1 = \begin{bmatrix} 0 & -2 \\ 1 & -3 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$$
+$$Q^{-1} = \begin{bmatrix} q_1 & A q_1 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = I$$
+
+Karena $Q^{-1} = I$, maka $Q = I$. Hal ini menunjukkan bahwa sistem yang diberikan sudah berada secara alami dalam bentuk kanonik keterobservasian dengan:
+$$\bar{A} = \begin{bmatrix} 0 & -2 \\ 1 & -3 \end{bmatrix}, \quad \bar{C} = \begin{bmatrix} 0 & 1 \end{bmatrix}$$
+di mana kolom kedua matriks $\bar{A}$ memuat koefisien $[-a_2, -a_1]^T = [-2, -3]^T$.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 9
+% =========================================================================
+\textbf{\large No. 9}
+
+\textbf{Soal:}  
+Diberikan sistem LTI dengan matriks:
+$$A = \begin{bmatrix} -1 & 0 \\ 0 & -2 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 2 \end{bmatrix}, \quad D = [0]$$
+\begin{enumerate}[label=(\alph*)]
+    \item Uji keterkontrolan keadaan sistem.
+    \item Uji keterkontrolan keluaran (\textit{output controllability}) sistem.
+    \item Jelaskan secara fisis mengapa suatu sistem dapat terkontrol keluaran meskipun tidak terkontrol keadaan.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Uji Keterkontrolan Keadaan}
+
+Matriks keterkontrolan keadaan dihitung sebagai:
+$$M_c = \begin{bmatrix} B & AB \end{bmatrix} = \begin{bmatrix} 1 & -1 \\ 0 & 0 \end{bmatrix}$$
+Karena baris kedua seluruhnya nol, $\det(M_c) = 0$ dan $\operatorname{rank}(M_c) = 1 < 2$. Sistem \textbf{tidak terkontrol keadaan lengkap}. Variabel keadaan $x_2$ tidak dapat dipengaruhi oleh masukan $u(t)$.
+
+\textbf{(b) Uji Keterkontrolan Keluaran}
+
+Kriteria keterkontrolan keluaran Kalman untuk sistem dengan dimensi keluaran $p = 1$ menggunakan matriks:
+$$M_{co} = \begin{bmatrix} CB & CAB & D \end{bmatrix}$$
+Dihitung suku-suku perkalian:
+$$CB = \begin{bmatrix} 1 & 2 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix} = 1$$
+$$CAB = \begin{bmatrix} 1 & 2 \end{bmatrix} \begin{bmatrix} -1 \\ 0 \end{bmatrix} = -1$$
+$$M_{co} = \begin{bmatrix} 1 & -1 & 0 \end{bmatrix}$$
+
+Rank dari matriks $M_{co}$ adalah 1, yang sama dengan dimensi sinyal keluaran ($p = 1$):
+$$\operatorname{rank}(M_{co}) = p = 1$$
+Dengan demikian, sistem dinyatakan \textbf{terkontrol keluaran lengkap} (\textit{completely output controllable}).
+
+\textbf{(c) Penjelasan Fisis}
+
+Keterkontrolan keadaan menuntut kendali independen atas seluruh $n$ dimensi ruang keadaan internal sistem. Sebaliknya, keterkontrolan keluaran hanya menuntut kemampuan masukan untuk mengarahkan sinyal keluaran $y(t)$ ke sembarang nilai target. Karena keluaran $y(t) = x_1(t) + 2x_2(t)$ dipengaruhi secara langsung oleh variabel $x_1(t)$ yang sepenuhnya terkontrol oleh $u(t)$, pergerakan $x_1(t)$ sudah cukup untuk membawa nilai $y(t)$ ke titik target mana pun, meskipun variabel keadaan internal $x_2(t)$ tidak dapat dikendalikan.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 10
+% =========================================================================
+\textbf{\large No. 10}
+
+\textbf{Soal:}  
+Suatu sistem memiliki representasi ruang keadaan:
+$$A = \begin{bmatrix} -2 & 0 \\ 0 & 1 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Tentukan apakah sistem tersebut terkontrol dan terobservasi.
+    \item Tentukan apakah sistem tersebut terstabilkan (\textit{stabilizable}) dan terdeteksi (\textit{detectable}).
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Uji Keterkontrolan dan Keterobservasian}
+
+Nilai-nilai eigen matriks $A$ adalah $\lambda_1 = -2$ (stabil, terletak di setengah bidang kiri) dan $\lambda_2 = 1$ (tidak stabil, terletak di setengah bidang kanan).
+Matriks $B = [1, 0]^T$ menunjukkan bahwa moda tak stabil $\lambda_2 = 1$ tidak memiliki masukan kendali ($b_2 = 0$). Dengan demikian, sistem \textbf{tidak terkontrol lengkap}.
+Matriks $C = [1, 0]$ menunjukkan bahwa kolom kedua bernilai nol ($c_2 = 0$), sehingga moda tak stabil $\lambda_2 = 1$ tidak muncul pada pengukuran keluaran. Dengan demikian, sistem \textbf{tidak terobservasi lengkap}.
+
+\textbf{(b) Analisis Keterstabilan dan Keterdeteksian}
+
+Keterstabilan (\textit{stabilizability}) mensyaratkan bahwa seluruh moda yang tak-terkontrol harus stabil secara asimtotik ($\operatorname{Re}(\lambda) < 0$).
+Moda yang tidak terkontrol pada sistem ini adalah $\lambda_2 = 1$. Karena $\operatorname{Re}(\lambda_2) = 1 > 0$ (tidak stabil), moda tidak stabil ini tidak dapat diredam atau digeser oleh umpan balik keadaan apa pun. Akibatnya, sistem \textbf{tidak terstabilkan} (\textit{not stabilizable}).
+
+Keterdeteksian (\textit{detectability}) mensyaratkan bahwa seluruh moda yang tak-terobservasi harus stabil secara asimtotik.
+Moda yang tidak terobservasi pada sistem ini adalah $\lambda_2 = 1$. Karena $\operatorname{Re}(\lambda_2) = 1 > 0$, dinamika yang tidak terdeteksi oleh sensor keluaran adalah dinamika yang mengalami ketidakstabilan tak-terbatas. Akibatnya, sistem \textbf{tidak terdeteksi} (\textit{not detectable}).
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 11
+% =========================================================================
+\textbf{\large No. 11}
+
+\textbf{Soal:}  
+Diberikan sistem tak-terkontrol dan tak-terobservasi lengkap:
+$$A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & -2 & 0 \\ 0 & 0 & -3 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 1 & 0 \end{bmatrix}$$
+Lakukan Dekomposisi Struktural Kalman untuk mengidentifikasi 4 subruang keadaan sistem:
+\begin{enumerate}[label=(\alph*)]
+    \item Subruang terkontrol dan terobservasi ($x_{co}$).
+    \item Subruang terkontrol tetapi tak-terobservasi ($x_{c\bar{o}}$).
+    \item Subruang tak-terkontrol tetapi terobservasi ($x_{\bar{c}o}$).
+    \item Subruang tak-terkontrol dan tak-terobservasi ($x_{\bar{c}\bar{o}}$).
+    \item Tentukan fungsi transfer sistem $G(s) = C(sI - A)^{-1} B$ dan tunjukkan subruang mana yang merepresentasikannya.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+Sistem sudah berada dalam bentuk modal terpisah dengan tiga variabel keadaan independen:
+$$\dot{x}_1 = x_1 + u, \quad \dot{x}_2 = -2x_2, \quad \dot{x}_3 = -3x_3 + u$$
+$$y = x_1 + x_2$$
+
+Diperiksa karakteristik masing-masing variabel keadaan:
+Untuk keadaan $x_1$ ($\lambda = 1$):
+Masukan terhubung langsung ($b_1 = 1 \ne 0$) $\implies$ terkontrol.
+Keluaran membaca langsung ($c_1 = 1 \ne 0$) $\implies$ terobservasi.
+Dengan demikian, $x_1$ berada pada subruang \textbf{terkontrol dan terobservasi} ($x_{co}$).
+
+Untuk keadaan $x_2$ ($\lambda = -2$):
+Masukan tidak terhubung ($b_2 = 0$) $\implies$ tak-terkontrol.
+Keluaran membaca langsung ($c_2 = 1 \ne 0$) $\implies$ terobservasi.
+Dengan demikian, $x_2$ berada pada subruang \textbf{tak-terkontrol tetapi terobservasi} ($x_{\bar{c}o}$).
+
+Untuk keadaan $x_3$ ($\lambda = -3$):
+Masukan terhubung langsung ($b_3 = 1 \ne 0$) $\implies$ terkontrol.
+Keluaran tidak membaca ($c_3 = 0$) $\implies$ tak-terobservasi.
+Dengan demikian, $x_3$ berada pada subruang \textbf{terkontrol tetapi tak-terobservasi} ($x_{c\bar{o}}$).
+
+Subruang tak-terkontrol dan tak-terobservasi ($x_{\bar{c}\bar{o}}$) adalah ruang nol ($\emptyset$ atau berdimensi 0).
+
+\textbf{(e) Penentuan Fungsi Transfer}
+
+Fungsi transfer dihitung dari rumus matriks:
+$$G(s) = C(sI - A)^{-1}B = \begin{bmatrix} 1 & 1 & 0 \end{bmatrix} \begin{bmatrix} \frac{1}{s - 1} & 0 & 0 \\ 0 & \frac{1}{s + 2} & 0 \\ 0 & 0 & \frac{1}{s + 3} \end{bmatrix} \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}$$
+$$G(s) = \begin{bmatrix} \frac{1}{s - 1} & \frac{1}{s + 2} & 0 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \frac{1}{s - 1} + 0 + 0 = \frac{1}{s - 1}$$
+
+Hasil ini membuktikan prinsip fundamental Dekomposisi Kalman: \textbf{fungsi transfer sistem hanya merepresentasikan subruang yang sekaligus terkontrol dan terobservasi ($x_{co}$)}. Moda $x_2$ dan $x_3$ tersembunyi dari fungsi transfer luar.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 12
+% =========================================================================
+\textbf{\large No. 12}
+
+\textbf{Soal:}  
+Diberikan sistem ruang keadaan berikut:
+$$A = \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ -1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung fungsi transfer $G(s) = C(sI - A)^{-1} B$.
+    \item Tunjukkan apakah terjadi pembatalan kutub-nol (\textit{pole-zero cancellation}).
+    \item Analisis bagaimana pembatalan tersebut memengaruhi sifat keterkontrolan dan keterobservasian sistem.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Perhitungan Fungsi Transfer}
+
+Matriks karakteristik dihitung:
+$$sI - A = \begin{bmatrix} s & -1 \\ 2 & s + 3 \end{bmatrix} \implies \det(sI - A) = s(s + 3) + 2 = s^2 + 3s + 2 = (s + 1)(s + 2)$$
+Invers matriks:
+$$(sI - A)^{-1} = \frac{1}{(s+1)(s+2)} \begin{bmatrix} s + 3 & 1 \\ -2 & s \end{bmatrix}$$
+
+Fungsi transfer sistem:
+\begin{align*}
+    G(s) &= C(sI - A)^{-1} B = \frac{1}{(s+1)(s+2)} \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} s + 3 & 1 \\ -2 & s \end{bmatrix} \begin{bmatrix} 1 \\ -1 \end{bmatrix} \\
+    &= \frac{1}{(s+1)(s+2)} \begin{bmatrix} s + 3 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ -1 \end{bmatrix} = \frac{(s + 3) - 1}{(s+1)(s+2)} = \frac{s + 2}{(s+1)(s+2)}
+\end{align*}
+
+\textbf{(b) Pembatalan Kutub-Nol}
+
+Terdapat nol sistem pada $s = -2$ dan kutub sistem pada $s = -2$. Terjadi pembatalan suku $(s + 2)$, sehingga fungsi transfer tereduksi menjadi:
+$$G(s) = \frac{1}{s + 1}$$
+
+\textbf{(c) Analisis Keterkontrolan dan Keterobservasian}
+
+Diuji matriks keterkontrolan Kalman:
+$$AB = \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix} \begin{bmatrix} 1 \\ -1 \end{bmatrix} = \begin{bmatrix} -1 \\ 1 \end{bmatrix}$$
+$$M_c = \begin{bmatrix} B & AB \end{bmatrix} = \begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} \implies \det(M_c) = 1 - 1 = 0$$
+Matriks $M_c$ memiliki rank 1. Sistem \textbf{tidak terkontrol lengkap}.
+
+Diuji matriks keterobservasian Kalman:
+$$CA = \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ -2 & -3 \end{bmatrix} = \begin{bmatrix} 0 & 1 \end{bmatrix}$$
+$$M_o = \begin{bmatrix} C \\ CA \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = I \implies \det(M_o) = 1 \ne 0$$
+Sistem \textbf{terobservasi keadaan lengkap}.
+
+Kesimpulan: Pembatalan kutub-nol pada $s = -2$ berkorespondensi langsung dengan kehilangan sifat keterkontrolan pada moda tersebut.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 13
+% =========================================================================
+\textbf{\large No. 13}
+
+\textbf{Soal:}  
+Diberikan sistem stabil asimtotik orde-2:
+$$A = \begin{bmatrix} -1 & 0 \\ 0 & -2 \end{bmatrix}, \quad B = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung Gramian Keterkontrolan tak-hingga $W_c = \int_0^\infty e^{At} B B^T e^{A^T t} dt$ menggunakan persamaan Aljabar Lyapunov $A W_c + W_c A^T + B B^T = 0$.
+    \item Tunjukkan bahwa $W_c > 0$ (definit positif) dan jelaskan keterkaitannya dengan keterkontrolan sistem.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Penyelesaian Persamaan Lyapunov Aljabar}
+
+Dihitung matriks simetris $B B^T$:
+$$B B^T = \begin{bmatrix} 1 \\ 2 \end{bmatrix} \begin{bmatrix} 1 & 2 \end{bmatrix} = \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$$
+
+Misalkan matriks simetris Gramian $W_c$ berordo $2 \times 2$:
+$$W_c = \begin{bmatrix} w_{11} & w_{12} \\ w_{12} & w_{22} \end{bmatrix}$$
+
+Persamaan Lyapunov: $A W_c + W_c A^T = -B B^T$.
+Dihitung suku perkalian:
+$$A W_c = \begin{bmatrix} -1 & 0 \\ 0 & -2 \end{bmatrix} \begin{bmatrix} w_{11} & w_{12} \\ w_{12} & w_{22} \end{bmatrix} = \begin{bmatrix} -w_{11} & -w_{12} \\ -2w_{12} & -2w_{22} \end{bmatrix}$$
+$$W_c A^T = (A W_c)^T = \begin{bmatrix} -w_{11} & -2w_{12} \\ -w_{12} & -2w_{22} \end{bmatrix}$$
+$$A W_c + W_c A^T = \begin{bmatrix} -2w_{11} & -3w_{12} \\ -3w_{12} & -4w_{22} \end{bmatrix}$$
+
+Disamakan dengan matriks $-B B^T$:
+$$\begin{bmatrix} -2w_{11} & -3w_{12} \\ -3w_{12} & -4w_{22} \end{bmatrix} = \begin{bmatrix} -1 & -2 \\ -2 & -4 \end{bmatrix}$$
+Diperoleh sistem persamaan:
+$$-2w_{11} = -1 \implies w_{11} = \frac{1}{2}$$
+$$-3w_{12} = -2 \implies w_{12} = \frac{2}{3}$$
+$$-4w_{22} = -4 \implies w_{22} = 1$$
+
+Sehingga matriks Gramian keterkontrolan adalah:
+$$W_c = \begin{bmatrix} 1/2 & 2/3 \\ 2/3 & 1 \end{bmatrix}$$
+
+\textbf{(b) Pengujian Definit Positif}
+
+Uji kriteria Sylvester (minor utama utama):
+Minor utama pertama: $\Delta_1 = w_{11} = 1/2 > 0$.
+Minor utama kedua: $\Delta_2 = \det(W_c) = (1/2)(1) - (2/3)^2 = 1/2 - 4/9 = 9/18 - 8/18 = 1/18 > 0$.
+
+Karena seluruh minor utama positif, $W_c > 0$ (\textbf{definit positif}). Menurut teorema Lyapunov, $W_c$ berorde penuh dan definit positif jika dan hanya jika sistem $(A, B)$ terkontrol lengkap.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 14
+% =========================================================================
+\textbf{\large No. 14}
+
+\textbf{Soal:}  
+Diberikan sistem multivariabel 2-masukan 2-keluaran (MIMO) orde-3:
+$$A = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -2 & -3 & -4 \end{bmatrix}, \quad B = \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 1 & -1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 1 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung matriks keterkontrolan Kalman $M_c \in \mathbb{R}^{3 \times 6}$ dan tentukan rank-nya.
+    \item Hitung matriks keterobservasian Kalman $M_o \in \mathbb{R}^{6 \times 3}$ dan tentukan rank-nya.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Uji Keterkontrolan MIMO}
+
+Matriks masukan memiliki dua kolom $B = [b_1 \quad b_2]$. Matriks keterkontrolan berdimensi $3 \times 6$:
+$$M_c = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$$
+Dihitung kolom $B$:
+$$B = \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 1 & -1 \end{bmatrix}$$
+Dihitung $AB$:
+$$AB = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -2 & -3 & -4 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 1 \\ 1 & -1 \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 1 & -1 \\ -6 & 1 \end{bmatrix}$$
+Tiga kolom pertama dari $M_c$ adalah:
+$$\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 1 \\ 1 & -1 & 1 \end{bmatrix}$$
+Determinan dari submatriks $3 \times 3$ ini adalah:
+$$\det = 1 \cdot [(1)(1) - (1)(-1)] = 1(2) = 2 \ne 0$$
+Karena sudah ditemukan 3 kolom yang bebas linear, rank matriks keterkontrolan mencapai nilai maksimum:
+$$\operatorname{rank}(M_c) = 3$$
+Sistem MIMO tersebut \textbf{terkontrol lengkap}.
+
+\textbf{(b) Uji Keterobservasian MIMO}
+
+Matriks keluaran memiliki dua baris $C = \begin{bmatrix} c_1^T \\ c_2^T \end{bmatrix}$. Matriks keterobservasian berdimensi $6 \times 3$:
+$$M_o = \begin{bmatrix} C \\ CA \\ CA^2 \end{bmatrix}$$
+Dua baris pertama dari $C$:
+$$C = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 1 \end{bmatrix}$$
+Dua baris berikutnya dari $CA$:
+$$CA = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -2 & -3 & -4 \end{bmatrix} = \begin{bmatrix} 0 & 1 & 0 \\ -2 & -3 & -3 \end{bmatrix}$$
+Ditinjau submatriks $3 \times 3$ yang tersusun dari baris 1, 2, dan 3 dari $M_o$:
+$$\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 0 \end{bmatrix}$$
+Determinan submatriks ini adalah:
+$$\det = 1 \cdot [(1)(0) - (1)(1)] = -1 \ne 0$$
+Karena terdapat 3 baris bebas linear, rank matriks keterobservasian adalah:
+$$\operatorname{rank}(M_o) = 3$$
+Sistem MIMO tersebut \textbf{terobservasi lengkap}.
+
+\vspace{12pt}
+\hrule
+\vspace{10pt}
+
+% =========================================================================
+% SOAL 15
+% =========================================================================
+\textbf{\large No. 15}
+
+\textbf{Soal:}  
+Diberikan sistem waktu diskrit LTI:
+$$\mathbf{x}(k+1) = G \mathbf{x}(k) + H u(k), \quad y(k) = C \mathbf{x}(k)$$
+dengan matriks sistem:
+$$G = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}, \quad H = \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 \end{bmatrix}$$
+\begin{enumerate}[label=(\alph*)]
+    \item Hitung matriks keterkontrolan diskrit $M_c$ dan tentukan apakah sistem dapat dikendalikan ke titik asal (\textit{controllable to the origin}) atau dapat dijangkau dari titik asal (\textit{reachable from the origin}).
+    \item Hitung jumlah langkah $k$ minimum yang diperlukan untuk membawa sembarang keadaan awal $\mathbf{x}(0)$ ke titik kesetimbangan $\mathbf{x}(k) = \mathbf{0}$ tanpa menggunakan kendali luar ($u = 0$). Jelaskan fenomena respon berhingga (\textit{deadbeat response}) ini.
+\end{enumerate}
+
+\textbf{Penyelesaian:}
+
+\textbf{(a) Keterjangkauan dan Keterkontrolan Diskrit}
+
+Dihitung matriks keterjangkauan Kalman:
+$$GH = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$$
+$$M_c = \begin{bmatrix} H & GH \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$$
+Determinan matriks adalah $\det(M_c) = 0 - 1 = -1 \ne 0 \implies \operatorname{rank}(M_c) = 2$.
+Karena $\operatorname{rank}(M_c) = n = 2$, sistem bersifat \textbf{terjangkau lengkap dari titik asal} (\textit{completely reachable}) dan sekaligus \textbf{terkontrol lengkap ke titik asal} (\textit{completely controllable to origin}).
+
+\textbf{(b) Analisis Matriks Nilpoten dan Deadbeat Response}
+
+Matriks transisi diskrit $G$ memiliki nilai eigen ganda pada titik asal:
+$$\det(zI - G) = z^2 \implies \lambda_1 = \lambda_2 = 0$$
+Matriks dengan seluruh nilai eigen sama dengan nol disebut matriks nilpoten.
+Dihitung kuadrat matriks $G$:
+$$G^2 = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = \mathbf{0}$$
+
+Untuk respons bebas kendali ($u(k) = 0$), dinamika sistem dinyatakan oleh:
+$$\mathbf{x}(k) = G^k \mathbf{x}(0)$$
+Pada langkah $k = 2$:
+$$\mathbf{x}(2) = G^2 \mathbf{x}(0) = \mathbf{0} \cdot \mathbf{x}(0) = \mathbf{0}$$
+Untuk sembarang kondisi awal $\mathbf{x}(0)$, variabel keadaan sistem secara eksak mencapai nol tepat dalam $k = 2$ langkah sampling. Karakteristik ini dikenal sebagai respon \textit{deadbeat}, yaitu sifat khas sistem waktu diskrit di mana seluruh kutub berada pada titik asal bidang-$z$.
+
+\end{document}

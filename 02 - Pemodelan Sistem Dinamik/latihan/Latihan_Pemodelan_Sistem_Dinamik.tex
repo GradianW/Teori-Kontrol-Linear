@@ -53,7 +53,7 @@ Suatu sistem mekanik translasi terdiri dari dua massa $m_1$ dan $m_2$ yang berad
 \begin{enumerate}[label=(\alph*)]
     \item Turunkan sistem persamaan diferensial gerak kedua massa.
     \item Tentukan representasi ruang keadaan matriks standar $(A, B, C, D)$ dengan vektor keadaan $\mathbf{x}(t) = [y_1, \dot{y}_1, y_2, \dot{y}_2]^T$ dan vektor keluaran $\mathbf{y}(t) = [y_1, y_2]^T$.
-    \item Jika $m_1 = 1\text{ kg}$, $m_2 = 1\text{ kg}$, $k_1 = 3\text{ N/m}$, $k_2 = 2\text{ N/m}$, $b_1 = 2\text{ N}\cdot\text{s/m}$, dan $b_2 = 1\text{ N}\cdot\text{s/m}$, tentukan fungsi alih $G_1(s) = \frac{Y_1(s)}{U(s)}$ dan $G_2(s) = \frac{Y_2(s)}{U(s)}$.
+    \item Jika $m_1 = 1\text{ kg}$, $m_2 = 1\text{ kg}$, $k_1 = 3\text{ N/m}$, $k_2 = 2\text{ N/m}$, $b_1 = 2\text{ N}\cdot\text{s/m}$, dan $b_2 = 1\text{ N}\cdot\text{s/m}$, tentukan fungsi transfer $G_1(s) = \frac{Y_1(s)}{U(s)}$ dan $G_2(s) = \frac{Y_2(s)}{U(s)}$.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -81,7 +81,7 @@ $$\dot{x}_3 = x_4, \quad \dot{x}_4 = \frac{k_2}{m_2} x_1 + \frac{b_2}{m_2} x_2 -
 Dalam bentuk matriks $\dot{\mathbf{x}} = A\mathbf{x} + B u$ dan $\mathbf{y} = C\mathbf{x} + D u$:
 $$A = \begin{bmatrix} 0 & 1 & 0 & 0 \\ -\frac{k_1 + k_2}{m_1} & -\frac{b_1 + b_2}{m_1} & \frac{k_2}{m_1} & \frac{b_2}{m_1} \\ 0 & 0 & 0 & 1 \\ \frac{k_2}{m_2} & \frac{b_2}{m_2} & -\frac{k_2}{m_2} & -\frac{b_2}{m_2} \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ \frac{1}{m_1} \\ 0 \\ 0 \end{bmatrix}, \quad C = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}, \quad D = \begin{bmatrix} 0 \\ 0 \end{bmatrix}$$
 
-\textbf{(c) Penentuan Fungsi Alih}
+\textbf{(c) Penentuan Fungsi Transfer}
 
 Melalui Transformasi Laplace persamaan gerak dengan kondisi awal nol dan substitusi nilai numerik:
 $$(s^2 + 3s + 5) Y_1(s) - (s + 2) Y_2(s) = U(s)$$
@@ -91,7 +91,7 @@ Substitusi $Y_2(s)$ ke persamaan pertama menghasilkan:
 $$\left[ (s^2 + 3s + 5) - \frac{(s+2)^2}{s^2 + s + 2} \right] Y_1(s) = U(s)$$
 $$\frac{s^4 + 4s^3 + 9s^2 + 7s + 6}{s^2 + s + 2} Y_1(s) = U(s)$$
 
-Sehingga diperoleh fungsi alih masing-masing keluaran:
+Sehingga diperoleh fungsi transfer masing-masing keluaran:
 $$G_1(s) = \frac{Y_1(s)}{U(s)} = \frac{s^2 + s + 2}{s^4 + 4s^3 + 9s^2 + 7s + 6}$$
 $$G_2(s) = \frac{Y_2(s)}{U(s)} = \frac{s + 2}{s^4 + 4s^3 + 9s^2 + 7s + 6}$$
 
@@ -109,7 +109,7 @@ Suatu rangkaian listrik terdiri dari sumber tegangan masukan $u(t) = v_{in}(t)$,
 \begin{enumerate}[label=(\alph*)]
     \item Terapkan Hukum Tegangan Kirchhoff (KVL) dan Hukum Arus Kirchhoff (KCL) untuk menurunkan persamaan dinamik rangkaian.
     \item Susun representasi ruang keadaan dengan vektor keadaan $\mathbf{x}(t) = [i_L(t), v_{C1}(t), v_{C2}(t)]^T$.
-    \item Tentukan fungsi alih sistem $G(s) = \frac{V_{C2}(s)}{V_{in}(s)}$ dalam bentuk parameter umum.
+    \item Tentukan fungsi transfer sistem $G(s) = \frac{V_{C2}(s)}{V_{in}(s)}$ dalam bentuk parameter umum.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -136,7 +136,7 @@ $$\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \\ \dot{x}_3 \end{bmatrix} = \begin{bma
 Persamaan keluaran untuk tegangan $y(t) = v_{C2}(t) = x_3(t)$ adalah:
 $$y(t) = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} + [0] u(t)$$
 
-\textbf{(c) Penentuan Fungsi Alih Sistem}
+\textbf{(c) Penentuan Fungsi Transfer Sistem}
 
 Dalam domain Laplace dengan kondisi awal nol, persamaan simpul kedua menyatakan hubungan $V_{C1}(s)$ dan $V_{C2}(s)$:
 $$V_{C1}(s) = (R_2 C_2 s + 1) V_{C2}(s)$$
@@ -151,7 +151,7 @@ Substitusi hubungan ini ke persamaan simpul pertama menghasilkan arus induktor:
 Substitusi $I_L(s)$ dan $V_{C1}(s)$ ke dalam persamaan KVL loop masukan $(L s + R_1) I_L(s) + V_{C1}(s) = V_{in}(s)$ menghasilkan:
 $$\left\{ (L s + R_1)\left[ R_2 C_1 C_2 s^2 + (C_1 + C_2) s \right] + (R_2 C_2 s + 1) \right\} V_{C2}(s) = V_{in}(s)$$
 
-Penguraian polinomial penyebut memberikan fungsi alih:
+Penguraian polinomial penyebut memberikan fungsi transfer:
 $$G(s) = \frac{V_{C2}(s)}{V_{in}(s)} = \frac{1}{L R_2 C_1 C_2 s^3 + [L(C_1 + C_2) + R_1 R_2 C_1 C_2] s^2 + [R_1(C_1 + C_2) + R_2 C_2] s + 1}$$
 
 \vspace{12pt}
@@ -168,7 +168,7 @@ Suatu motor arus searah terkendali jangkar (\textit{armature-controlled DC motor
 \begin{enumerate}[label=(\alph*)]
     \item Turunkan persamaan diferensial yang mengatur dinamika elektrik dan mekanik motor.
     \item Susun model ruang keadaan dengan vektor keadaan $\mathbf{x}(t) = [\theta(t), \omega(t), i_a(t)]^T$.
-    \item Diberikan nilai parameter: $R_a = 2\,\Omega$, $L_a = 0.5\text{ H}$, $K_t = 0.1\text{ N}\cdot\text{m/A}$, $K_b = 0.1\text{ V}\cdot\text{s/rad}$, $J = 0.02\text{ kg}\cdot\text{m}^2$, dan $B_m = 0.01\text{ N}\cdot\text{m}\cdot\text{s/rad}$. Tentukan fungsi alih posisi $G_\theta(s) = \frac{\Theta(s)}{V_a(s)}$ dan fungsi alih kecepatan $G_\omega(s) = \frac{\Omega(s)}{V_a(s)}$.
+    \item Diberikan nilai parameter: $R_a = 2\,\Omega$, $L_a = 0.5\text{ H}$, $K_t = 0.1\text{ N}\cdot\text{m/A}$, $K_b = 0.1\text{ V}\cdot\text{s/rad}$, $J = 0.02\text{ kg}\cdot\text{m}^2$, dan $B_m = 0.01\text{ N}\cdot\text{m}\cdot\text{s/rad}$. Tentukan fungsi transfer posisi $G_\theta(s) = \frac{\Theta(s)}{V_a(s)}$ dan fungsi transfer kecepatan $G_\omega(s) = \frac{\Omega(s)}{V_a(s)}$.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -191,23 +191,23 @@ $$\begin{bmatrix} \dot{x}_1 \\ \dot{x}_2 \\ \dot{x}_3 \end{bmatrix} = \begin{bma
 Persamaan keluaran untuk posisi dan kecepatan sudut rotor adalah:
 $$\mathbf{y}(t) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} + \begin{bmatrix} 0 \\ 0 \end{bmatrix} u(t)$$
 
-\textbf{(c) Penentuan Fungsi Alih Numerik}
+\textbf{(c) Penentuan Fungsi Transfer Numerik}
 
 Dalam domain Laplace dengan kondisi awal nol, persamaan elektrik dan mekanik menghasilkan:
 $$I_a(s) = \frac{V_a(s) - K_b \Omega(s)}{L_a s + R_a}$$
 $$(J s + B_m) \Omega(s) = K_t I_a(s) = K_t \left[ \frac{V_a(s) - K_b \Omega(s)}{L_a s + R_a} \right]$$
 
-Pengelompokan suku $\Omega(s)$ menghasilkan fungsi alih kecepatan sudut:
+Pengelompokan suku $\Omega(s)$ menghasilkan fungsi transfer kecepatan sudut:
 $$G_\omega(s) = \frac{\Omega(s)}{V_a(s)} = \frac{K_t}{(J s + B_m)(L_a s + R_a) + K_t K_b} = \frac{K_t}{J L_a s^2 + (J R_a + B_m L_a) s + (B_m R_a + K_t K_b)}$$
 
 Substitusi nilai parameter:
 $$J L_a = (0.02)(0.5) = 0.01, \quad J R_a + B_m L_a = (0.02)(2) + (0.01)(0.5) = 0.045$$
 $$B_m R_a + K_t K_b = (0.01)(2) + (0.1)(0.1) = 0.02 + 0.01 = 0.03, \quad K_t = 0.1$$
 
-Sehingga diperoleh fungsi alih kecepatan:
+Sehingga diperoleh fungsi transfer kecepatan:
 $$G_\omega(s) = \frac{0.1}{0.01 s^2 + 0.045 s + 0.03} = \frac{10}{s^2 + 4.5 s + 3}$$
 
-Fungsi alih posisi sudut $\Theta(s) = \frac{1}{s}\Omega(s)$ adalah:
+Fungsi transfer posisi sudut $\Theta(s) = \frac{1}{s}\Omega(s)$ adalah:
 $$G_\theta(s) = \frac{\Theta(s)}{V_a(s)} = \frac{10}{s(s^2 + 4.5 s + 3)} = \frac{10}{s^3 + 4.5 s^2 + 3s}$$
 
 \vspace{12pt}
@@ -224,7 +224,7 @@ Suatu sistem tangki bertingkat terhubung (\textit{interacting two-tank system}) 
 \begin{enumerate}[label=(\alph*)]
     \item Turunkan persamaan diferensial neraca massa laju aliran untuk kedua tangki.
     \item Susun representasi ruang keadaan matriks dengan vektor keadaan $\mathbf{x}(t) = [h_1(t), h_2(t)]^T$.
-    \item Tentukan fungsi alih loop terbuka $G(s) = \frac{H_2(s)}{Q_{in}(s)}$.
+    \item Tentukan fungsi transfer loop terbuka $G(s) = \frac{H_2(s)}{Q_{in}(s)}$.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -247,7 +247,7 @@ $$\begin{bmatrix} \dot{h}_1 \\ \dot{h}_2 \end{bmatrix} = \begin{bmatrix} -\frac{
 Persamaan keluaran untuk ketinggian cairan pada tangki kedua adalah:
 $$y(t) = \begin{bmatrix} 0 & 1 \end{bmatrix} \begin{bmatrix} h_1 \\ h_2 \end{bmatrix} + [0] u(t)$$
 
-\textbf{(c) Penentuan Fungsi Alih Sistem}
+\textbf{(c) Penentuan Fungsi Transfer Sistem}
 
 Dengan melakukan Transformasi Laplace pada kedua persamaan neraca massa dengan kondisi awal nol:
 $$(A_1 R_1 s + 1) H_1(s) - H_2(s) = R_1 Q_{in}(s) \implies H_1(s) = \frac{R_1 Q_{in}(s) + H_2(s)}{A_1 R_1 s + 1}$$
@@ -262,7 +262,7 @@ Penguraian kurung siku menghasilkan:
     &\implies \frac{R_1}{R_2} \left[ A_1 A_2 R_1 R_2 s^2 + (A_1 R_1 + A_1 R_2 + A_2 R_2) s + 1 \right] H_2(s) = R_1 Q_{in}(s)
 \end{align*}
 
-Dengan membagi kedua ruas dengan $R_1$, diperoleh fungsi alih:
+Dengan membagi kedua ruas dengan $R_1$, diperoleh fungsi transfer:
 $$G(s) = \frac{H_2(s)}{Q_{in}(s)} = \frac{R_2}{A_1 A_2 R_1 R_2 s^2 + (A_1 R_1 + A_1 R_2 + A_2 R_2) s + 1}$$
 
 \vspace{12pt}
@@ -278,7 +278,7 @@ $$G(s) = \frac{H_2(s)}{Q_{in}(s)} = \frac{R_2}{A_1 A_2 R_1 R_2 s^2 + (A_1 R_1 + 
 Suatu sistem kendali loop tertutup dengan konfigurasi umpan balik ganda memiliki hubungan blok sebagai berikut: sinyal masukan $R(s)$ masuk ke titik penjumlahan 1 (+) bersama umpan balik negatif $-H_2(s) Y(s)$ menghasilkan sinyal $E_1(s)$. Sinyal $E_1(s)$ melewati blok $G_1(s)$ menuju titik penjumlahan 2 (+), yang juga menerima umpan balik negatif $-H_1(s)$ dari keluaran blok $G_2(s)$. Keluaran titik penjumlahan 2 masuk ke blok $G_2(s)$, menghasilkan sinyal $V(s)$. Sinyal $V(s)$ dijumlahkan di titik penjumlahan 3 (+) dengan sinyal \textit{feedforward} $+G_3(s) E_1(s)$, dan hasilnya melewati blok $G_4(s)$ untuk menghasilkan keluaran akhir $Y(s)$.
 \begin{enumerate}[label=(\alph*)]
     \item Tuliskan persamaan aljabar sinyal pada setiap titik percabangan dan titik penjumlahan.
-    \item Lakukan reduksi diagram blok secara analitis untuk menentukan fungsi alih loop tertutup $T(s) = \frac{Y(s)}{R(s)}$.
+    \item Lakukan reduksi diagram blok secara analitis untuk menentukan fungsi transfer loop tertutup $T(s) = \frac{Y(s)}{R(s)}$.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -290,7 +290,7 @@ $$E_1(s) = R(s) - H_2(s) Y(s)$$
 $$V(s) = G_2(s) \left[ G_1(s) E_1(s) - H_1(s) V(s) \right]$$
 $$Y(s) = G_4(s) \left[ V(s) + G_3(s) E_1(s) \right]$$
 
-\textbf{(b) Reduksi Aljabar Fungsi Alih}
+\textbf{(b) Reduksi Aljabar Fungsi Transfer}
 
 Penyelesaian persamaan internal untuk sinyal $V(s)$ dalam fungsi $E_1(s)$ menghasilkan:
 $$[1 + G_2(s) H_1(s)] V(s) = G_1(s) G_2(s) E_1(s) \implies V(s) = \frac{G_1(s) G_2(s)}{1 + G_2(s) H_1(s)} E_1(s)$$
@@ -304,7 +304,7 @@ Substitusi $V(s)$ ke persamaan sinyal keluaran $Y(s)$ menghasilkan:
 Substitusi ekspresi $E_1(s) = R(s) - H_2(s) Y(s)$ menghasilkan persamaan relasi masukan-keluaran:
 $$Y(s) = \frac{G_4(s) [G_1(s) G_2(s) + G_3(s) + G_2(s) G_3(s) H_1(s)]}{1 + G_2(s) H_1(s)} [R(s) - H_2(s) Y(s)]$$
 
-Pengelompokan suku $Y(s)$ ke ruas kiri menghasilkan fungsi alih loop tertutup:
+Pengelompokan suku $Y(s)$ ke ruas kiri menghasilkan fungsi transfer loop tertutup:
 $$T(s) = \frac{Y(s)}{R(s)} = \frac{G_1(s) G_2(s) G_4(s) + G_3(s) G_4(s) + G_2(s) G_3(s) G_4(s) H_1(s)}{1 + G_2(s) H_1(s) + H_2(s) G_4(s) [G_1(s) G_2(s) + G_3(s) + G_2(s) G_3(s) H_1(s)]}$$
 
 \vspace{12pt}
@@ -350,7 +350,7 @@ $$x_1 = R - H_1 x_2 - H_3 x_5, \quad x_2 = G_1 x_1 - H_2 x_4, \quad x_3 = G_2 x_
     \item Tentukan semua lintasan maju (\textit{forward paths}) beserta penguatannya ($F_k$).
     \item Tentukan semua loop umpan balik tunggal ($L_i$) dan pasangan loop tak bersentuhan (\textit{non-touching loops}).
     \item Hitung determinan graf $\Delta$ dan kofaktor lintasan $\Delta_k$.
-    \item Tentukan fungsi alih total $G(s) = \frac{Y(s)}{R(s)}$ menggunakan Rumus Penguatan Mason.
+    \item Tentukan fungsi transfer total $G(s) = \frac{Y(s)}{R(s)}$ menggunakan Rumus Penguatan Mason.
 \end{enumerate}
 
 \textbf{Penyelesaian:}
@@ -382,7 +382,7 @@ Kofaktor lintasan maju dihitung dengan mengeliminasi loop yang menyentuh lintasa
 Lintasan $F_1$ menyentuh semua simpul $\{x_1, x_2, x_3, x_4, x_5\}$, sehingga menyentuh seluruh loop $\implies \Delta_1 = 1$.
 Lintasan $F_2$ melalui simpul $\{x_1, x_2, x_5\}$. Loop $L_2$ yang melalui $\{x_2, x_3, x_4\}$ juga menyentuh simpul $x_2$ pada lintasan $F_2$, sehingga semua loop menyentuh lintasan $F_2 \implies \Delta_2 = 1$.
 
-\textbf{(d) Perhitungan Fungsi Alih Total dengan Rumus Mason}
+\textbf{(d) Perhitungan Fungsi Transfer Total dengan Rumus Mason}
 
 Penerapan Rumus Penguatan Mason $G(s) = \frac{\sum F_k \Delta_k}{\Delta}$ menghasilkan:
 $$G(s) = \frac{Y(s)}{R(s)} = \frac{G_1 G_2 G_3 G_4 + G_1 G_5}{1 + G_1 H_1 + G_2 G_3 H_2 + G_1 G_2 G_3 G_4 H_3 + G_1 G_5 H_3}$$
@@ -426,7 +426,7 @@ $$Y_1 = G_1 [U_1 - H_1 Y_1] + G_{12} Y_2, \quad Y_2 = G_2 [U_2 - H_2 Y_2] + G_{2
 \end{tikzpicture}
 \end{center}
 
-Tentukan matriks fungsi alih transfer sistem $\mathbf{G}_{MIMO}(s) = \begin{bmatrix} G_{11}(s) & G_{12}(s) \\ G_{21}(s) & G_{22}(s) \end{bmatrix}$ sedemikian sehingga $\begin{bmatrix} Y_1(s) \\ Y_2(s) \end{bmatrix} = \mathbf{G}_{MIMO}(s) \begin{bmatrix} U_1(s) \\ U_2(s) \end{bmatrix}$.
+Tentukan matriks fungsi transfer transfer sistem $\mathbf{G}_{MIMO}(s) = \begin{bmatrix} G_{11}(s) & G_{12}(s) \\ G_{21}(s) & G_{22}(s) \end{bmatrix}$ sedemikian sehingga $\begin{bmatrix} Y_1(s) \\ Y_2(s) \end{bmatrix} = \mathbf{G}_{MIMO}(s) \begin{bmatrix} U_1(s) \\ U_2(s) \end{bmatrix}$.
 
 \textbf{Penyelesaian:}
 
@@ -456,7 +456,7 @@ $$\mathbf{G}_{MIMO}(s) = \frac{1}{(1 + G_1 H_1)(1 + G_2 H_2) - G_{12} G_{21}} \b
 \textbf{\large No. 8}
 
 \textbf{Soal:}  
-Diberikan diagram aliran sinyal yang tersusun atas 3 buah integrator berurutan ($1/s$) dengan variabel keadaan $x_1, x_2, x_3$ didefinisikan sebagai sinyal keluaran dari masing-masing integrator dari kiri ke kanan (masukan integrator masing-masing adalah $\dot{x}_1, \dot{x}_2, \dot{x}_3$). Topologi percabangan sistem didefinisikan sebagai:
+Diberikan diagram aliran sinyal yang tersusun atas 3 buah integrator berurutan ($1/s$) dengan variabel keadaan $x_3, x_2, x_1$ didefinisikan sebagai sinyal keluaran dari masing-masing integrator dari kiri ke kanan menuju keluaran $y = x_1$ (masukan integrator masing-masing adalah $\dot{x}_3, \dot{x}_2, \dot{x}_1$). Topologi percabangan sistem didefinisikan sebagai:
 $$\dot{x}_1 = -a_1 x_1 + x_2 + b_1 u, \quad \dot{x}_2 = -a_2 x_1 + x_3 + b_2 u, \quad \dot{x}_3 = -a_3 x_1 + b_3 u, \quad y = c_1 x_1 + c_2 x_2 + c_3 x_3 + d u$$
 
 \begin{center}
@@ -481,6 +481,7 @@ $$\dot{x}_1 = -a_1 x_1 + x_2 + b_1 u, \quad \dot{x}_2 = -a_2 x_1 + x_3 + b_2 u, 
     % Input injections
     \draw[sfgbypass] (U) to[bend right=15] node[left] {$b_3=5$} (dx3);
     \draw[sfgbypass] (U) to[bend right=10] node[pos=0.4, above right] {$b_2=2$} (dx2);
+    \draw[sfgbypass] (U) to[bend left=12] node[pos=0.6, above] {$b_1=0$} (dx1);
     
     % Feedbacks from x1
     \draw[sfgloop] (x1) to[bend left=35] node[below] {$-a_1=-4$} (dx1);
@@ -489,7 +490,7 @@ $$\dot{x}_1 = -a_1 x_1 + x_2 + b_1 u, \quad \dot{x}_2 = -a_2 x_1 + x_3 + b_2 u, 
 \end{tikzpicture}
 \end{center}
 
-Susun matriks ruang keadaan $(A, B, C, D)$ sistem tersebut secara langsung dan tentukan fungsi alih $G(s) = \frac{Y(s)}{U(s)}$ ketika $b_1=0, b_2=2, b_3=5, a_1=4, a_2=6, a_3=3, c_1=1, c_2=0, c_3=0, d=0$.
+Susun matriks ruang keadaan $(A, B, C, D)$ sistem tersebut secara langsung dan tentukan fungsi transfer $G(s) = \frac{Y(s)}{U(s)}$ ketika $b_1=0, b_2=2, b_3=5, a_1=4, a_2=6, a_3=3, c_1=1, c_2=0, c_3=0, d=0$.
 
 \textbf{Penyelesaian:}
 
@@ -502,7 +503,7 @@ $$A = \begin{bmatrix} -4 & 1 & 0 \\ -6 & 0 & 1 \\ -3 & 0 & 0 \end{bmatrix}, \qua
 Determinan matriks karakteristik dihitung melalui ekspansi minor:
 $$\det(sI - A) = \det \begin{bmatrix} s+4 & -1 & 0 \\ 6 & s & -1 \\ 3 & 0 & s \end{bmatrix} = (s+4)(s^2) - (-1)(6s + 3) = s^3 + 4s^2 + 6s + 3$$
 
-Fungsi alih sistem diperoleh melalui perumusan $Y(s) = X_1(s)$:
+Fungsi transfer sistem diperoleh melalui perumusan $Y(s) = X_1(s)$:
 \begin{align*}
     s X_1(s) &= -4 X_1(s) + X_2(s) \implies X_2(s) = (s+4) X_1(s) \\
     s X_2(s) &= -6 X_1(s) + X_3(s) + 2 U(s) \implies X_3(s) = (s^2 + 4s + 6) X_1(s) - 2 U(s) \\
@@ -513,7 +514,7 @@ Substitusi $X_3(s)$ ke persamaan terakhir menghasilkan:
 $$s [(s^2 + 4s + 6) X_1(s) - 2 U(s)] = -3 X_1(s) + 5 U(s)$$
 $$(s^3 + 4s^2 + 6s + 3) X_1(s) = (2s + 5) U(s)$$
 
-Karena $Y(s) = X_1(s)$, maka fungsi alih sistem adalah:
+Karena $Y(s) = X_1(s)$, maka fungsi transfer sistem adalah:
 $$G(s) = \frac{Y(s)}{U(s)} = \frac{2s + 5}{s^3 + 4s^2 + 6s + 3}$$
 
 \vspace{12pt}
@@ -526,10 +527,10 @@ $$G(s) = \frac{Y(s)}{U(s)} = \frac{2s + 5}{s^3 + 4s^2 + 6s + 3}$$
 \textbf{\large No. 9}
 
 \textbf{Soal:}  
-Diberikan fungsi alih rasional berderajat 3 bertipe \textit{proper} sebagai berikut:
+Diberikan fungsi transfer rasional berderajat 3 bertipe \textit{proper} sebagai berikut:
 $$G(s) = \frac{2s^3 + 13s^2 + 24s + 15}{s^3 + 6s^2 + 11s + 6}$$
 \begin{enumerate}[label=(\alph*)]
-    \item Pisahkan suku transmisi langsung (\textit{direct feedthrough}) $d_0$ dan bentuk fungsi alih menjadi bagian \textit{strictly proper}.
+    \item Pisahkan suku transmisi langsung (\textit{direct feedthrough}) $d_0$ dan bentuk fungsi transfer menjadi bagian \textit{strictly proper}.
     \item Tentukan representasi ruang keadaan dalam Bentuk Kanonik Terkontrol (\textit{Controllable Canonical Form} - CCF) dan gambarkan diagram aliran sinyalnya.
 \end{enumerate}
 
@@ -540,7 +541,7 @@ $$G(s) = \frac{2s^3 + 13s^2 + 24s + 15}{s^3 + 6s^2 + 11s + 6}$$
 Pembagian polinomial pembilang oleh penyebut menghasilkan:
 $$2s^3 + 13s^2 + 24s + 15 = 2(s^3 + 6s^2 + 11s + 6) + (s^2 + 2s + 3)$$
 
-Dengan demikian fungsi alih dapat dituliskan sebagai:
+Dengan demikian fungsi transfer dapat dituliskan sebagai:
 $$G(s) = d_0 + G_{sp}(s) = 2 + \frac{s^2 + 2s + 3}{s^3 + 6s^2 + 11s + 6}$$
 dengan $d_0 = 2$, $b_2 = 1, b_1 = 2, b_0 = 3$, serta koefisien penyebut $a_2 = 6, a_1 = 11, a_0 = 6$.
 
@@ -588,7 +589,7 @@ $$B_{CCF} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}, \quad C_{CCF} = \begin{bm
 \textbf{\large No. 10}
 
 \textbf{Soal:}  
-Gunakan fungsi alih yang sama dengan Soal No. 9:
+Gunakan fungsi transfer yang sama dengan Soal No. 9:
 $$G(s) = \frac{2s^3 + 13s^2 + 24s + 15}{s^3 + 6s^2 + 11s + 6} = 2 + \frac{s^2 + 2s + 3}{s^3 + 6s^2 + 11s + 6}$$
 \begin{enumerate}[label=(\alph*)]
     \item Tentukan representasi ruang keadaan dalam Bentuk Kanonik Terobservasi (\textit{Observable Canonical Form} - OCF) dan gambarkan diagram aliran sinyalnya.
@@ -653,7 +654,7 @@ Hal ini membuktikan sifat dualitas formal antara keterkontrolan dan keterobserva
 \textbf{\large No. 11}
 
 \textbf{Soal:}  
-Diberikan fungsi alih sistem:
+Diberikan fungsi transfer sistem:
 $$G(s) = \frac{s + 3}{(s + 1)(s + 2)(s + 4)}$$
 Bentuklah representasi ruang keadaan dalam Bentuk Kanonik Kaskade (\textit{Cascade/Series Form}) melalui faktorisasi menjadi perkalian tiga subsistem orde pertama berurutan $G(s) = G_1(s) G_2(s) G_3(s) = \left(\frac{1}{s+1}\right)\left(\frac{s+3}{s+2}\right)\left(\frac{1}{s+4}\right)$ dan gambarkan diagram alirannya.
 
@@ -705,10 +706,10 @@ $$y(t) = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x
 \textbf{\large No. 12}
 
 \textbf{Soal:}  
-Diberikan fungsi alih yang memiliki kombinasi pole real sederhana dan pole kompleks konjugat:
+Diberikan fungsi transfer yang memiliki kombinasi pole real sederhana dan pole kompleks konjugat:
 $$G(s) = \frac{5s^2 + 17s + 18}{(s + 1)(s^2 + 4s + 5)}$$
 \begin{enumerate}[label=(\alph*)]
-    \item Lakukan ekspansi pecahan parsial dari fungsi alih tersebut.
+    \item Lakukan ekspansi pecahan parsial dari fungsi transfer tersebut.
     \item Susun representasi ruang keadaan dalam Bentuk Kanonik Modal Real (\textit{Real Modal / Diagonal Form}).
 \end{enumerate}
 
@@ -716,13 +717,13 @@ $$G(s) = \frac{5s^2 + 17s + 18}{(s + 1)(s^2 + 4s + 5)}$$
 
 \textbf{(a) Ekspansi Pecahan Parsial}
 
-Faktor penyebut kuadratik memiliki akar-akar kompleks $s = -2 \pm j$. Fungsi alih diekspansikan ke dalam bentuk:
+Faktor penyebut kuadratik memiliki akar-akar kompleks $s = -2 \pm j$. Fungsi transfer diekspansikan ke dalam bentuk:
 $$G(s) = \frac{c_1}{s + 1} + \frac{\alpha s + \beta}{s^2 + 4s + 5}$$
 
 Koefisien $c_1$ dihitung dengan metode penutupan Heaviside:
 $$c_1 = \lim_{s \to -1} (s+1) G(s) = \frac{5(-1)^2 + 17(-1) + 18}{(-1)^2 + 4(-1) + 5} = \frac{5 - 17 + 18}{1 - 4 + 5} = \frac{6}{2} = 3$$
 
-Pengurangan suku pecahan pertama dari fungsi alih total menghasilkan bagian kedua:
+Pengurangan suku pecahan pertama dari fungsi transfer total menghasilkan bagian kedua:
 \begin{align*}
     \frac{\alpha s + \beta}{s^2 + 4s + 5} &= \frac{5s^2 + 17s + 18 - 3(s^2 + 4s + 5)}{(s+1)(s^2 + 4s + 5)} \\
     &= \frac{2s^2 + 5s + 3}{(s+1)(s^2 + 4s + 5)} = \frac{(s+1)(2s + 3)}{(s+1)(s^2 + 4s + 5)} = \frac{2s + 3}{s^2 + 4s + 5}
@@ -750,10 +751,10 @@ $$A = \begin{bmatrix} -1 & 0 & 0 \\ 0 & -2 & 1 \\ 0 & -1 & -2 \end{bmatrix}, \qu
 \textbf{\large No. 13}
 
 \textbf{Soal:}  
-Diberikan fungsi alih yang memiliki pole berulang berorde 3:
+Diberikan fungsi transfer yang memiliki pole berulang berorde 3:
 $$G(s) = \frac{3s^2 + 14s + 19}{(s + 2)^3}$$
 \begin{enumerate}[label=(\alph*)]
-    \item Lakukan ekspansi pecahan parsial dari fungsi alih tersebut.
+    \item Lakukan ekspansi pecahan parsial dari fungsi transfer tersebut.
     \item Tentukan representasi ruang keadaan dalam Bentuk Kanonik Jordan (\textit{Jordan Canonical Form}).
 \end{enumerate}
 
