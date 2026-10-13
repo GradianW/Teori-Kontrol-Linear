@@ -237,13 +237,27 @@ $$C_J = \begin{bmatrix} 1 & 1 & 2 \end{bmatrix}, \quad D_J = 0$$
 Matriks karakteristik $(sI - A_J)$ adalah matriks segitiga atas:
 $$sI - A_J = \begin{bmatrix} s+1 & -1 & 0 \\ 0 & s+1 & -1 \\ 0 & 0 & s+1 \end{bmatrix}$$
 
-Invers matriks segitiga atas dihitung secara langsung:
-$$(sI - A_J)^{-1} = \begin{bmatrix} \frac{1}{s+1} & \frac{1}{(s+1)^2} & \frac{1}{(s+1)^3} \\ 0 & \frac{1}{s+1} & \frac{1}{(s+1)^2} \\ 0 & 0 & \frac{1}{s+1} \end{bmatrix}$$
+Determinan matriks segitiga atas diperoleh langsung dari perkalian elemen-elemen diagonal utamanya:
+$$\det(sI - A_J) = (s+1)(s+1)(s+1) = (s+1)^3$$
 
-Perkalian resolven dengan vektor masukan $B_J$ mengekstraksi kolom ketiga:
+Matriks kofaktor $K_{ij}$ dihitung untuk setiap elemen matriks:
+Kofaktor baris pertama:
+$$K_{11} = +((s+1)^2 - 0) = (s+1)^2, \quad K_{12} = -(0 - 0) = 0, \quad K_{13} = +(0 - 0) = 0$$
+Kofaktor baris kedua:
+$$K_{21} = -((-1)(s+1) - 0) = (s+1), \quad K_{22} = +((s+1)^2 - 0) = (s+1)^2, \quad K_{23} = -(0 - 0) = 0$$
+Kofaktor baris ketiga:
+$$K_{31} = +((-1)(-1) - 0) = 1, \quad K_{32} = -(-(s+1) - 0) = (s+1), \quad K_{33} = +((s+1)^2 - 0) = (s+1)^2$$
+
+Matriks adjoin merupakan transpos dari matriks kofaktor $[K_{ij}]^T$:
+$$\operatorname{adj}(sI - A_J) = \begin{bmatrix} (s+1)^2 & s+1 & 1 \\ 0 & (s+1)^2 & s+1 \\ 0 & 0 & (s+1)^2 \end{bmatrix}$$
+
+Invers matriks resolven diperoleh dengan membagi matriks adjoin dengan determinannya $(s+1)^3$:
+$$(sI - A_J)^{-1} = \frac{\operatorname{adj}(sI - A_J)}{\det(sI - A_J)} = \begin{bmatrix} \frac{1}{s+1} & \frac{1}{(s+1)^2} & \frac{1}{(s+1)^3} \\ 0 & \frac{1}{s+1} & \frac{1}{(s+1)^2} \\ 0 & 0 & \frac{1}{s+1} \end{bmatrix}$$
+
+Perkalian resolven dengan vektor masukan $B_J = [0, 0, 1]^T$ mengekstraksi kolom ketiga:
 $$(sI - A_J)^{-1} B_J = \begin{bmatrix} \frac{1}{(s+1)^3} \\ \frac{1}{(s+1)^2} \\ \frac{1}{s+1} \end{bmatrix}$$
 
-Perkalian dengan vektor baris keluaran $C_J$ menghasilkan:
+Perkalian dengan vektor baris keluaran $C_J = [1, 1, 2]$ menghasilkan:
 $$G(s) = C_J (sI - A_J)^{-1} B_J = \begin{bmatrix} 1 & 1 & 2 \end{bmatrix} \begin{bmatrix} \frac{1}{(s+1)^3} \\ \frac{1}{(s+1)^2} \\ \frac{1}{s+1} \end{bmatrix} = \frac{1}{(s+1)^3} + \frac{1}{(s+1)^2} + \frac{2}{s+1} = \frac{2s^2 + 5s + 4}{(s+1)^3}$$
 Hasil verifikasi tepat identik dengan fungsi transfer awal.
 
@@ -575,14 +589,14 @@ Diberikan sistem kendali lup tertutup dengan dua lup umpan balik bersarang yang 
     \node [output, right of=g2, node distance=2.2cm] (output) {};
     
     \draw [sfgarrow] (input) -- node {$R(s)$} node[pos=0.85, below] {$+$} (sum1);
-    \draw [sfgarrow] (sum1) -- node[pos=0.85, below] {$+$} (sum2);
+    \draw [sfgarrow] (sum1) -- node[above] {$E_2(s)$} node[pos=0.85, below] {$+$} (sum2);
     \draw [sfgarrow] (sum2) -- (g1);
-    \draw [sfgarrow] (g1) -- (g2);
-    \draw [sfgarrow] (g2) -- node [name=y] {$Y(s)$}(output);
+    \draw [sfgarrow] (g1) -- node [name=v, above] {$V(s)$} (g2);
+    \draw [sfgarrow] (g2) -- node [name=y, above] {$Y(s)$} (output);
     
     % Lup Umpan Balik Dalam H1
     \node [block, below of=g1, node distance=1.3cm] (h1) {$H_1(s)$};
-    \draw [sfgarrow] ($(g1.east)!0.5!(g2.west)$) |- (h1);
+    \draw [sfgarrow] (v) |- (h1);
     \draw [sfgarrow] (h1) -| node[pos=0.9, left] {$-$} (sum2);
     
     % Lup Umpan Balik Luar H2
@@ -600,24 +614,144 @@ Diberikan sistem kendali lup tertutup dengan dua lup umpan balik bersarang yang 
 
 \textbf{(a) Reduksi Lup Umpan Balik Bagian Dalam}
 
-Perhatikan sub-sistem lingkar tertutup bagian dalam dengan masukan dari titik penjumlahan kedua dan keluaran setelah blok $G_1(s)$.
-Fungsi transfer ekuivalen untuk lup bagian dalam dengan umpan balik negatif bernilai:
-$$G_{in}(s) = \frac{G_1(s)}{1 + G_1(s) H_1(s)}$$
+Untuk memahami proses reduksi secara komprehensif, diagram blok didekomposisi tahap demi tahap dengan meninjau interaksi aljabar sinyal pada setiap simpul.
 
-Dengan mengganti sub-sistem bagian dalam dengan blok tunggal $G_{in}(s)$, diagram blok menjadi hubungan kaskade (seri) antara $G_{in}(s)$ dan $G_2(s)$:
-$$G_{fwd}(s) = G_{in}(s) \cdot G_2(s) = \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s)}$$
+\textit{Isolasi Lup Umpan Balik Bagian Dalam}
+
+Perhatikan sub-sistem lingkar tertutup bagian dalam yang dibentuk oleh titik penjumlahan kedua ($\sum_2$), blok maju $G_1(s)$, dan blok umpan balik $H_1(s)$. Sinyal masukan bagi sub-sistem ini adalah $E_2(s)$ (sinyal keluaran dari titik penjumlahan pertama), dan sinyal keluarannya adalah sinyal perantara $V(s)$ yang berada tepat di antara blok $G_1(s)$ dan $G_2(s)$.
+
+Sub-sistem lup dalam ini diisolasi dari keseluruhan sistem seperti yang diilustrasikan pada diagram berikut:
+
+\begin{center}
+\begin{tikzpicture}[auto, >=Latex]
+    \node [input] (in) {};
+    \node [sum, right=0.8cm of in] (s2) {};
+    \node [block, right=1.2cm of s2] (g1) {$G_1(s)$};
+    \node [output, right=1.2cm of g1] (out) {};
+    \node [block, below=0.9cm of g1] (h1) {$H_1(s)$};
+    
+    \draw [sfgarrow] (in) -- node {$E_2(s)$} node[pos=0.85, below] {\small $+$} (s2);
+    \draw [sfgarrow] (s2) -- (g1);
+    \draw [sfgarrow] (g1) -- node [name=v, above] {$V(s)$} (out);
+    \draw [sfgarrow] (v) |- (h1);
+    \draw [sfgarrow] (h1) -| node[pos=0.9, left] {\small $-$} (s2);
+\end{tikzpicture}
+\end{center}
+
+Hubungan aljabar sinyal pada sub-lup ini diturunkan sebagai berikut:
+Pada titik penjumlahan $\sum_2$, sinyal umpan balik $H_1(s) V(s)$ dikurangkan dari sinyal masukan $E_2(s)$, sehingga sinyal yang memasuki blok $G_1(s)$ adalah $E_2(s) - H_1(s) V(s)$.
+Sinyal tersebut kemudian diperkuat oleh blok $G_1(s)$ untuk menghasilkan keluaran $V(s)$:
+$$V(s) = G_1(s) \left[ E_2(s) - H_1(s) V(s) \right]$$
+
+Dengan menjabarkan perkalian pada ruas kanan:
+$$V(s) = G_1(s) E_2(s) - G_1(s) H_1(s) V(s)$$
+
+Seluruh suku yang memuat sinyal $V(s)$ dikelompokkan ke ruas kiri:
+$$V(s) + G_1(s) H_1(s) V(s) = G_1(s) E_2(s)$$
+
+Faktorkan $V(s)$ pada ruas kiri:
+$$V(s) \left[ 1 + G_1(s) H_1(s) \right] = G_1(s) E_2(s)$$
+
+Dengan membagi kedua ruas dengan $[1 + G_1(s) H_1(s)]$ dan $E_2(s)$, diperoleh fungsi transfer lingkar tertutup ekuivalen untuk lup bagian dalam:
+$$G_{in}(s) = \frac{V(s)}{E_2(s)} = \frac{G_1(s)}{1 + G_1(s) H_1(s)}$$
+
+Hasil ini menunjukkan bahwa seluruh sub-sistem lup dalam (titik penjumlahan $\sum_2$, blok $G_1(s)$, dan jalur umpan balik $H_1(s)$) dapat digantikan secara utuh oleh satu blok tunggal dengan fungsi transfer $G_{in}(s)$.
+
+\textit{Substitusi Blok Ekuivalen ke Diagram Sistem}
+
+Blok $G_{in}(s)$ disubstitusikan kembali ke diagram sistem utama, menggantikan seluruh struktur lup dalam. Akibatnya, titik penjumlahan $\sum_2$ dan loop umpan balik $H_1(s)$ tereliminasi, sehingga diagram sistem tereduksi menjadi:
+
+\begin{center}
+\begin{tikzpicture}[auto, >=Latex]
+    \node [input] (input) {};
+    \node [sum, right=0.8cm of input] (sum1) {};
+    \node [block, right=1.2cm of sum1] (gin) {$G_{in}(s)$};
+    \node [block, right=1.5cm of gin] (g2) {$G_2(s)$};
+    \node [output, right=1.2cm of g2] (output) {};
+    \node [block, below=0.9cm of $(gin)!0.5!(g2)$] (h2) {$H_2(s)$};
+    
+    \draw [sfgarrow] (input) -- node {$R(s)$} node[pos=0.85, below] {\small $+$} (sum1);
+    \draw [sfgarrow] (sum1) -- (gin);
+    \draw [sfgarrow] (gin) -- node [above] {$V(s)$} (g2);
+    \draw [sfgarrow] (g2) -- node [name=y, above] {$Y(s)$} (output);
+    \draw [sfgarrow] (y) |- (h2);
+    \draw [sfgarrow] (h2) -| node[pos=0.9, left] {\small $-$} (sum1);
+\end{tikzpicture}
+\end{center}
+
+\textit{Penggabungan Hubungan Kaskade (Seri) Jalur Maju}
+
+Pada diagram tereduksi di atas, keluaran dari blok $G_{in}(s)$ mengalir langsung menjadi masukan bagi blok $G_2(s)$ tanpa adanya titik percabangan (\textit{pick-off point}) maupun titik penjumlahan lain di antaranya. Hubungan berurutan semacam ini merupakan hubungan seri (kaskade).
+
+Berdasarkan aturan aljabar diagram blok untuk hubungan seri, dua blok berurutan dapat digabungkan dengan mengalikan masing-masing fungsi transfernya:
+$$Y(s) = G_2(s) V(s) = G_2(s) \left[ G_{in}(s) E_1(s) \right] = \left[ G_{in}(s) G_2(s) \right] E_1(s)$$
+sehingga diperoleh fungsi transfer jalur maju gabungan:
+$$G_{fwd}(s) = G_{in}(s) \cdot G_2(s) = \left( \frac{G_1(s)}{1 + G_1(s) H_1(s)} \right) G_2(s) = \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s)}$$
+
+Diagram blok kini tersederhana menjadi sistem lingkar tertutup tunggal:
+
+\begin{center}
+\begin{tikzpicture}[auto, >=Latex]
+    \node [input] (input) {};
+    \node [sum, right=0.8cm of input] (sum1) {};
+    \node [block, right=1.5cm of sum1, minimum width=2.4cm] (gfwd) {$G_{fwd}(s) = G_{in}(s) G_2(s)$};
+    \node [output, right=1.5cm of gfwd] (output) {};
+    \node [block, below=0.9cm of gfwd] (h2) {$H_2(s)$};
+    
+    \draw [sfgarrow] (input) -- node {$R(s)$} node[pos=0.85, below] {\small $+$} (sum1);
+    \draw [sfgarrow] (sum1) -- node [above] {$E_1(s)$} (gfwd);
+    \draw [sfgarrow] (gfwd) -- node [name=y, above] {$Y(s)$} (output);
+    \draw [sfgarrow] (y) |- (h2);
+    \draw [sfgarrow] (h2) -| node[pos=0.9, left] {\small $-$} (sum1);
+\end{tikzpicture}
+\end{center}
 
 \textbf{(b) Reduksi Lup Umpan Balik Luar dan Fungsi Transfer Total}
 
-Sistem sekarang tersederhana menjadi satu lup umpan balik tunggal dengan jalur maju $G_{fwd}(s)$ dan jalur umpan balik negatif $H_2(s)$.
-Fungsi transfer lingkar tertutup total dihitung menggunakan rumus dasar umpan balik:
+Setelah jalur maju disederhanakan menjadi $G_{fwd}(s)$, sistem berada dalam bentuk kanonik lingkar tertutup tunggal dengan masukan referensi $R(s)$, jalur maju $G_{fwd}(s)$, dan jalur umpan balik negatif $H_2(s)$.
+
+\textit{Aljabar Sinyal Lup Luar}
+
+Sinyal galat pada titik penjumlahan pertama dinyatakan sebagai selisih masukan referensi dengan sinyal umpan balik luar:
+$$E_1(s) = R(s) - H_2(s) Y(s)$$
+
+Sinyal keluaran $Y(s)$ diperoleh dari penguatan sinyal galat oleh blok maju $G_{fwd}(s)$:
+$$Y(s) = G_{fwd}(s) E_1(s) = G_{fwd}(s) \left[ R(s) - H_2(s) Y(s) \right]$$
+
+Dengan menjabarkan suku-suku ruas kanan:
+$$Y(s) = G_{fwd}(s) R(s) - G_{fwd}(s) H_2(s) Y(s)$$
+
+Memindahkan suku umpan balik ke ruas kiri dan memfaktorkan $Y(s)$:
+$$Y(s) \left[ 1 + G_{fwd}(s) H_2(s) \right] = G_{fwd}(s) R(s)$$
+
+Fungsi transfer lingkar tertutup dinyatakan oleh:
 $$T(s) = \frac{Y(s)}{R(s)} = \frac{G_{fwd}(s)}{1 + G_{fwd}(s) H_2(s)}$$
 
-Substitusi ekspresi $G_{fwd}(s)$ menghasilkan:
+\textit{Substitusi Bentuk Rasional $G_{fwd}(s)$}
+
+Ekspresi $G_{fwd}(s) = \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s)}$ disubstitusikan ke dalam persamaan fungsi transfer lingkar tertutup di atas:
 $$T(s) = \frac{\frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s)}}{1 + \left( \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s)} \right) H_2(s)}$$
 
-Dengan mengalikan pembilang dan penyebut dengan suku $(1 + G_1(s) H_1(s))$, diperoleh fungsi transfer sistem yang telah tereduksi sempurna:
+Untuk menghilangkan pecahan bertingkat, pembilang dan penyebut dikalikan dengan penyebut persekutuan $(1 + G_1(s) H_1(s))$:
+$$T(s) = \frac{G_1(s) G_2(s)}{\left( 1 + G_1(s) H_1(s) \right) + G_1(s) G_2(s) H_2(s)}$$
+
+Sehingga diperoleh fungsi transfer lingkar tertutup total sistem:
 $$T(s) = \frac{Y(s)}{R(s)} = \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s) + G_1(s) G_2(s) H_2(s)}$$
+
+\textit{Representasi Blok Tunggal Akhir}
+
+Keseluruhan sistem kendali dua lup bertingkat tersebut kini tereduksi menjadi satu blok tunggal masukan-keluaran:
+
+\begin{center}
+\begin{tikzpicture}[auto, >=Latex]
+    \node [input] (input) {};
+    \node [block, right=1.2cm of input, minimum width=4cm, minimum height=1.1cm] (tot) {$T(s) = \frac{G_1(s) G_2(s)}{1 + G_1(s) H_1(s) + G_1(s) G_2(s) H_2(s)}$};
+    \node [output, right=1.2cm of tot] (output) {};
+    
+    \draw [sfgarrow] (input) -- node {$R(s)$} (tot);
+    \draw [sfgarrow] (tot) -- node {$Y(s)$} (output);
+\end{tikzpicture}
+\end{center}
 
 \vspace{12pt}
 \hrule
