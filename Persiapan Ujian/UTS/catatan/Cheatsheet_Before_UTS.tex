@@ -1,0 +1,353 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% Konfigurasi warna estetis modern
+\definecolor{primary}{RGB}{18, 52, 86}      % Navy Blue
+\definecolor{secondary}{RGB}{28, 110, 164}  % Medium Blue
+\definecolor{accent}{RGB}{217, 83, 79}      % Soft Coral
+\definecolor{lightbg}{RGB}{245, 248, 252}   % Soft Blue-Gray
+\definecolor{boxborder}{RGB}{180, 205, 230} % Border Blue
+\definecolor{darktext}{RGB}{30, 41, 59}     % Slate Dark
+
+\tcbuselibrary{skins,breakable}
+\tcbset{
+    enhanced,
+    colback=lightbg,
+    colframe=secondary,
+    fonttitle=\bfseries\sffamily,
+    coltitle=white,
+    boxrule=0.8pt,
+    arc=3mm,
+    boxsep=2pt,
+    left=5pt,right=5pt,top=4pt,bottom=4pt,
+    before skip=6pt,
+    after skip=6pt
+}
+
+\newtcolorbox{rumusbox}[2][]{
+    colback=white,
+    colframe=primary,
+    title={#2},
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\footnotesize,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=4pt,right=4pt,top=3pt,bottom=3pt,
+    before skip=4pt,after skip=4pt,
+    #1
+}
+
+\newtcolorbox{tipbox}[1][Tips \& Perangkap Ujian]{
+    colback=white,
+    colframe=accent,
+    title={#1},
+    coltitle=white,
+    fonttitle=\bfseries\sffamily\footnotesize,
+    boxrule=0.8pt,
+    arc=2mm,
+    left=4pt,right=4pt,top=3pt,bottom=3pt,
+    before skip=4pt,after skip=4pt
+}
+
+\pagestyle{plain}
+
+\begin{document}
+
+% Header Utama
+\begin{center}
+    {\LARGE\bfseries\sffamily\color{primary} CHEATSHEET LENGKAP BEFORE UTS}\\[3pt]
+    {\large\bfseries\sffamily\color{secondary} MA4171 Teori Kontrol Linear --- Semester I 2026/2027}\\[2pt]
+    {\small Dosen: Dr. Dewi Handayani, S.Si., M.Si. \quad $\bullet$ \quad FMIPA Institut Teknologi Bandung}
+\end{center}
+\vspace{-6pt}
+\hrule height 1.2pt
+\vspace{6pt}
+
+\begin{multicols*}{2}
+
+% ========================================================
+% BAGIAN 1: TRANSFORMASI LAPLACE & PDB
+% ========================================================
+\begin{rumusbox}{1. Transformasi Laplace \& PDB Linear}
+\textbf{Definisi Dasar}:
+$$\mathcal{L}\{f(t)\} = F(s) = \int_0^\infty f(t) e^{-st} \, dt$$
+
+\textbf{Sifat-Sifat Krusial}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Turunan}: $\mathcal{L}\{\dot{x}(t)\} = s X(s) - x(0)$
+    \item $\mathcal{L}\{\ddot{x}(t)\} = s^2 X(s) - s x(0) - \dot{x}(0)$
+    \item $\mathcal{L}\{\dddot{x}(t)\} = s^3 X(s) - s^2 x(0) - s \dot{x}(0) - \ddot{x}(0)$
+    \item $\mathcal{L}\{x^{(n)}\} = s^n X(s) - \sum_{k=1}^n s^{n-k} x^{(k-1)}(0)$
+    \item \textbf{Integral}: $\mathcal{L}\left\{\int_0^t x(\tau) d\tau\right\} = \frac{1}{s} X(s)$
+    \item \textbf{Pergeseran Waktu}: $\mathcal{L}\{f(t-a)u(t-a)\} = e^{-as} F(s)$
+    \item \textbf{Pergeseran Frekuensi}: $\mathcal{L}\{e^{at} f(t)\} = F(s-a)$
+    \item \textbf{Perkalian $t$}: $\mathcal{L}\{t f(t)\} = -\frac{d}{ds} F(s)$
+\end{itemize}
+
+\textbf{Tabel Pasangan Transformasi Penting}:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\scriptsize
+\begin{tabular}{cc|cc}
+\toprule
+$f(t)$ & $F(s)$ & $f(t)$ & $F(s)$ \\
+\midrule
+$\delta(t)$ & $1$ & $u(t)$ (step) & $\frac{1}{s}$ \\
+$t$ & $\frac{1}{s^2}$ & $t^n$ & $\frac{n!}{s^{n+1}}$ \\
+$e^{-at}$ & $\frac{1}{s+a}$ & $t e^{-at}$ & $\frac{1}{(s+a)^2}$ \\
+$\sin(\omega t)$ & $\frac{\omega}{s^2+\omega^2}$ & $\cos(\omega t)$ & $\frac{s}{s^2+\omega^2}$ \\
+$e^{-at}\sin(\omega t)$ & $\frac{\omega}{(s+a)^2+\omega^2}$ & $e^{-at}\cos(\omega t)$ & $\frac{s+a}{(s+a)^2+\omega^2}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Invers via Dekomposisi Pecahan Parsial}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textit{Akar Berbeda}: $\frac{P(s)}{(s-p_1)(s-p_2)} = \frac{A}{s-p_1} + \frac{B}{s-p_2}$
+    $$A = \lim_{s \to p_1} (s-p_1) F(s)$$
+    \item \textit{Akar Berulang}: $\frac{P(s)}{(s-p)^m} = \sum_{k=1}^m \frac{A_k}{(s-p)^k}$
+    $$A_k = \frac{1}{(m-k)!} \lim_{s \to p} \frac{d^{m-k}}{ds^{m-k}} \left[ (s-p)^m F(s) \right]$$
+\end{itemize}
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 2: REDUKSI DIAGRAM BLOK
+% ========================================================
+\begin{rumusbox}{2. Aljabar Diagram Blok \& Fungsi Transfer}
+\textbf{Fungsi Transfer Sistem SISO}:
+$$G(s) = \frac{Y(s)}{U(s)} \quad \text{dengan kondisi awal } x(0) = 0$$
+
+\textbf{Tiga Hubungan Dasar}:
+\begin{itemize}\setlength\itemsep{2pt}
+    \item \textbf{Kaskade (Seri)}: $G_{eq}(s) = G_1(s) G_2(s)$
+    \item \textbf{Paralel}: $G_{eq}(s) = G_1(s) \pm G_2(s)$
+    \item \textbf{Umpan Balik (\textit{Feedback})}:
+    $$G_{eq}(s) = \frac{C(s)}{R(s)} = \frac{G(s)}{1 \pm G(s)H(s)}$$
+    $\bullet$ Umpan balik negatif (tanda $-$ di pembanding): $+G(s)H(s)$\\
+    $\bullet$ Umpan balik positif (tanda $+$ di pembanding): $-G(s)H(s)$
+\end{itemize}
+
+\textbf{Aturan Ekuivalensi Pemindahan}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Pindah titik cabang \textbf{melewati blok $G$ ke depan}: kalikan cabang dengan $\frac{1}{G}$.
+    \item Pindah titik cabang \textbf{melewati blok $G$ ke belakang}: kalikan cabang dengan $G$.
+    \item Pindah titik penjumlahan \textbf{melewati blok $G$ ke depan}: kalikan masukan baru dengan $G$.
+    \item Pindah titik penjumlahan \textbf{melewati blok $G$ ke belakang}: kalikan masukan baru dengan $\frac{1}{G}$.
+\end{itemize}
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 3: ATURAN PENGUATAN MASON (SFG)
+% ========================================================
+\begin{rumusbox}{3. Signal Flow Graph \& Aturan Mason}
+\textbf{Rumus Penguatan Mason (\textit{Mason's Gain Formula})}:
+$$P = \frac{Y_{out}}{U_{in}} = \frac{1}{\Delta} \sum_{k=1}^N P_k \Delta_k$$
+
+\textbf{Komponen Formula}:
+\begin{itemize}\setlength\itemsep{2pt}
+    \item $P_k$ : Penguatan lintasan maju (\textit{forward path gain}) ke-$k$ dari node input ke node output tanpa menyentuh node mana pun dua kali.
+    \item $\Delta$ : Determinan graf keseluruhan:
+    $$\Delta = 1 - \sum L_i + \sum L_i L_j - \sum L_i L_j L_k + \dots$$
+    di mana:
+    \begin{itemize}\setlength\itemsep{1pt}
+        \item $\sum L_i$ : jumlah seluruh gain loop individu.
+        \item $\sum L_i L_j$ : jumlah perkalian gain pasangan dua loop yang \textbf{tidak saling bersentuhan} (\textit{non-touching}).
+        \item $\sum L_i L_j L_k$ : jumlah perkalian 3 loop yang saling tidak bersentuhan.
+    \end{itemize}
+    \item $\Delta_k$ : Kofaktor lintasan ke-$k$, yaitu nilai determinan graf $\Delta$ setelah \textbf{menghapus seluruh loop yang bersentuhan} dengan lintasan maju $P_k$.
+\end{itemize}
+\end{rumusbox}
+
+\begin{tipbox}[Prosedur Cepat Menjawab Soal Mason di Ujian]
+1. Tuliskan semua lintasan maju $P_1, P_2, \dots$ beserta nilainya.\\
+2. Tuliskan seluruh loop tunggal $L_1, L_2, \dots$ dengan tanda aljabar yang tepat (perhatikan tanda $-H$).\\
+3. Identifikasi loop yang \textit{non-touching} (tidak berbagi simpul).\\
+4. Hitung $\Delta$, lalu tentukan $\Delta_k$ (jika lintasan $P_k$ menyentuh semua loop, maka $\Delta_k = 1$).\\
+5. Masukkan ke rumus $P = \frac{\sum P_k \Delta_k}{\Delta}$.
+\end{tipbox}
+
+% ========================================================
+% BAGIAN 4: RUANG KEADAAN & RESPON WAKTU
+% ========================================================
+\begin{rumusbox}{4. Representasi Ruang Keadaan \& Respon Sistem}
+\textbf{Bentuk Standar LTI}:
+\begin{align*}
+    \dot{x}(t) &= A x(t) + B u(t) \quad (\text{Persamaan Keadaan})\\
+    y(t) &= C x(t) + D u(t) \quad (\text{Persamaan Keluaran})
+\end{align*}
+dengan $x \in \mathbb{R}^n, u \in \mathbb{R}^m, y \in \mathbb{R}^p$.
+
+\textbf{Konversi Ruang Keadaan ke Fungsi Transfer}:
+$$G(s) = C(sI - A)^{-1} B + D = \frac{C \operatorname{adj}(sI - A) B}{\det(sI - A)} + D$$
+Kutub-kutub (\textit{poles}) sistem adalah akar-akar dari $\det(sI - A) = 0$.
+
+\textbf{Matriks Fundamental / Transisi Keadaan $\Phi(t) = e^{At}$}:
+$$e^{At} = \mathcal{L}^{-1}\{(sI - A)^{-1}\}$$
+Untuk matriks $2 \times 2$:
+$$(sI - A)^{-1} = \frac{1}{\det(sI - A)} \begin{bmatrix} s - a_{22} & a_{12} \\ a_{21} & s - a_{11} \end{bmatrix}$$
+
+\textbf{Solusi Lengkap Respon Waktu}:
+$$x(t) = \underbrace{e^{At} x(0)}_{\text{Respon Masukan Nol (ZIR)}} + \underbrace{\int_0^t e^{A(t-\tau)} B u(\tau) \, d\tau}_{\text{Respon Keadaan Nol (ZSR)}}$$
+Dalam domain Laplace:
+$$X(s) = (sI - A)^{-1} x(0) + (sI - A)^{-1} B U(s)$$
+$$Y(s) = C(sI - A)^{-1} x(0) + \left[ C(sI - A)^{-1} B + D \right] U(s)$$
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 5: BENTUK KANONIK RUANG KEADAAN
+% ========================================================
+\begin{rumusbox}{5. Empat Bentuk Kanonik Ruang Keadaan}
+Diberikan fungsi transfer SISO berordo $n$:
+$$G(s) = \frac{b_0 s^n + b_1 s^{n-1} + \dots + b_{n-1}s + b_n}{s^n + a_1 s^{n-1} + \dots + a_{n-1}s + a_n}$$
+Bila $b_0 = 0 \implies D = 0$.
+
+\textbf{1. Bentuk Kanonik Keterkontrolan (CCF)}:\\
+Variabel perantara: $Z(s) = \frac{U(s)}{s^n + a_1 s^{n-1} + \dots + a_n}$.\\
+State: $x_1 = z, x_2 = \dot{z}, \dots, x_n = z^{(n-1)}$.
+{\scriptsize
+\begin{align*}
+A &= \begin{bmatrix} 0 & 1 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & 1 \\ -a_n & -a_{n-1} & \dots & -a_1 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix} \\
+C &= \begin{bmatrix} b_n - a_n b_0 & \dots & b_1 - a_1 b_0 \end{bmatrix}, \quad D = b_0
+\end{align*}
+}
+
+\textbf{2. Bentuk Kanonik Keterobservasian (OCF)}:\\
+Bentuk dual dari CCF ($A_{ocf} = A_{ccf}^T, B_{ocf} = C_{ccf}^T, C_{ocf} = B_{ccf}^T$):
+{\scriptsize
+\begin{align*}
+A &= \begin{bmatrix} 0 & \dots & 0 & -a_n \\ 1 & \dots & 0 & -a_{n-1} \\ \vdots & \ddots & \vdots & \vdots \\ 0 & \dots & 1 & -a_1 \end{bmatrix}, \quad B = \begin{bmatrix} b_n - a_n b_0 \\ b_{n-1} - a_{n-1} b_0 \\ \vdots \\ b_1 - a_1 b_0 \end{bmatrix} \\
+C &= \begin{bmatrix} 0 & \dots & 0 & 1 \end{bmatrix}, \quad D = b_0
+\end{align*}
+}
+
+\textbf{3. Bentuk Kanonik Diagonal (DCF)}:\\
+Syarat: Nilai eigen $\lambda_1, \dots, \lambda_n$ bernilai riil dan berbeda.\\
+Ekspansi parsial: $G(s) = \sum_{i=1}^n \frac{c_i}{s - \lambda_i} + D$.
+{\scriptsize
+$$A = \operatorname{diag}(\lambda_1, \dots, \lambda_n), \quad B = \begin{bmatrix} 1 \\ \vdots \\ 1 \end{bmatrix}, \quad C = \begin{bmatrix} c_1 & \dots & c_n \end{bmatrix}$$
+}
+
+\textbf{4. Bentuk Kanonik Jordan (JCF)}:\\
+Bila ada nilai eigen berulang, misal $\lambda_1$ rangkap 3:
+{\scriptsize
+$$J_1 = \begin{bmatrix} \lambda_1 & 1 & 0 \\ 0 & \lambda_1 & 1 \\ 0 & 0 & \lambda_1 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$$
+}
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 6: SISTEM MULTIVARIABEL (SIMO, MISO, MIMO)
+% ========================================================
+\begin{rumusbox}{6. Sistem Multivariabel (SIMO, MISO, MIMO)}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{SIMO (1 masukan, $p$ keluaran)}:
+    $$G(s) = \frac{1}{d(s)} \begin{bmatrix} n_1(s) \\ \vdots \\ n_p(s) \end{bmatrix}$$
+    Gunakan CCF bersama: matriks $A$ dan $B$ sama, $C \in \mathbb{R}^{p \times n}$ memuat koefisien masing-masing $n_i(s)$.
+    \item \textbf{MISO ($m$ masukan, 1 keluaran)}:
+    $$G(s) = \frac{1}{d(s)} \begin{bmatrix} n_1(s) & \dots & n_m(s) \end{bmatrix}$$
+    Gunakan OCF bersama: matriks $A$ dan $C$ sama, $B \in \mathbb{R}^{n \times m}$ memuat koefisien masing-masing $n_i(s)$.
+    \item \textbf{MIMO ($m$ masukan, $p$ keluaran)}:
+    Matriks fungsi transfer $\mathbf{G}(s) \in \mathbb{R}^{p \times m}$. Realisasi minimal dapat dibentuk melalui bentuk Diagonal/Jordan via residu parsial.
+\end{itemize}
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 7: KETERKONTROLAN & KETEROBSERVASIAN (TOPIK 04)
+% ========================================================
+\begin{rumusbox}{7. Keterkontrolan \& Keterobservasian Sistem}
+\textbf{1. Kriteria Keterkontrolan Kalman}:
+Matriks keterkontrolan:
+$$M_c = \begin{bmatrix} B & AB & A^2B & \dots & A^{n-1}B \end{bmatrix} \in \mathbb{R}^{n \times n}$$
+Sistem terkontrol lengkap $\iff \operatorname{rank}(M_c) = n$ (atau $\det(M_c) \ne 0$).
+
+\textbf{2. Kriteria Keterobservasian Kalman}:
+Matriks keterobservasian:
+$$M_o = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatrix} \in \mathbb{R}^{n \times n}$$
+Sistem terobservasi lengkap $\iff \operatorname{rank}(M_o) = n$ (atau $\det(M_o) \ne 0$).
+
+\textbf{3. Transformasi ke CCF Menggunakan $T = M_c W$}:
+Jika $|sI - A| = s^n + a_1 s^{n-1} + \dots + a_n = 0$:
+{\scriptsize
+$$W = \begin{bmatrix} a_{n-1} & a_{n-2} & \dots & 1 \\ a_{n-2} & \dots & 1 & 0 \\ \vdots & \reflectbox{$\ddots$} & \vdots & \vdots \\ 1 & 0 & \dots & 0 \end{bmatrix}, \quad T = M_c W$$
+}
+Transformasi $x = Tz$ menghasilkan:
+$$A_{ccf} = T^{-1} A T, \quad B_{ccf} = T^{-1} B$$
+
+\textbf{4. Uji Gilbert (Bentuk Diagonal \& Jordan)}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Bentuk Diagonal} ($A = \operatorname{diag}(\lambda_i)$):
+    \begin{itemize}\setlength\itemsep{0pt}
+        \item Terkontrol $\iff$ Tidak ada baris pada $\tilde{B}$ yang seluruhnya bernilai nol.
+        \item Terobservasi $\iff$ Tidak ada kolom pada $\tilde{C}$ yang seluruhnya bernilai nol.
+    \end{itemize}
+    \item \textbf{Bentuk Jordan} (Blok $J_i$ nilai eigen berulang):
+    \begin{itemize}\setlength\itemsep{0pt}
+        \item Terkontrol $\iff$ Elemen pada \textbf{baris terakhir} setiap blok Jordan pada matriks $\tilde{B}$ bernilai bukan nol ($b_{terakhir} \ne 0$).
+        \item Terobservasi $\iff$ Elemen pada \textbf{kolom pertama} setiap blok Jordan pada matriks $\tilde{C}$ bernilai bukan nol ($c_{pertama} \ne 0$).
+    \end{itemize}
+\end{itemize}
+
+\textbf{5. Prinsip Dualitas Kalman}:
+$$(A, B) \text{ terkontrol} \iff (A^T, B^T) \text{ terobservasi}$$
+$$M_c(A, B) = M_o^T(A^T, B^T)$$
+\end{rumusbox}
+
+% ========================================================
+% BAGIAN 8: TRANSFORMASI Z & SISTEM WAKTU DISKRIT
+% ========================================================
+\begin{rumusbox}{8. Transformasi Z \& Sistem Waktu Diskrit}
+\textbf{Definisi}:
+$$X(z) = \mathcal{Z}\{x(k)\} = \sum_{k=0}^\infty x(k) z^{-k}$$
+
+\textbf{Tabel Transformasi Z Esensial}:
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\scriptsize
+\begin{tabular}{cc|cc}
+\toprule
+$x(k)$ & $X(z)$ & $x(k)$ & $X(z)$ \\
+\midrule
+$\delta(k)$ & $1$ & $1$ (step) & $\frac{z}{z-1} = \frac{1}{1-z^{-1}}$ \\
+$a^k$ & $\frac{z}{z-a}$ & $k$ & $\frac{z}{(z-1)^2}$ \\
+$k a^k$ & $\frac{a z}{(z-a)^2}$ & $a^{k-1}$ & $\frac{1}{z-a}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Teorema Pergeseran Waktu}:
+\begin{align*}
+    \mathcal{Z}\{x(k+1)\} &= z X(z) - z x(0)\\
+    \mathcal{Z}\{x(k+2)\} &= z^2 X(z) - z^2 x(0) - z x(1)
+\end{align*}
+
+\textbf{Metode Inversi Pecahan Parsial}:
+Uraikan selalu dalam bentuk $\frac{X(z)}{z}$:
+$$\frac{X(z)}{z} = \frac{A}{z - p_1} + \frac{B}{z - p_2} \implies X(z) = \frac{A z}{z - p_1} + \frac{B z}{z - p_2}$$
+sehingga dengan mudah diperoleh $x(k) = A p_1^k + B p_2^k$.
+
+\textbf{Ruang Keadaan Diskrit}:
+\begin{align*}
+    x(k+1) &= G x(k) + H u(k)\\
+    y(k) &= C x(k) + D u(k)
+\end{align*}
+Fungsi transfer diskrit: $G(z) = C(zI - G)^{-1}H + D$.
+\end{rumusbox}
+
+\begin{tipbox}[Checklist Final Peserta Ujian UTS]
+$\square$ Selalu tulis asumsi kondisi awal nol saat mencari fungsi transfer.\\
+$\square$ Jangan tertukar: Umpan balik negatif bertanda $+$ di penyebut $\frac{G}{1+GH}$.\\
+$\square$ Saat menghitung determinan $\Delta$ Mason, periksa dengan teliti apakah ada loop yang saling lepas (\textit{non-touching}).\\
+$\square$ Untuk matriks $e^{At}$, pastikan invers Laplace $(sI - A)^{-1}$ dihitung elemen demi elemen dengan benar.\\
+$\square$ Rank matriks $M_c$ atau $M_o$: jika determinan $\ne 0$, rank langsung $n$ (penuh).
+\end{tipbox}
+
+\end{multicols*}
+
+\end{document}

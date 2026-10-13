@@ -77,6 +77,15 @@ Sistem $(A, B)$ terkontrol lengkap jika dan hanya jika:
 Cukup diuji pada seluruh nilai eigen $s = \lambda_i$ dari matriks $A$.
 }
 
+\subsection{Uji Keterkontrolan Gilbert (Bentuk Diagonal)}
+\kotakdefinisi{Uji Gilbert Keterkontrolan:}{
+Jika matriks sistem telah didiagonalkan $\Lambda = P^{-1} A P = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$ dengan nilai-nilai eigen yang distingtif (berbeda):
+\begin{equation*}
+    \dot{z}(t) = \Lambda z(t) + \tilde{B} u(t), \quad \tilde{B} = P^{-1} B
+\end{equation*}
+Sistem terkontrol lengkap jika dan hanya jika \textbf{tidak ada baris pada matriks $\tilde{B}$ yang seluruh elemennya bernilai nol}.
+}
+
 \subsection{Gramian Keterkontrolan (\textit{Controllability Gramian})}
 \begin{equation*}
     W_c(0, t_1) = \int_0^{t_1} e^{A(t_1 - \tau)} B B^T e^{A^T(t_1 - \tau)} \, d\tau > 0 \quad (\forall t_1 > 0)
@@ -106,6 +115,15 @@ Sistem $(A, C)$ terobservasi lengkap jika dan hanya jika:
     \operatorname{rank} \begin{bmatrix} sI - A \\ C \end{bmatrix} = n, \quad \forall s \in \mathbb{C}
 \end{equation*}
 Cukup diuji pada seluruh nilai eigen $s = \lambda_i$ dari matriks $A$.
+}
+
+\subsection{Uji Keterobservasian Gilbert (Bentuk Diagonal)}
+\kotakdefinisi{Uji Gilbert Keterobservasian:}{
+Jika matriks sistem telah didiagonalkan $\Lambda = P^{-1} A P = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$ dan matriks keluaran ditransformasikan menjadi $\tilde{C} = C P$:
+\begin{equation*}
+    y(t) = \tilde{C} z(t) + D u(t)
+\end{equation*}
+Sistem terobservasi lengkap jika dan hanya jika \textbf{tidak ada kolom pada matriks $\tilde{C}$ yang seluruh elemennya bernilai nol}.
 }
 
 \vspace{6pt}
